@@ -581,18 +581,25 @@ else if (getactiveStorage === "active" && getStorageItems !== "") {
       renderer.setSize(window.innerWidth, window.innerHeight);
   });
 
-
+let savedData = []
   function saveProgress() {
-    // let listOfObjects = []
-  
-      // listOfObjects.push(scene.children[i])
- localStorage.setItem('active', "active")
-      localStorage.setItem("listofobjects", JSON.stringify(listofmodels))
-    
-  //  localStorage.setItem("listofobjects", JSON.stringify(listOfObjects))
-    let listOfObjects = localStorage.getItem("listofobjects")
-//    console.log(JSON.parse(listOfObjects));
-console.log(listOfObjects);
+    if (getactiveStorage === null) {
+        localStorage.setItem('active', "active")
+        let addedItems = listofmodels
+         for (let i = 0; i < addedItems.length; i++) {
+                savedData.push(addedItems[i]);
+          }
+        localStorage.setItem("listofobjects", JSON.stringify(savedData))
+    }
+    else if (getactiveStorage === "active" && getStorageItems.length > 0 ) {
+        let listOfObjects = JSON.parse(localStorage.getItem("listofobjects") )
+        let addedItems = listofmodels
+         for (let i = 0; i < addedItems.length; i++) {
+            listOfObjects.push(addedItems[i]);
+          }
+          let savedData = listOfObjects
+          localStorage.setItem("listofobjects", JSON.stringify(savedData))
+    }
   }
 
   function reset() {
@@ -605,7 +612,6 @@ console.log(listOfObjects);
     <div>
       <div className='absolute w-[15%] m-8 border-solid border-sky-500 border-4 rounded-lg h-[90%]'>
         <div className='flex flex-col'>
-        <p> Hello World</p>
         <button className=' p-1 m-3 rounded-lg bg-blue-300 text-white' onClick={saveProgress}>Save</button>
         <button className=' p-1 m-3 rounded-lg bg-red-600 text-white' onClick={reset}>Reset</button>
 
