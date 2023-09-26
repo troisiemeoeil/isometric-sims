@@ -1,11 +1,11 @@
 
-import { useEffect } from 'react'
+
 import './App.css'
 import * as THREE from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
 function App() {
-useEffect(()=> {
+
 
   
   const largeBuilding = new URL('./assets/large_buildingA.glb', import.meta.url);
@@ -58,13 +58,19 @@ useEffect(()=> {
   scene.add(directionalLight);
 
 
-  
+
   const orbit = new OrbitControls(camera, renderer.domElement);
   
   camera.position.set(10, 15, -22);
   
   orbit.update();
-  
+let getStorageItems = localStorage.getItem('listofobjects')
+let getactiveStorage = localStorage.getItem('active')
+
+console.log("initial items", getStorageItems === "");
+
+
+
   let assetLoader = new GLTFLoader()
   let stag = []
   
@@ -76,7 +82,6 @@ useEffect(()=> {
           const model = gltf.scene;
           model.scale.set(0.5, 0.5, 0.5);
           let meshArr = model.children[0].children
-          console.log(meshArr);
           for (let i = 0; i < meshArr.length; i++) {
             meshArr[i].material.metalness = 0
           }
@@ -86,8 +91,158 @@ useEffect(()=> {
           console.error(error);
       });
   } 
+
+
+  function loadSavedScene() {
+    const listofSavedModels =  JSON.parse(localStorage.getItem("listofobjects"))
+        for (let i = 0; i < listofSavedModels.length; i++) {
+          //list of saved models returns an array of the name and position of each model
+            if (listofSavedModels[i].name === "large_buildingA") {
+                assetLoader.load(selectedModel[0].href, function(gltf) {
+                    const model = gltf.scene;
+                    model.scale.set(0.5, 0.5, 0.5);
+                    model.position.copy(listofSavedModels[i].position);
+                    let meshArr = model.children[0].children
+                    for (let i = 0; i < meshArr.length; i++) {
+                      meshArr[i].material.metalness = 0
+                    }
+              scene.add(model);
+                }, undefined, function(error) {
+                    console.error(error);
+                });
+            }
+            else if(listofSavedModels[i].name === "skyscraperD") {
+                console.log("found a skycraper");
+                
+                assetLoader.load(models[1].href, function(gltf) {
+                    const model = gltf.scene;
+                    model.scale.set(0.5, 0.5, 0.5);
+                    model.position.copy(listofSavedModels[i].position);
+                    let meshArr = model.children[0].children
+                    for (let i = 0; i < meshArr.length; i++) {
+                      meshArr[i].material.metalness = 0
+                    }
+              scene.add(model);
+                }, undefined, function(error) {
+                    console.error(error);
+                });
+            }
+            else if(listofSavedModels[i].name === "detail_awningWide") {
+                assetLoader.load(models[2].href, function(gltf) {
+                    const model = gltf.scene;
+                    model.scale.set(0.5, 0.5, 0.5);
+                    model.position.copy(listofSavedModels[i].position);
+                    let meshArr = model.children[0].children
+                    for (let i = 0; i < meshArr.length; i++) {
+                      meshArr[i].material.metalness = 0
+                    }
+              scene.add(model);
+                }, undefined, function(error) {
+                    console.error(error);
+                });
+            }
+
+            else if(listofSavedModels[i].name === "low_buildingC") {
+                assetLoader.load(models[3].href, function(gltf) {
+                    const model = gltf.scene;
+                    model.scale.set(0.5, 0.5, 0.5);
+                    model.position.copy(listofSavedModels[i].position);
+                    let meshArr = model.children[0].children
+                    for (let i = 0; i < meshArr.length; i++) {
+                      meshArr[i].material.metalness = 0
+                    }
+              scene.add(model);
+                }, undefined, function(error) {
+                    console.error(error);
+                });
+            }
+            
+            else if(listofSavedModels[i].name === "small_buildingA") {
+                assetLoader.load(models[4].href, function(gltf) {
+                    const model = gltf.scene;
+                    model.scale.set(0.5, 0.5, 0.5);
+                    model.position.copy(listofSavedModels[i].position);
+                    let meshArr = model.children[0].children
+                    for (let i = 0; i < meshArr.length; i++) {
+                      meshArr[i].material.metalness = 0
+                    }
+              scene.add(model);
+                }, undefined, function(error) {
+                    console.error(error);
+                });
+            }
+            
+            else if(listofSavedModels[i].name === "tree_oak_fall") {
+                assetLoader.load(models[5].href, function(gltf) {
+                    const model = gltf.scene;
+                    model.scale.set(0.5, 0.5, 0.5);
+                    model.position.copy(listofSavedModels[i].position);
+                    let meshArr = model.children[0].children
+                    for (let i = 0; i < meshArr.length; i++) {
+                      meshArr[i].material.metalness = 0
+                    }
+              scene.add(model);
+                }, undefined, function(error) {
+                    console.error(error);
+                });
+            }
+            else if(listofSavedModels[i].name === "tree_palmTall") {
+                assetLoader.load(models[6].href, function(gltf) {
+                    const model = gltf.scene;
+                    model.scale.set(0.5, 0.5, 0.5);
+                    model.position.copy(listofSavedModels[i].position);
+                    let meshArr = model.children[0].children
+                    for (let i = 0; i < meshArr.length; i++) {
+                      meshArr[i].material.metalness = 0
+                    }
+              scene.add(model);
+                }, undefined, function(error) {
+                    console.error(error);
+                });
+            }
+            else if(listofSavedModels[i].name === "tree_pineDefaultA") {
+                assetLoader.load(models[7].href, function(gltf) {
+                    const model = gltf.scene;
+                    model.scale.set(0.5, 0.5, 0.5);
+                    model.position.copy(listofSavedModels[i].position);
+                    let meshArr = model.children[0].children
+                    for (let i = 0; i < meshArr.length; i++) {
+                      meshArr[i].material.metalness = 0
+                    }
+              scene.add(model);
+                }, undefined, function(error) {
+                    console.error(error);
+                });
+            }
+
+            else if(listofSavedModels[i].name === "tree_plateau_fall") {
+                assetLoader.load(models[8].href, function(gltf) {
+                    const model = gltf.scene;
+                    model.scale.set(0.5, 0.5, 0.5);
+                    model.position.copy(listofSavedModels[i].position);
+                    let meshArr = model.children[0].children
+                    for (let i = 0; i < meshArr.length; i++) {
+                      meshArr[i].material.metalness = 0
+                    }
+              scene.add(model);
+                }, undefined, function(error) {
+                    console.error(error);
+                });
+            }
+        }
+            
+       
+
+  }
+
+
+
+if (getactiveStorage === null) {
   loadScene()
-  
+}
+else if (getactiveStorage === "active" && getStorageItems !== "") {
+  loadSavedScene()
+}
   const planeMesh = new THREE.Mesh(
       new THREE.PlaneGeometry(20, 20),
       new THREE.MeshBasicMaterial({
@@ -147,7 +302,8 @@ useEffect(()=> {
   
   
   
-  const objects = [];
+  let objects = [];
+  let listofmodels = []
   
   window.addEventListener('dblclick', function() {
       // console.log(scene);
@@ -155,19 +311,31 @@ useEffect(()=> {
           return (object.position.x === highlightMesh.position.x)
           && (object.position.z === highlightMesh.position.z)
       });
-  
       if(!objectExist) {
           if(intersects.length > 0) {
-              console.log(stag[0]);
               const stagClone = stag[0].clone();
               stagClone.position.copy(highlightMesh.position);
               scene.add(stagClone);
               objects.push(stagClone);
               highlightMesh.material.color.setHex(0xFF6666);
+              console.log("position of cube", highlightMesh.position);
+              console.log("details of cube", stagClone.children[0].name);
+              let addedModels = {
+                name: stagClone.children[0].name,
+                position: {
+                    x: highlightMesh.position.x,
+                    y: highlightMesh.position.y,
+                    z: highlightMesh.position.z,
+                }
+              }
+              listofmodels.push(addedModels)
+
           }
       }
-      console.log(scene.children.length);
+     
   });
+  
+
   
   // function KeyPress(e) {
   //     var evtobj = window.e
@@ -281,6 +449,7 @@ useEffect(()=> {
   })
   
   let selectedObj = []
+
   window.addEventListener('keypress', function(e) {
       switch (e.code) {
           case 'KeyX':
@@ -398,7 +567,7 @@ useEffect(()=> {
   //         //     break
   //     }
   // })
-  
+ 
   function animate(time) {
       highlightMesh.material.opacity = 1 + Math.sin(time / 120);
       renderer.render(scene, camera);
@@ -411,11 +580,38 @@ useEffect(()=> {
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
   });
+
+
+  function saveProgress() {
+    // let listOfObjects = []
   
-}, [])
+      // listOfObjects.push(scene.children[i])
+ localStorage.setItem('active', "active")
+      localStorage.setItem("listofobjects", JSON.stringify(listofmodels))
+    
+  //  localStorage.setItem("listofobjects", JSON.stringify(listOfObjects))
+    let listOfObjects = localStorage.getItem("listofobjects")
+//    console.log(JSON.parse(listOfObjects));
+console.log(listOfObjects);
+  }
+
+  function reset() {
+    localStorage.clear();
+    location.reload()
+  }
+
+
   return (
-    <>
-    </>
+    <div>
+      <div className='absolute w-[15%] m-8 border-solid border-sky-500 border-4 rounded-lg h-[90%]'>
+        <div className='flex flex-col'>
+        <p> Hello World</p>
+        <button className=' p-1 m-3 rounded-lg bg-blue-300 text-white' onClick={saveProgress}>Save</button>
+        <button className=' p-1 m-3 rounded-lg bg-red-600 text-white' onClick={reset}>Reset</button>
+
+        </div>
+      </div>
+    </div>
   )
 }
 
