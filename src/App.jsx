@@ -14,10 +14,10 @@ useEffect(()=> {
   const lowBuilding = new URL('./assets/low_buildingC.glb', import.meta.url);
   const smallBuilding = new URL('./assets/small_buildingA.glb', import.meta.url);
   
-  const oakTree = new URL('../assets/tree_oak_fall.glb', import.meta.url);
-  const palmTree = new URL('../assets/tree_palmTall.glb', import.meta.url);
-  const pineTree = new URL('../assets/tree_pineDefaultA.glb', import.meta.url);
-  const plateauFall = new URL('../assets/tree_plateau_fall.glb', import.meta.url);
+  const oakTree = new URL('./assets/tree_oak_fall.glb', import.meta.url);
+  const palmTree = new URL('./assets/tree_palmTall.glb', import.meta.url);
+  const pineTree = new URL('./assets/tree_pineDefaultA.glb', import.meta.url);
+  const plateauFall = new URL('./assets/tree_plateau_fall.glb', import.meta.url);
   
   
   let models = [largeBuilding, skyScraper, awing, lowBuilding, smallBuilding, oakTree, palmTree, pineTree, plateauFall ]
@@ -36,7 +36,8 @@ useEffect(()=> {
       1000
   );
   const ambientLight = new THREE.AmbientLight(0xFFFFFF);
-  ambientLight.intensity = 4;
+  console.log(scene);
+  ambientLight.intensity = 2;
   scene.add(ambientLight);
   
   const spotLight = new THREE.SpotLight( 0xffffff );
@@ -48,9 +49,15 @@ useEffect(()=> {
   scene.add(spotLight)
   
   const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1);
-  scene.add(directionalLight);
+  directionalLight.position.set(-3, 3, -3);
   directionalLight.position.set(3, 3, 3);
-  
+
+  // directionalLight.position.set(3, 3, 3);
+  // directionalLight.position.set(-3, 0, 3);
+  // directionalLight.position.set(3, 0, -3);
+  scene.add(directionalLight);
+
+
   
   const orbit = new OrbitControls(camera, renderer.domElement);
   
@@ -68,6 +75,11 @@ useEffect(()=> {
       assetLoader.load(selectedModel[0].href, function(gltf) {
           const model = gltf.scene;
           model.scale.set(0.5, 0.5, 0.5);
+          let meshArr = model.children[0].children
+          console.log(meshArr);
+          for (let i = 0; i < meshArr.length; i++) {
+            meshArr[i].material.metalness = 0
+          }
           stag.push(model);
           console.log(stag);
       }, undefined, function(error) {
@@ -157,7 +169,10 @@ useEffect(()=> {
       console.log(scene.children.length);
   });
   
-
+  // function KeyPress(e) {
+  //     var evtobj = window.e
+  //     if (evtobj.keyCode == 90 && evtobj.ctrlKey) alert("Ctrl+z");
+  // }
   window.addEventListener('keypress', function (event) {
    
       switch (event.code) {
@@ -281,16 +296,16 @@ useEffect(()=> {
                       {
                           let objId = selectedObj[0].uuid
                           console.log(objId);
-                          function removeObjectWithId(arr, id) {
-                              const objWithIdIndex = arr.findIndex((objects) => objects.uuid === id);
+                          // function removeObjectWithId(arr, id) {
+                          //     const objWithIdIndex = arr.findIndex((objects) => objects.uuid === id);
                             
-                              if (objWithIdIndex > -1) {
-                                arr.splice(objWithIdIndex, 1);
-                              }
+                          //     if (objWithIdIndex > -1) {
+                          //       arr.splice(objWithIdIndex, 1);
+                          //     }
                             
-                              return arr;
-                            }
-                            removeObjectWithId(objects, objId);
+                          //     return arr;
+                          //   }
+                            // removeObjectWithId(objects, objId);
                             console.log(objects);
                           selectedObj[0].removeFromParent()
                       }
@@ -400,7 +415,6 @@ useEffect(()=> {
 }, [])
   return (
     <>
-    
     </>
   )
 }
