@@ -296,16 +296,16 @@ useEffect(()=> {
                       {
                           let objId = selectedObj[0].uuid
                           console.log(objId);
-                          // function removeObjectWithId(arr, id) {
-                          //     const objWithIdIndex = arr.findIndex((objects) => objects.uuid === id);
+                          function removeObjectWithId(arr, id) {
+                              const objWithIdIndex = arr.findIndex((objects) => objects.uuid === id);
                             
-                          //     if (objWithIdIndex > -1) {
-                          //       arr.splice(objWithIdIndex, 1);
-                          //     }
+                              if (objWithIdIndex > -1) {
+                                arr.splice(objWithIdIndex, 1);
+                              }
                             
-                          //     return arr;
-                          //   }
-                            // removeObjectWithId(objects, objId);
+                              return arr;
+                            }
+                            removeObjectWithId(objects, objId);
                             console.log(objects);
                           selectedObj[0].removeFromParent()
                       }
