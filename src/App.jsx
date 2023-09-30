@@ -4,7 +4,17 @@ import * as THREE from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
-import { useEffect } from 'react';
+import large_buildingAimg from './assets/modelsImg/city/largebuildingA.png'
+import detail_amingwidpng from './assets/modelsImg/city/detail_amingwid.png'
+import lowbuildingCpng from './assets/modelsImg/city/lowbuildingC.png'
+import skyscraperDpng from './assets/modelsImg/city/skyscraperD.png'
+import smallbuildingCpng from './assets/modelsImg/city/smallbuildingC.png'
+import tree_oak_fallpng from './assets/modelsImg/city/tree_oak_fall.png'
+import tree_palmTallpng from './assets/modelsImg/city/tree_palmTall.png'
+import tree_pineDefaultApng from './assets/modelsImg/city/tree_pineDefaultA.png'
+import tree_plateau_fallpng from './assets/modelsImg/city/tree_plateau_fall.png'
+
+import { useEffect, useState } from 'react';
 import { addBuilding, 
       adddetail_awningWide,
       addlowBuilding,
@@ -63,6 +73,10 @@ function App() {
 
 let getStorageItems = localStorage.getItem('listofobjects')
 let getactiveStorage = localStorage.getItem('active')
+   
+   
+  const [active, setActive] = useState(false)
+  
 
   useEffect(()=> {
     
@@ -321,9 +335,11 @@ const planeMesh = new THREE.Mesh(
   
   let objects = [];
 
+ 
   
   const largeBuildingBtn = document.getElementById('largeBuildingBtn')
   largeBuildingBtn.addEventListener('click', ()=> {
+    setActive(!active)
     addBuilding(selectedModel, stag, models)
     loadScene()
 })
@@ -375,14 +391,26 @@ plateauFallmodel.addEventListener('click', ()=> {
   loadScene()
 })
 
-
-  
   let selectedObj = []
 
+//   window.addEventListener('click', (e)=> {
+//   let intersectObj;
+
+//     console.log(mousePosition);
+//     mousePosition.x = (e.clientX / window.innerWidth) * 2 - 1;
+//         mousePosition.y = -(e.clientY / window.innerHeight) * 2 + 1;
+        
+//         raycaster.setFromCamera(mousePosition, camera);
+//         intersectObj = raycaster.intersectObject(scene.children);
+//         console.log(intersectObj[0]);
+//   })
+
   window.addEventListener('keypress', function(e) {
+
       switch (e.code) {
           case 'KeyX':
-              if(intersects.length > 0) {
+          
+              if(intersect(intersects, raycaster, planeMesh).length > 0) {
                   const objectExist = objects.find(function(object) {
                       return (object.position.x === highlightMesh.position.x)
                       && (object.position.z === highlightMesh.position.z)
@@ -479,7 +507,6 @@ plateauFallmodel.addEventListener('click', ()=> {
   });
 
   let listofmodels = []
-  
   window.addEventListener('dblclick', function() {
       // console.log(scene);
   intersect(intersects, raycaster, planeMesh)
@@ -487,12 +514,19 @@ plateauFallmodel.addEventListener('click', ()=> {
           return (object.position.x === highlightMesh.position.x)
           && (object.position.z === highlightMesh.position.z)
       });
-      console.log(objectExist );
-          if(intersect(intersects, raycaster, planeMesh).length > 0) {
+      console.log(objectExist);
+   
+          if(intersect(intersects, raycaster, planeMesh).length > 0 && objectExist) {
               const stagClone = stag[0].clone();
               console.log(" initial position of cube", stagClone.position);
-
-              stagClone.position.copy(highlightMesh.position);
+              const avengers = listofmodels.filter(modelPos => modelPos.position.x === highlightMesh.position.x)
+              console.log("existing blocks in this mesh",avengers);
+              console.log(listofmodels);
+              stagClone.position.set(
+                 highlightMesh.position.x,
+                highlightMesh.position.y + ((avengers.length) * 0.8) ,
+                highlightMesh.position.z,
+              );
               scene.add(stagClone);
               objects.push(stagClone);
               highlightMesh.material.color.setHex(0xFF6666);
@@ -502,13 +536,42 @@ plateauFallmodel.addEventListener('click', ()=> {
                 name: stagClone.children[0].name,
                 position: {
                     x: highlightMesh.position.x,
-                    y: highlightMesh.position.y,
+                    y: highlightMesh.position.y + ((avengers.length + 1) * 0.8),
                     z: highlightMesh.position.z,
                 }
               }
-              console.log(addedModels);
+             
               listofmodels.push(addedModels)
+             
+             
           }
+          else if (intersect(intersects, raycaster, planeMesh).length > 0 && !objectExist) {
+            const stagClone = stag[0].clone();
+            console.log(" initial position of cube", stagClone.position);
+
+            stagClone.position.set(
+               highlightMesh.position.x,
+              highlightMesh.position.y ,
+              highlightMesh.position.z,
+            );
+            scene.add(stagClone);
+            objects.push(stagClone);
+            highlightMesh.material.color.setHex(0xFF6666);
+            console.log("position of cube", highlightMesh.position);
+            console.log("details of cube", stagClone.children[0].name);
+            let addedModels = {
+              name: stagClone.children[0].name,
+              position: {
+                  x: highlightMesh.position.x,
+                  y: highlightMesh.position.y,
+                  z: highlightMesh.position.z,
+              }
+            }
+            console.log(addedModels);
+            listofmodels.push(addedModels)
+            const avengers = listofmodels.filter(modelPos => modelPos.position.x === highlightMesh.position.x);
+            console.log("existing blocks in this mesh",avengers);
+        }
   });
 
 
@@ -620,23 +683,52 @@ function twoD() {
     console.log("click");
   }
   
+
   return (
     <div>
       <div className='absolute w-[15%] m-8 border-solid border-sky-500 border-4 rounded-lg h-[90%]'>
         <div className='flex flex-row basis-full flex-wrap'>
-        <button className=' text-sm p-1 m-1 rounded-lg bg-emerald-500 text-white' id='largeBuildingBtn'>Large Building</button>
-        <button className='  text-sm p-1 m-1 rounded-lg bg-yellow-500 text-white' id='skyScraperBtn'>Sky Scraper</button>
-        <button className=' text-sm p-1 m-1 rounded-lg bg-red-300 text-white' id="detail_awningWide">Chair</button>
+        <button className=' w-[80px] h-[80px] p-1 m-1  ' id='largeBuildingBtn'>
+            <img src={large_buildingAimg} alt="React Logo" className=' relative rounded-md'/>
+        </button>
+      
+        <button className= {`w-[90px] h-[90px] text-sm p-1 m-1 rounded-lg border-2 object-fill border-solid ${active ? "border-blue-300" : "border-white"}   text-white`}
+         id='skyScraperBtn' 
+         >
+        <img src={skyscraperDpng} alt="React Logo" className='relative rounded-md' />
+        </button>
+        <button className='w-[80px] h-[80px] text-sm p-1 m-1 rounded-lg  text-white' id="detail_awningWide">
+        <img src={detail_amingwidpng} alt="React Logo" className='object-contain relative rounded-md' />
+          
+        </button>
         
-        <button className=' text-sm p-1 m-1 rounded-lg bg-pink-500 text-white' id='lowBuilding'>Low Building</button>
-        <button className='  text-sm p-1 m-1 rounded-lg bg-cyan-500 text-white' id='smallBuilding'>Small Building</button>
-        <button className=' text-sm p-1 m-1 rounded-lg bg-blue-500 text-white' id="oakTree">Oak Tree</button>
-        <button className=' text-sm p-1 m-1 rounded-lg bg-fuchsia-500 text-white' id='palmTree'>Palm Tree</button>
-        <button className=' text-sm p-1 m-1 rounded-lg bg-purple-500 text-white' id='pineTree'>Pine Tree</button>
-        <button className=' text-sm p-1 m-1 rounded-lg bg-cyan-800 text-white' id='plateauFall'>Fall Tree</button>
+        <button className='w-[80px] h-[80px] text-sm p-1 m-1 rounded-lg  text-white' id='lowBuilding'>
+        <img src={lowbuildingCpng} alt="React Logo" className='object-contain relative rounded-md'/>
+           
+        </button>
+        <button className='w-[80px] h-[80px]  text-sm p-1 m-1 rounded-lg  text-white' id='smallBuilding'>
+        <img src={smallbuildingCpng} alt="React Logo" className=' relative rounded-md'/>
+          
+        </button>
+        <button className='w-[80px] h-[80px] text-sm p-1 m-1 rounded-lg  text-white' id="oakTree">
+        <img src={tree_oak_fallpng} alt="React Logo" className=' relative rounded-md'/>
+          
+        </button>
+        <button className='w-[80px] h-[80px] text-sm p-1 m-1 rounded-lg  text-white' id='palmTree'>
+        <img src={tree_palmTallpng} alt="React Logo" className=' relative rounded-md'/>
+          
+        </button>
+        <button className='w-[80px] h-[80px] text-sm p-1 m-1 rounded-lg  text-white' id='pineTree'>
+        <img src={tree_pineDefaultApng} alt="React Logo" className=' relative rounded-md'/>
+          
+        </button>
+        <button className='w-[80px] h-[80px] text-sm p-1 m-1 rounded-lg  text-white' id='plateauFall'>
+        <img src={tree_plateau_fallpng} alt="React Logo" className=' relative rounded-md'/>
+          
+        </button>
 
         </div>
-
+ 
 
         <div className='flex flex-col'>
         <button className=' p-1 m-3 rounded-lg bg-emerald-500 text-white' onClick={twoD}>Edit</button>

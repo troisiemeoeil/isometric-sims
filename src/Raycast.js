@@ -32,7 +32,7 @@ export function Raycast(e,mousePosition, raycaster, intersects, camera, planeMes
 
 export function intersect(intersects, raycaster, planeMesh) {
     return intersects = raycaster.intersectObject(planeMesh)
-    
-    
-   
+}
+    export function intersectBuilding(intersects, raycaster, building) {
+        return intersects = raycaster.intersectObject(building)
 }
