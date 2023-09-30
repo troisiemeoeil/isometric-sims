@@ -14,7 +14,7 @@ import tree_palmTallpng from './assets/modelsImg/city/tree_palmTall.png'
 import tree_pineDefaultApng from './assets/modelsImg/city/tree_pineDefaultA.png'
 import tree_plateau_fallpng from './assets/modelsImg/city/tree_plateau_fall.png'
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { addBuilding, 
       adddetail_awningWide,
       addlowBuilding,
@@ -75,8 +75,6 @@ let getStorageItems = localStorage.getItem('listofobjects')
 let getactiveStorage = localStorage.getItem('active')
    
    
-  const [active, setActive] = useState(false)
-  
 
   useEffect(()=> {
     
@@ -339,7 +337,7 @@ const planeMesh = new THREE.Mesh(
   
   const largeBuildingBtn = document.getElementById('largeBuildingBtn')
   largeBuildingBtn.addEventListener('click', ()=> {
-    setActive(!active)
+ 
     addBuilding(selectedModel, stag, models)
     loadScene()
 })
@@ -692,7 +690,7 @@ function twoD() {
             <img src={large_buildingAimg} alt="React Logo" className=' relative rounded-md'/>
         </button>
       
-        <button className= {`w-[90px] h-[90px] text-sm p-1 m-1 rounded-lg border-2 object-fill border-solid ${active ? "border-blue-300" : "border-white"}   text-white`}
+        <button className= {`w-[90px] h-[90px] text-sm p-1 m-1 rounded-lg border-2 object-fill border-solid border-blue-300" border-white text-white`}
          id='skyScraperBtn' 
          >
         <img src={skyscraperDpng} alt="React Logo" className='relative rounded-md' />
