@@ -4,68 +4,11 @@ import * as THREE from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
-import { useEffect } from 'react';
-import { addBuilding, 
-      adddetail_awningWide,
-      addlowBuilding,
-      addoakTreemodel,
-      addpalmTreemodel,
-      addpineTreemodel,
-      addplateauFallmodel,
-      addskyScraperBtn,
-      addsmallBuildingmodel
-     } from './addModels';
-import { Raycast, intersect } from './Raycast';
-
-let stag = []
-  
- 
-
+import { FirstPersonControls } from 'three/addons/controls/FirstPersonControls.js';
 function App() {
-    const renderer = new THREE.WebGLRenderer();
-
-    const scene = new THREE.Scene();
-
-      //principal camera
-  const camera = new THREE.PerspectiveCamera(
-    45,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-);
-    camera.position.set(0, 30, 0);
-    scene.add(camera)
 
 
-    const orbit = new OrbitControls(camera, renderer.domElement);
-    orbit.enabled = true
-      orbit.saveState()
-
-      const ambientLight = new THREE.AmbientLight(0xFFFFFF);
-      console.log(scene);
-      ambientLight.intensity = 2;
-      scene.add(ambientLight);
-      
-      const spotLight = new THREE.SpotLight( 0xffffff );
-      spotLight.intensity = 2;
-      spotLight.position.set( 1000, 1000, 1000 );
-      spotLight.position.set( 1000, 1000, -1000 );
-      
-      
-      scene.add(spotLight)
-      
-      const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1);
-      directionalLight.position.set(-3, 3, -3);
-      directionalLight.position.set(3, 3, 3);
-      scene.add(directionalLight);
-    
-    
-
-let getStorageItems = localStorage.getItem('listofobjects')
-let getactiveStorage = localStorage.getItem('active')
-
-  useEffect(()=> {
-    
+  
   const largeBuilding = new URL('./assets/large_buildingA.glb', import.meta.url);
   const skyScraper = new URL('./assets/skyscraperD.glb', import.meta.url);
   const awing = new URL('./assets/detail_awningWide.glb', import.meta.url);
@@ -89,17 +32,59 @@ let getactiveStorage = localStorage.getItem('active')
   })
 
 
+  const renderer = new THREE.WebGLRenderer();
 
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setClearColor (0xEEE0C9, 1);
   document.body.appendChild(renderer.domElement);
   
+  const scene = new THREE.Scene();
   
+    //principal camera
+  const camera = new THREE.PerspectiveCamera(
+      45,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
+  );
+  camera.position.set(0, 30, 0);
+  scene.add(camera)
+
   
-  
- 
- 
+  const orbit = new OrbitControls(camera, renderer.domElement);
+  orbit.enabled = true
+    orbit.saveState()
+  function twoD() {
+    orbit.enabled = false
+  }
+
+  function threeD() {
+    orbit.reset()
+    console.log("click");
+  }
+
   //controls camera
+ let  controls = new FirstPersonControls(camera, renderer.domElement)
+    controls.lookSpeed = 0.8
+    controls.movementSpeed = 5
+
+  const ambientLight = new THREE.AmbientLight(0xFFFFFF);
+  console.log(scene);
+  ambientLight.intensity = 2;
+  scene.add(ambientLight);
+  
+  const spotLight = new THREE.SpotLight( 0xffffff );
+  spotLight.intensity = 2;
+  spotLight.position.set( 1000, 1000, 1000 );
+  spotLight.position.set( 1000, 1000, -1000 );
+  
+  
+  scene.add(spotLight)
+  
+  const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1);
+  directionalLight.position.set(-3, 3, -3);
+  directionalLight.position.set(3, 3, 3);
+  scene.add(directionalLight);
 
 
 
@@ -107,8 +92,13 @@ let getactiveStorage = localStorage.getItem('active')
 
 
 
-  let selectedModel = [models[0]] 
+let getStorageItems = localStorage.getItem('listofobjects')
+let getactiveStorage = localStorage.getItem('active')
+
+
+  let stag = []
   
+  let selectedModel = [models[0]] 
   // console.log(selectedModel);
   
   function loadScene() {
@@ -312,70 +302,182 @@ const planeMesh = new THREE.Mesh(
 
   
   window.addEventListener('mousemove', function(e) {
-    Raycast(e,mousePosition, raycaster, intersects, camera, planeMesh, highlightMesh, objects)
+      mousePosition.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mousePosition.y = -(e.clientY / window.innerHeight) * 2 + 1;
+      raycaster.setFromCamera(mousePosition, camera);
+      intersects = raycaster.intersectObject(planeMesh);
+      if(intersects.length > 0) {
+          const intersect = intersects[0];
+          const highlightPos = new THREE.Vector3().copy(intersect.point).floor().addScalar(0.5);
+          highlightMesh.position.set(highlightPos.x, 0, highlightPos.z);
+       
+  
+          const objectExist = objects.find(function(object) {
+              return (object.position.x === highlightMesh.position.x)
+              && (object.position.z === highlightMesh.position.z)
+          });
+          
+          if(!objectExist)
+              highlightMesh.material.color.setHex(0x96B6C5);
+          else
+              {
+               
+                  highlightMesh.material.color.setHex(0xFCAEAE);
+              }
+      }
+
+
    
-    
   });
   
   
   
   let objects = [];
+  let listofmodels = []
+  
+  window.addEventListener('dblclick', function() {
+      // console.log(scene);
+      const objectExist = objects.find(function(object) {
+          return (object.position.x === highlightMesh.position.x)
+          && (object.position.z === highlightMesh.position.z)
+      });
+      if(!objectExist) {
+          if(intersects.length > 0) {
+              const stagClone = stag[0].clone();
+              stagClone.position.copy(highlightMesh.position);
+              scene.add(stagClone);
+              objects.push(stagClone);
+              highlightMesh.material.color.setHex(0xFF6666);
+              console.log("position of cube", highlightMesh.position);
+              console.log("details of cube", stagClone.children[0].name);
+              let addedModels = {
+                name: stagClone.children[0].name,
+                position: {
+                    x: highlightMesh.position.x,
+                    y: highlightMesh.position.y,
+                    z: highlightMesh.position.z,
+                }
+              }
+              console.log(addedModels);
+              listofmodels.push(addedModels)
+
+              stagClone.getWorldPosition(planeMesh);
+          }
+      }
+  });
+  
 
   
-  const largeBuildingBtn = document.getElementById('largeBuildingBtn')
-  largeBuildingBtn.addEventListener('click', ()=> {
-    addBuilding(selectedModel, stag, models)
-    loadScene()
-})
- 
-const skyScraperBtn = document.getElementById('skyScraperBtn')
-skyScraperBtn.addEventListener('click', ()=> {
-addskyScraperBtn(selectedModel, stag, models)
-  loadScene()
-})
-
- 
-const detail_awningWide = document.getElementById('detail_awningWide')
-detail_awningWide.addEventListener('click', ()=> {
-    adddetail_awningWide(selectedModel, stag, models)
-  loadScene()
-})
-
-const lowBuildingmodel = document.getElementById('lowBuilding')
-lowBuildingmodel.addEventListener('click', ()=> {
-    addlowBuilding(selectedModel, stag, models)
-  loadScene()
-})
-
-const smallBuildingmodel = document.getElementById('smallBuilding')
-smallBuildingmodel.addEventListener('click', ()=> {
-    addsmallBuildingmodel(selectedModel, stag, models)
-  loadScene()
-})
-
-const oakTreemodel = document.getElementById('oakTree')
-oakTreemodel.addEventListener('click', ()=> {
-    addoakTreemodel(selectedModel, stag, models)
-  loadScene()
-})
-
-const palmTreemodel = document.getElementById('palmTree')
-palmTreemodel.addEventListener('click', ()=> {
-    addpalmTreemodel(selectedModel, stag, models)
-  loadScene()
-})
-const pineTreemodel = document.getElementById('pineTree')
-pineTreemodel.addEventListener('click', ()=> {
-    addpineTreemodel(selectedModel, stag, models)
-  loadScene()
-})
-const plateauFallmodel = document.getElementById('plateauFall')
-plateauFallmodel.addEventListener('click', ()=> {
-    addplateauFallmodel(selectedModel, stag, models)
-  loadScene()
-})
-
-
+  // function KeyPress(e) {
+  //     var evtobj = window.e
+  //     if (evtobj.keyCode == 90 && evtobj.ctrlKey) alert("Ctrl+z");
+  // }
+  window.addEventListener('keypress', function (event) {
+   
+      switch (event.code) {
+          case 'Numpad1':
+              while(selectedModel.length > 0) {
+                  selectedModel.pop();
+              }
+              while(stag.length > 0) {
+                  stag.pop();
+              }
+              selectedModel.push(models[0])
+              console.log(selectedModel[0].href);
+              loadScene()
+  
+              break
+              case 'Numpad2':
+                  while(selectedModel.length > 0) {
+                      selectedModel.pop();
+                  }
+                  while(stag.length > 0) {
+                      stag.pop();
+                  }
+                  selectedModel.push(models[1])
+                  console.log(selectedModel[0].href);
+                  loadScene()
+                  break
+                  case 'Numpad3':
+                      while(selectedModel.length > 0) {
+                          selectedModel.pop();
+                      }
+                      while(stag.length > 0) {
+                          stag.pop();
+                      }
+                      selectedModel.push(models[2])
+                      console.log(selectedModel[0].href);
+                      loadScene()
+                      break
+                  case 'Numpad4':
+                      while(selectedModel.length > 0) {
+                          selectedModel.pop();
+                      }
+                      while(stag.length > 0) {
+                          stag.pop();
+                      }
+                      selectedModel.push(models[3])
+                      console.log(selectedModel[0].href);
+                      loadScene()
+                      break
+                  case 'Numpad5':
+                      while(selectedModel.length > 0) {
+                          selectedModel.pop();
+                      }
+                      while(stag.length > 0) {
+                          stag.pop();
+                      }
+                      selectedModel.push(models[4])
+                      console.log(selectedModel[0].href);
+                      loadScene()
+                      break
+                  case 'Numpad6':
+                      while(selectedModel.length > 0) {
+                          selectedModel.pop();
+                      }
+                      while(stag.length > 0) {
+                          stag.pop();
+                      }
+                      selectedModel.push(models[5])
+                      console.log(selectedModel[0].href);
+                      loadScene()
+                      break
+                  case 'Numpad7':
+                      while(selectedModel.length > 0) {
+                          selectedModel.pop();
+                      }
+                      while(stag.length > 0) {
+                          stag.pop();
+                      }
+                      selectedModel.push(models[6])
+                      console.log(selectedModel[0].href);
+                      loadScene()
+                      break
+                  case 'Numpad8':
+                      while(selectedModel.length > 0) {
+                          selectedModel.pop();
+                      }
+                      while(stag.length > 0) {
+                          stag.pop();
+                      }
+                      selectedModel.push(models[7])
+                      console.log(selectedModel[0].href);
+                      loadScene()
+                      break
+                  case 'Numpad9':
+                      while(selectedModel.length > 0) {
+                          selectedModel.pop();
+                      }
+                      while(stag.length > 0) {
+                          stag.pop();
+                      }
+                      selectedModel.push(models[8])
+                      console.log(selectedModel[0].href);
+                      loadScene()
+                      break
+      }
+  
+  })
   
   let selectedObj = []
 
@@ -432,9 +534,7 @@ plateauFallmodel.addEventListener('click', ()=> {
   console.log(selectedObj[0]);
   
   });
-
   
-
   
   window.addEventListener('keypress', function (event) {
   
@@ -478,106 +578,46 @@ plateauFallmodel.addEventListener('click', ()=> {
       }
   });
 
-  let listofmodels = []
-  
-  window.addEventListener('dblclick', function() {
-      // console.log(scene);
-  intersect(intersects, raycaster, planeMesh)
-      const objectExist = objects.find(function(object) {
-          return (object.position.x === highlightMesh.position.x)
-          && (object.position.z === highlightMesh.position.z)
-      });
-      console.log(objectExist );
-          if(intersect(intersects, raycaster, planeMesh).length > 0) {
-              const stagClone = stag[0].clone();
-              console.log(" initial position of cube", stagClone.position);
-
-              stagClone.position.copy(highlightMesh.position);
-              scene.add(stagClone);
-              objects.push(stagClone);
-              highlightMesh.material.color.setHex(0xFF6666);
-              console.log("position of cube", highlightMesh.position);
-              console.log("details of cube", stagClone.children[0].name);
-              let addedModels = {
-                name: stagClone.children[0].name,
-                position: {
-                    x: highlightMesh.position.x,
-                    y: highlightMesh.position.y,
-                    z: highlightMesh.position.z,
-                }
-              }
-              console.log(addedModels);
-              listofmodels.push(addedModels)
-          }
-  });
 
 
-  function animate(time) {
-      
-      renderer.setAnimationLoop(animate);
-      highlightMesh.material.opacity = 1 + Math.sin(time / 120);
-      renderer.render(scene, camera);
-      
+//   let savedData = []
+  let correctModelPosition = []
+  function saveProgress() {
+    // const json = scene.toJSON();
+    // TO GET THE NAME OF THE MODEL
+    let sceneContent = scene.children
+    let arrModels = []
+    for (let i = 7; i < sceneContent.length; i++) {
+        arrModels.push({
+            name: sceneContent[i].children[0].name,
+            position: sceneContent[i].position
+        });
+       
   }
-  animate()
-  window.addEventListener('resize', function() {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      renderer.setSize(window.innerWidth, window.innerHeight);
-  });
 
- 
-  
-  })
+    if (getactiveStorage === null) {
+         localStorage.clear();
 
-  useEffect(()=> {
+        localStorage.setItem('active', "active")
+        localStorage.setItem("listofobjects", JSON.stringify(arrModels))
+        console.log("saved items when there's NO save", JSON.parse(localStorage.getItem("listofobjects")));
+      console.log(correctModelPosition);
 
-    const saveBtn = document.getElementById('saveBtn')
-    console.log(saveBtn);
-    let correctModelPosition = []
-    function saveProgress() {
-      // const json = scene.toJSON();
-      // TO GET THE NAME OF THE MODEL
-      let sceneContent = scene.children
-      console.log(sceneContent);
-      let arrModels = []
-      for (let i = 10; i < sceneContent.length; i++) {
-          arrModels.push({
-              name: sceneContent[i].children[0].name,
-              position: sceneContent[i].position
-          });
-         
     }
-  
-      if (getactiveStorage === null) {
-           localStorage.clear();
-  
+    else if (getactiveStorage === "active") {
+        localStorage.clear();
+            // correct method
+            for (let i = 7; i < scene.children.length; i++) {
+                correctModelPosition.push({
+                    name: scene.children[i].children[0].name,
+                    position: scene.children[i].position
+                });
+          }
+          console.log(correctModelPosition);
           localStorage.setItem('active', "active")
-          localStorage.setItem("listofobjects", JSON.stringify(arrModels))
-          console.log("saved items when there's NO save", JSON.parse(localStorage.getItem("listofobjects")));
-        console.log(correctModelPosition);
-  
-      }
-      else if (getactiveStorage === "active") {
-          localStorage.clear();
-              // correct method
-              for (let i = 10; i < scene.children.length; i++) {
-                  correctModelPosition.push({
-                      name: scene.children[i].children[0].name,
-                      position: scene.children[i].position
-                  });
-            }
-            console.log(correctModelPosition);
-            localStorage.setItem('active', "active")
-          localStorage.setItem("listofobjects", JSON.stringify(arrModels))
-      }
+        localStorage.setItem("listofobjects", JSON.stringify(arrModels))
     }
-  
-    saveBtn.addEventListener('click', ()=> {
-      saveProgress()
-    })
-   
-  })
-  
+  }
 
   function reset() {
     localStorage.clear();
@@ -611,43 +651,40 @@ function save(blob) {
 
 }
 
-function twoD() {
-    orbit.enabled = false
-  }
+  function animate(time) {
+      
+      renderer.setAnimationLoop(animate);
+      orbit.update()
+      highlightMesh.material.opacity = 1 + Math.sin(time / 120);
+      renderer.render(scene, camera);
+    camera.updateProjectionMatrix();
 
-  function threeD() {
-    orbit.reset()
-    console.log("click");
+      
   }
+  animate()
+  window.addEventListener('resize', function() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+ 
   
+
   return (
     <div>
       <div className='absolute w-[15%] m-8 border-solid border-sky-500 border-4 rounded-lg h-[90%]'>
-        <div className='flex flex-row basis-full flex-wrap'>
-        <button className=' text-sm p-1 m-1 rounded-lg bg-emerald-500 text-white' id='largeBuildingBtn'>Large Building</button>
-        <button className='  text-sm p-1 m-1 rounded-lg bg-yellow-500 text-white' id='skyScraperBtn'>Sky Scraper</button>
-        <button className=' text-sm p-1 m-1 rounded-lg bg-red-300 text-white' id="detail_awningWide">Chair</button>
-        
-        <button className=' text-sm p-1 m-1 rounded-lg bg-pink-500 text-white' id='lowBuilding'>Low Building</button>
-        <button className='  text-sm p-1 m-1 rounded-lg bg-cyan-500 text-white' id='smallBuilding'>Small Building</button>
-        <button className=' text-sm p-1 m-1 rounded-lg bg-blue-500 text-white' id="oakTree">Oak Tree</button>
-        <button className=' text-sm p-1 m-1 rounded-lg bg-fuchsia-500 text-white' id='palmTree'>Palm Tree</button>
-        <button className=' text-sm p-1 m-1 rounded-lg bg-purple-500 text-white' id='pineTree'>Pine Tree</button>
-        <button className=' text-sm p-1 m-1 rounded-lg bg-cyan-800 text-white' id='plateauFall'>Fall Tree</button>
-
-        </div>
-
-
         <div className='flex flex-col'>
         <button className=' p-1 m-3 rounded-lg bg-emerald-500 text-white' onClick={twoD}>Edit</button>
         <button className=' p-1 m-3 rounded-lg bg-orange-500 text-white' onClick={threeD}>View 3D</button>
-        <button className=' p-1 m-3 rounded-lg bg-blue-300 text-white' id='saveBtn' >Save</button>
+        <button className=' p-1 m-3 rounded-lg bg-blue-300 text-white' onClick={saveProgress}>Save</button>
         <button className=' p-1 m-3 rounded-lg bg-red-600 text-white' onClick={reset}>Reset</button>
         <button id='link' className=' p-1 m-3 rounded-lg bg-green-300 text-white' onClick={download} >Export as GLTF</button>
-        </div>
+
 
         </div>
       </div>
+    </div>
   )
 }
 
