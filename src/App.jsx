@@ -672,15 +672,6 @@ function save(blob) {
 
 }
 
-function twoD() {
-    orbit.enabled = false
-  }
-
-  function threeD() {
-    orbit.reset()
-    console.log("click");
-  }
-  
 
   return (
     <div>
@@ -729,8 +720,6 @@ function twoD() {
  
 
         <div className='flex flex-col'>
-        <button className=' p-1 m-3 rounded-lg bg-emerald-500 text-white' onClick={twoD}>Edit</button>
-        <button className=' p-1 m-3 rounded-lg bg-orange-500 text-white' onClick={threeD}>View 3D</button>
         <button className=' p-1 m-3 rounded-lg bg-blue-300 text-white' id='saveBtn' >Save</button>
         <button className=' p-1 m-3 rounded-lg bg-red-600 text-white' onClick={reset}>Reset</button>
         <button id='link' className=' p-1 m-3 rounded-lg bg-green-300 text-white' onClick={download} >Export as GLTF</button>
