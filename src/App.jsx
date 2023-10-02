@@ -27,11 +27,12 @@ import { addBuilding,
      } from './addModels';
 import { Raycast, intersect } from './Raycast';
 
-let stag = []
   
  
 
 function App() {
+let stag = []
+
     const renderer = new THREE.WebGLRenderer();
 
     const scene = new THREE.Scene();
@@ -74,50 +75,53 @@ function App() {
 let getStorageItems = localStorage.getItem('listofobjects')
 let getactiveStorage = localStorage.getItem('active')
    
-   
+const planeMesh = new THREE.Mesh(
+  new THREE.PlaneGeometry(20, 20),
+  new THREE.MeshBasicMaterial({
+      side: THREE.DoubleSide,
+      visible: false
+  })
+);
+planeMesh.rotation.x = Math.PI * - 0.5;
+scene.add(planeMesh);
 
-  useEffect(()=> {
+
+const grid = new THREE.GridHelper(20, 20);
+scene.add(grid);
+
+const highlightMesh = new THREE.Mesh(
+  new THREE.PlaneGeometry(1, 1),
+  new THREE.MeshBasicMaterial({
+      side: THREE.DoubleSide,
+      transparent: true
+  })
+);
+
+highlightMesh.rotation.x = Math.PI * - 0.5;
+highlightMesh.position.set(0.5, 0, 0.5);
+scene.add(highlightMesh);
+
+const mousePosition = new THREE.Vector2();
+const raycaster = new THREE.Raycaster();
+let intersects;
+
+   
+  
     
-  const largeBuilding = new URL('./assets/large_buildingA.glb', import.meta.url);
-  const skyScraper = new URL('./assets/skyscraperD.glb', import.meta.url);
-  const awing = new URL('./assets/detail_awningWide.glb', import.meta.url);
-  const lowBuilding = new URL('./assets/low_buildingC.glb', import.meta.url);
-  const smallBuilding = new URL('./assets/small_buildingA.glb', import.meta.url);
-  
-  const oakTree = new URL('./assets/tree_oak_fall.glb', import.meta.url);
-  const palmTree = new URL('./assets/tree_palmTall.glb', import.meta.url);
-  const pineTree = new URL('./assets/tree_pineDefaultA.glb', import.meta.url);
-  const plateauFall = new URL('./assets/tree_plateau_fall.glb', import.meta.url);
-  
-  
+const largeBuilding = new URL('./assets/large_buildingA.glb', import.meta.url);
+const skyScraper = new URL('./assets/skyscraperD.glb', import.meta.url);
+const awing = new URL('./assets/detail_awningWide.glb', import.meta.url);
+const lowBuilding = new URL('./assets/low_buildingC.glb', import.meta.url);
+const smallBuilding = new URL('./assets/small_buildingA.glb', import.meta.url);
+
+const oakTree = new URL('./assets/tree_oak_fall.glb', import.meta.url);
+const palmTree = new URL('./assets/tree_palmTall.glb', import.meta.url);
+const pineTree = new URL('./assets/tree_pineDefaultA.glb', import.meta.url);
+const plateauFall = new URL('./assets/tree_plateau_fall.glb', import.meta.url);
+
   let models = [largeBuilding, skyScraper, awing, lowBuilding, smallBuilding, oakTree, palmTree, pineTree, plateauFall ]
 
   let assetLoader = new GLTFLoader()
-
-  assetLoader.load(largeBuilding.href, function(gltf) {
-    const model = gltf.scene;
-   model.name = "large_buildingA"
-   console.log(model);
-  })
-
-
-
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setClearColor (0xEEE0C9, 1);
-  document.body.appendChild(renderer.domElement);
-  
-  
-  
-  
- 
- 
-  //controls camera
-
-
-
- 
-
-
 
   let selectedModel = [models[0]] 
   
@@ -139,16 +143,13 @@ let getactiveStorage = localStorage.getItem('active')
   } 
 
 
-
-
   function loadSavedScene() {
     const listofSavedModels =  JSON.parse(localStorage.getItem("listofobjects"))
-    console.log('saved items on reload', listofSavedModels);
         for (let i = 0; i < listofSavedModels.length; i++) {
           //list of saved models returns an array of the name and position of each model
             if (listofSavedModels[i].name === "large_buildingA") {
                 // camera.position.set(10,-15,22)
-                assetLoader.load(selectedModel[0].href, function(gltf) {
+                assetLoader.load(models[0].href, function(gltf) {
                     const model = gltf.scene;
                     model.scale.set(0.5, 0.5, 0.5);
                     model.position.copy(listofSavedModels[i].position);
@@ -282,51 +283,52 @@ let getactiveStorage = localStorage.getItem('active')
         }
   }
 
-
-
+  
 if (getactiveStorage === null) {
   loadScene()
 }
-else if (getactiveStorage === "active" && getStorageItems !== "") {
+else if (getactiveStorage === "active" && getStorageItems.length > 0) {
   loadSavedScene()
+  console.log('scene children at load time',scene.children);
+
 }
+  useEffect(()=> {
+  
+
+  // assetLoader.load(largeBuilding.href, function(gltf) {
+  //   const model = gltf.scene;
+  //  model.name = "large_buildingA"
+  //  console.log(model);
+  // })
 
 
-const planeMesh = new THREE.Mesh(
-      new THREE.PlaneGeometry(20, 20),
-      new THREE.MeshBasicMaterial({
-          side: THREE.DoubleSide,
-          visible: false
-      })
-  );
-  planeMesh.rotation.x = Math.PI * - 0.5;
-  scene.add(planeMesh);
-  
-  
-  const grid = new THREE.GridHelper(20, 20);
-  scene.add(grid);
-  
-  const highlightMesh = new THREE.Mesh(
-      new THREE.PlaneGeometry(1, 1),
-      new THREE.MeshBasicMaterial({
-          side: THREE.DoubleSide,
-          transparent: true
-      })
-  );
 
-  highlightMesh.rotation.x = Math.PI * - 0.5;
-  highlightMesh.position.set(0.5, 0, 0.5);
-  scene.add(highlightMesh);
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setClearColor (0xEEE0C9, 1);
+  document.body.appendChild(renderer.domElement);
   
-  const mousePosition = new THREE.Vector2();
-  const raycaster = new THREE.Raycaster();
-  let intersects;
+  
+  
+  
+ 
+ 
+  //controls camera
+
+
+
+ 
+
+
+
+
+
+
+
+
 
   
   window.addEventListener('mousemove', function(e) {
     Raycast(e,mousePosition, raycaster, intersects, camera, planeMesh, highlightMesh, objects)
-   
-    
   });
   
   
@@ -512,7 +514,7 @@ plateauFallmodel.addEventListener('click', ()=> {
           return (object.position.x === highlightMesh.position.x)
           && (object.position.z === highlightMesh.position.z)
       });
-      console.log(objectExist);
+   
    
           if(intersect(intersects, raycaster, planeMesh).length > 0 && objectExist) {
               const stagClone = stag[0].clone();
@@ -571,74 +573,76 @@ plateauFallmodel.addEventListener('click', ()=> {
             console.log("existing blocks in this mesh",avengers);
         }
   });
+  
 
-
-  function animate(time) {
-      
-      renderer.setAnimationLoop(animate);
-      highlightMesh.material.opacity = 1 + Math.sin(time / 120);
-      renderer.render(scene, camera);
-      
+  let correctModelPosition = []
+  const saveBtn = document.getElementById("saveBtn")
+  function saveProgress() {
+    // const json = scene.toJSON();
+    // TO GET THE NAME OF THE MODEL
+    let sceneContent = scene.children
+    console.log("content of list of models",listofmodels);
+    console.log("list of scene children",sceneContent);
+    let arrModels = []
+    for (let i = 10; i < sceneContent.length; i++) {
+        arrModels.push({
+            name: sceneContent[i].children[0].name,
+            position: sceneContent[i].position
+        });
+       
   }
-  animate()
-  window.addEventListener('resize', function() {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      renderer.setSize(window.innerWidth, window.innerHeight);
-  });
 
- 
-  
+    if (getactiveStorage === null) {
+         localStorage.clear();
+        localStorage.setItem('active', "active")
+        localStorage.setItem("listofobjects", JSON.stringify(listofmodels))
+        console.log("saved items when there's NO save", JSON.parse(localStorage.getItem("listofobjects")));
+    }
+    else if (getactiveStorage === "active") {
+            // correct method
+              // "Producing Code" (May take some time)
+            console.log("list of models to be added",listofmodels);
+              
+              let modelsInStorage = JSON.parse(localStorage.getItem("listofobjects"))
+            console.log("models in storage before setting storage",modelsInStorage);
+
+              console.log("current models in storage",  modelsInStorage);
+              for (let i = 0; i < listofmodels.length; i++) {
+              modelsInStorage.push(listofmodels[i])
+              }
+              var result = modelsInStorage.reduce((unique, o) => {
+                if(!unique.some(obj => obj.name === o.name && obj.position.x === o.position.x && obj.position.z === o.position.z )) {
+                  unique.push(o);
+                }
+            console.log(result);
+
+            console.log("clean models", unique);
+            localStorage.setItem("listofobjects", JSON.stringify(unique))
+
+                return unique;
+                
+            },[]);
+           
+              
+
+            for (let i = 10; i < scene.children.length; i++) {
+                correctModelPosition.push({
+                    name: scene.children[i].children[0].name,
+                    position: scene.children[i].position
+                });
+          }
+    }
+  }
+
+  saveBtn.addEventListener('click', saveProgress)
+
   })
 
-  useEffect(()=> {
 
-    const saveBtn = document.getElementById('saveBtn')
-    console.log(saveBtn);
-    let correctModelPosition = []
-    function saveProgress() {
-      // const json = scene.toJSON();
-      // TO GET THE NAME OF THE MODEL
-      let sceneContent = scene.children
-      console.log(sceneContent);
-      let arrModels = []
-      for (let i = 10; i < sceneContent.length; i++) {
-          arrModels.push({
-              name: sceneContent[i].children[0].name,
-              position: sceneContent[i].position
-          });
-         
-    }
-  
-      if (getactiveStorage === null) {
-           localStorage.clear();
-  
-          localStorage.setItem('active', "active")
-          localStorage.setItem("listofobjects", JSON.stringify(arrModels))
-          console.log("saved items when there's NO save", JSON.parse(localStorage.getItem("listofobjects")));
-        console.log(correctModelPosition);
-  
-      }
-      else if (getactiveStorage === "active") {
-          localStorage.clear();
-              // correct method
-              for (let i = 10; i < scene.children.length; i++) {
-                  correctModelPosition.push({
-                      name: scene.children[i].children[0].name,
-                      position: scene.children[i].position
-                  });
-            }
-            console.log(correctModelPosition);
-            localStorage.setItem('active', "active")
-          localStorage.setItem("listofobjects", JSON.stringify(arrModels))
-      }
-    }
-  
-    saveBtn.addEventListener('click', ()=> {
-      saveProgress()
-    })
+
    
-  })
   
+   
 
   function reset() {
     localStorage.clear();
@@ -671,6 +675,21 @@ function save(blob) {
    console.log("link href", scenelinksanit);
 
 }
+
+function animate() {
+      
+  renderer.setAnimationLoop(animate);
+  // highlightMesh.material.opacity = 1 + Math.sin(time / 120);
+  renderer.render(scene, camera);
+  
+}
+animate()
+
+
+window.addEventListener('resize', function() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
 
 
   return (
@@ -720,7 +739,7 @@ function save(blob) {
  
 
         <div className='flex flex-col'>
-        <button className=' p-1 m-3 rounded-lg bg-blue-300 text-white' id='saveBtn' >Save</button>
+        <button className=' p-1 m-3 rounded-lg bg-blue-300 text-white' id='saveBtn'  >Save</button>
         <button className=' p-1 m-3 rounded-lg bg-red-600 text-white' onClick={reset}>Reset</button>
         <button id='link' className=' p-1 m-3 rounded-lg bg-green-300 text-white' onClick={download} >Export as GLTF</button>
         </div>

@@ -6,6 +6,7 @@ export function addBuilding(selectedModel, stag, models) {
         stag.pop();
     }
     selectedModel.push(models[0])
+    console.log(selectedModel);
     console.log(selectedModel[0].href);
 }
 
