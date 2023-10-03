@@ -14,8 +14,10 @@ import tree_palmTallpng from './assets/modelsImg/city/tree_palmTall.png'
 import tree_pineDefaultApng from './assets/modelsImg/city/tree_pineDefaultA.png'
 import tree_plateau_fallpng from './assets/modelsImg/city/tree_plateau_fall.png'
 
+
 import { useEffect } from 'react';
 import { addBuilding, 
+      addRoadSquare, 
       adddetail_awningWide,
       addlowBuilding,
       addoakTreemodel,
@@ -24,11 +26,17 @@ import { addBuilding,
       addplateauFallmodel,
       addskyScraperBtn,
       addsmallBuildingmodel
-     } from './addModels';
-import { Raycast, intersect } from './Raycast';
+     } from './selectModel';
 
-  
- 
+
+import { Raycast } from './Raycast';
+import {saveProgress} from './saveProgress';
+import {addModel} from './addModel';
+import { deleteModel } from './deleteModel';
+import { loadSavedScene } from './loadSavedScene';
+import { loadScene } from './loadScene';
+
+
 
 function App() {
 let stag = []
@@ -118,8 +126,10 @@ const oakTree = new URL('./assets/tree_oak_fall.glb', import.meta.url);
 const palmTree = new URL('./assets/tree_palmTall.glb', import.meta.url);
 const pineTree = new URL('./assets/tree_pineDefaultA.glb', import.meta.url);
 const plateauFall = new URL('./assets/tree_plateau_fall.glb', import.meta.url);
+const roadSquare = new URL('./assets/road_square.glb', import.meta.url);
 
-  let models = [largeBuilding, skyScraper, awing, lowBuilding, smallBuilding, oakTree, palmTree, pineTree, plateauFall ]
+
+  let models = [largeBuilding, skyScraper, awing, lowBuilding, smallBuilding, oakTree, palmTree, pineTree, plateauFall, roadSquare ]
 
   let assetLoader = new GLTFLoader()
 
@@ -127,206 +137,27 @@ const plateauFall = new URL('./assets/tree_plateau_fall.glb', import.meta.url);
   
   // console.log(selectedModel);
   
-  function loadScene() {
-      assetLoader.load(selectedModel[0].href, function(gltf) {
-          const model = gltf.scene;
-          model.scale.set(0.5, 0.5, 0.5);
-          let meshArr = model.children[0].children
-          for (let i = 0; i < meshArr.length; i++) {
-            meshArr[i].material.metalness = 0
-          }
-          stag.push(model);
-          console.log(stag);
-      }, undefined, function(error) {
-          console.error(error);
-      });
-  } 
-
-
-  function loadSavedScene() {
-    const listofSavedModels =  JSON.parse(localStorage.getItem("listofobjects"))
-        for (let i = 0; i < listofSavedModels.length; i++) {
-          //list of saved models returns an array of the name and position of each model
-            if (listofSavedModels[i].name === "large_buildingA") {
-                // camera.position.set(10,-15,22)
-                assetLoader.load(models[0].href, function(gltf) {
-                    const model = gltf.scene;
-                    model.scale.set(0.5, 0.5, 0.5);
-                    model.position.copy(listofSavedModels[i].position);
-                    let meshArr = model.children[0].children
-                    for (let i = 0; i < meshArr.length; i++) {
-                      meshArr[i].material.metalness = 0
-                    }
-              scene.add(model);
-                }, undefined, function(error) {
-                    console.error(error);
-                });
-            }
-            else if(listofSavedModels[i].name === "skyscraperD") {
-                console.log("found a skycraper");
-                
-                assetLoader.load(models[1].href, function(gltf) {
-                    const model = gltf.scene;
-                    model.scale.set(0.5, 0.5, 0.5);
-                    model.position.copy(listofSavedModels[i].position);
-                    let meshArr = model.children[0].children
-                    for (let i = 0; i < meshArr.length; i++) {
-                      meshArr[i].material.metalness = 0
-                    }
-              scene.add(model);
-                }, undefined, function(error) {
-                    console.error(error);
-                });
-            }
-            else if(listofSavedModels[i].name === "detail_awningWide") {
-                assetLoader.load(models[2].href, function(gltf) {
-                    const model = gltf.scene;
-                    model.scale.set(0.5, 0.5, 0.5);
-                    model.position.copy(listofSavedModels[i].position);
-                    let meshArr = model.children[0].children
-                    for (let i = 0; i < meshArr.length; i++) {
-                      meshArr[i].material.metalness = 0
-                    }
-              scene.add(model);
-                }, undefined, function(error) {
-                    console.error(error);
-                });
-            }
-
-            else if(listofSavedModels[i].name === "low_buildingC") {
-                assetLoader.load(models[3].href, function(gltf) {
-                    const model = gltf.scene;
-                    model.scale.set(0.5, 0.5, 0.5);
-                    model.position.copy(listofSavedModels[i].position);
-                    let meshArr = model.children[0].children
-                    for (let i = 0; i < meshArr.length; i++) {
-                      meshArr[i].material.metalness = 0
-                    }
-              scene.add(model);
-                }, undefined, function(error) {
-                    console.error(error);
-                });
-            }
-            
-            else if(listofSavedModels[i].name === "small_buildingA") {
-                assetLoader.load(models[4].href, function(gltf) {
-                    const model = gltf.scene;
-                    model.scale.set(0.5, 0.5, 0.5);
-                    model.position.copy(listofSavedModels[i].position);
-                    let meshArr = model.children[0].children
-                    for (let i = 0; i < meshArr.length; i++) {
-                      meshArr[i].material.metalness = 0
-                    }
-              scene.add(model);
-                }, undefined, function(error) {
-                    console.error(error);
-                });
-            }
-            
-            else if(listofSavedModels[i].name === "tree_oak_fall") {
-                assetLoader.load(models[5].href, function(gltf) {
-                    const model = gltf.scene;
-                    model.scale.set(0.5, 0.5, 0.5);
-                    model.position.copy(listofSavedModels[i].position);
-                    let meshArr = model.children[0].children
-                    for (let i = 0; i < meshArr.length; i++) {
-                      meshArr[i].material.metalness = 0
-                    }
-              scene.add(model);
-                }, undefined, function(error) {
-                    console.error(error);
-                });
-            }
-            else if(listofSavedModels[i].name === "tree_palmTall") {
-                assetLoader.load(models[6].href, function(gltf) {
-                    const model = gltf.scene;
-                    model.scale.set(0.5, 0.5, 0.5);
-                    model.position.copy(listofSavedModels[i].position);
-                    let meshArr = model.children[0].children
-                    for (let i = 0; i < meshArr.length; i++) {
-                      meshArr[i].material.metalness = 0
-                    }
-              scene.add(model);
-                }, undefined, function(error) {
-                    console.error(error);
-                });
-            }
-            else if(listofSavedModels[i].name === "tree_pineDefaultA") {
-                assetLoader.load(models[7].href, function(gltf) {
-                    const model = gltf.scene;
-                    model.scale.set(0.5, 0.5, 0.5);
-                    model.position.copy(listofSavedModels[i].position);
-                    let meshArr = model.children[0].children
-                    for (let i = 0; i < meshArr.length; i++) {
-                      meshArr[i].material.metalness = 0
-                    }
-              scene.add(model);
-                }, undefined, function(error) {
-                    console.error(error);
-                });
-            }
-
-            else if(listofSavedModels[i].name === "tree_plateau_fall") {
-                assetLoader.load(models[8].href, function(gltf) {
-                    const model = gltf.scene;
-                    model.scale.set(0.5, 0.5, 0.5);
-                    model.position.copy(listofSavedModels[i].position);
-                    let meshArr = model.children[0].children
-                    for (let i = 0; i < meshArr.length; i++) {
-                      meshArr[i].material.metalness = 0
-                    }
-              scene.add(model);
-                }, undefined, function(error) {
-                    console.error(error);
-                });
-            }
-        }
-  }
 
   
 if (getactiveStorage === null) {
-  loadScene()
+   
+window.addEventListener('load', ()=> {
+  loadScene(selectedModel, stag)
+})
+
 }
 else if (getactiveStorage === "active" && getStorageItems.length > 0) {
-  loadSavedScene()
+
+  loadSavedScene(scene, assetLoader, models )
   console.log('scene children at load time',scene.children);
 
 }
   useEffect(()=> {
-  
-
-  // assetLoader.load(largeBuilding.href, function(gltf) {
-  //   const model = gltf.scene;
-  //  model.name = "large_buildingA"
-  //  console.log(model);
-  // })
-
-
-
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setClearColor (0xEEE0C9, 1);
   document.body.appendChild(renderer.domElement);
-  
-  
-  
-  
- 
- 
-  //controls camera
 
 
-
- 
-
-
-
-
-
-
-
-
-
-  
   window.addEventListener('mousemove', function(e) {
     Raycast(e,mousePosition, raycaster, intersects, camera, planeMesh, highlightMesh, objects)
   });
@@ -335,110 +166,84 @@ else if (getactiveStorage === "active" && getStorageItems.length > 0) {
   
   let objects = [];
 
- 
-  
+  const roadSquareBtn = document.getElementById('roadSquareBtn')
+  roadSquareBtn.addEventListener('click', ()=> {
+    addRoadSquare(selectedModel, stag, models)
+    loadScene( selectedModel, stag)
+
+})
+
   const largeBuildingBtn = document.getElementById('largeBuildingBtn')
   largeBuildingBtn.addEventListener('click', ()=> {
- 
     addBuilding(selectedModel, stag, models)
-    loadScene()
+    loadScene( selectedModel, stag)
+
 })
  
 const skyScraperBtn = document.getElementById('skyScraperBtn')
 skyScraperBtn.addEventListener('click', ()=> {
 addskyScraperBtn(selectedModel, stag, models)
-  loadScene()
+loadScene( selectedModel, stag)
+
 })
 
  
 const detail_awningWide = document.getElementById('detail_awningWide')
 detail_awningWide.addEventListener('click', ()=> {
     adddetail_awningWide(selectedModel, stag, models)
-  loadScene()
+   loadScene( selectedModel, stag)
+
 })
 
 const lowBuildingmodel = document.getElementById('lowBuilding')
 lowBuildingmodel.addEventListener('click', ()=> {
     addlowBuilding(selectedModel, stag, models)
-  loadScene()
+    loadScene( selectedModel, stag)
+
 })
 
 const smallBuildingmodel = document.getElementById('smallBuilding')
 smallBuildingmodel.addEventListener('click', ()=> {
     addsmallBuildingmodel(selectedModel, stag, models)
-  loadScene()
+    loadScene( selectedModel, stag)
+
 })
 
 const oakTreemodel = document.getElementById('oakTree')
 oakTreemodel.addEventListener('click', ()=> {
     addoakTreemodel(selectedModel, stag, models)
-  loadScene()
+    loadScene( selectedModel, stag)
+
 })
 
 const palmTreemodel = document.getElementById('palmTree')
 palmTreemodel.addEventListener('click', ()=> {
     addpalmTreemodel(selectedModel, stag, models)
-  loadScene()
+    loadScene( selectedModel, stag)
+
 })
 const pineTreemodel = document.getElementById('pineTree')
 pineTreemodel.addEventListener('click', ()=> {
     addpineTreemodel(selectedModel, stag, models)
-  loadScene()
+    loadScene( selectedModel, stag)
+
 })
 const plateauFallmodel = document.getElementById('plateauFall')
 plateauFallmodel.addEventListener('click', ()=> {
     addplateauFallmodel(selectedModel, stag, models)
-  loadScene()
+    loadScene( selectedModel, stag)
+
 })
 
   let selectedObj = []
 
-//   window.addEventListener('click', (e)=> {
-//   let intersectObj;
 
-//     console.log(mousePosition);
-//     mousePosition.x = (e.clientX / window.innerWidth) * 2 - 1;
-//         mousePosition.y = -(e.clientY / window.innerHeight) * 2 + 1;
-        
-//         raycaster.setFromCamera(mousePosition, camera);
-//         intersectObj = raycaster.intersectObject(scene.children);
-//         console.log(intersectObj[0]);
-//   })
-
-  window.addEventListener('keypress', function(e) {
-
-      switch (e.code) {
-          case 'KeyX':
-          
-              if(intersect(intersects, raycaster, planeMesh).length > 0) {
-                  const objectExist = objects.find(function(object) {
-                      return (object.position.x === highlightMesh.position.x)
-                      && (object.position.z === highlightMesh.position.z)
-                  });
-          
-                  if(!objectExist)
-                     return
-                  else
-                      {
-                          let objId = selectedObj[0].uuid
-                          console.log(objId);
-                          function removeObjectWithId(arr, id) {
-                              const objWithIdIndex = arr.findIndex((objects) => objects.uuid === id);
-                            
-                              if (objWithIdIndex > -1) {
-                                arr.splice(objWithIdIndex, 1);
-                              }
-                            
-                              return arr;
-                            }
-                            removeObjectWithId(objects, objId);
-                            console.log(objects);
-                          selectedObj[0].removeFromParent()
-                      }
-              }
-              break  
-      }          
-  });
+  window.addEventListener('keypress', (e) => {
+    deleteModel(e, intersects, raycaster, planeMesh, objects, highlightMesh, selectedObj)
+  }
+  
+  
+  );
   
   window.addEventListener('contextmenu', function() {
      
@@ -507,142 +312,19 @@ plateauFallmodel.addEventListener('click', ()=> {
   });
 
   let listofmodels = []
-  window.addEventListener('dblclick', function() {
-      // console.log(scene);
-  intersect(intersects, raycaster, planeMesh)
-      const objectExist = objects.find(function(object) {
-          return (object.position.x === highlightMesh.position.x)
-          && (object.position.z === highlightMesh.position.z)
-      });
-   
-   
-          if(intersect(intersects, raycaster, planeMesh).length > 0 && objectExist) {
-              const stagClone = stag[0].clone();
-              console.log(" initial position of cube", stagClone.position);
-              const avengers = listofmodels.filter(modelPos => modelPos.position.x === highlightMesh.position.x)
-              console.log("existing blocks in this mesh",avengers);
-              console.log(listofmodels);
-              stagClone.position.set(
-                 highlightMesh.position.x,
-                highlightMesh.position.y + ((avengers.length) * 0.8) ,
-                highlightMesh.position.z,
-              );
-              scene.add(stagClone);
-              objects.push(stagClone);
-              highlightMesh.material.color.setHex(0xFF6666);
-              console.log("position of cube", highlightMesh.position);
-              console.log("details of cube", stagClone.children[0].name);
-              let addedModels = {
-                name: stagClone.children[0].name,
-                position: {
-                    x: highlightMesh.position.x,
-                    y: highlightMesh.position.y + ((avengers.length + 1) * 0.8),
-                    z: highlightMesh.position.z,
-                }
-              }
-             
-              listofmodels.push(addedModels)
-             
-             
-          }
-          else if (intersect(intersects, raycaster, planeMesh).length > 0 && !objectExist) {
-            const stagClone = stag[0].clone();
-            console.log(" initial position of cube", stagClone.position);
-
-            stagClone.position.set(
-               highlightMesh.position.x,
-              highlightMesh.position.y ,
-              highlightMesh.position.z,
-            );
-            scene.add(stagClone);
-            objects.push(stagClone);
-            highlightMesh.material.color.setHex(0xFF6666);
-            console.log("position of cube", highlightMesh.position);
-            console.log("details of cube", stagClone.children[0].name);
-            let addedModels = {
-              name: stagClone.children[0].name,
-              position: {
-                  x: highlightMesh.position.x,
-                  y: highlightMesh.position.y,
-                  z: highlightMesh.position.z,
-              }
-            }
-            console.log(addedModels);
-            listofmodels.push(addedModels)
-            const avengers = listofmodels.filter(modelPos => modelPos.position.x === highlightMesh.position.x);
-            console.log("existing blocks in this mesh",avengers);
-        }
-  });
+  window.addEventListener('dblclick', () => {
+    addModel(scene,intersects, raycaster, planeMesh, objects, highlightMesh, stag, listofmodels)
+  }
+  );
   
 
-  let correctModelPosition = []
   const saveBtn = document.getElementById("saveBtn")
-  function saveProgress() {
-    // const json = scene.toJSON();
-    // TO GET THE NAME OF THE MODEL
-    let sceneContent = scene.children
-    console.log("content of list of models",listofmodels);
-    console.log("list of scene children",sceneContent);
-    let arrModels = []
-    for (let i = 10; i < sceneContent.length; i++) {
-        arrModels.push({
-            name: sceneContent[i].children[0].name,
-            position: sceneContent[i].position
-        });
-       
-  }
 
-    if (getactiveStorage === null) {
-         localStorage.clear();
-        localStorage.setItem('active', "active")
-        localStorage.setItem("listofobjects", JSON.stringify(listofmodels))
-        console.log("saved items when there's NO save", JSON.parse(localStorage.getItem("listofobjects")));
-    }
-    else if (getactiveStorage === "active") {
-            // correct method
-              // "Producing Code" (May take some time)
-            console.log("list of models to be added",listofmodels);
-              
-              let modelsInStorage = JSON.parse(localStorage.getItem("listofobjects"))
-            console.log("models in storage before setting storage",modelsInStorage);
-
-              console.log("current models in storage",  modelsInStorage);
-              for (let i = 0; i < listofmodels.length; i++) {
-              modelsInStorage.push(listofmodels[i])
-              }
-              var result = modelsInStorage.reduce((unique, o) => {
-                if(!unique.some(obj => obj.name === o.name && obj.position.x === o.position.x && obj.position.z === o.position.z )) {
-                  unique.push(o);
-                }
-            console.log(result);
-
-            console.log("clean models", unique);
-            localStorage.setItem("listofobjects", JSON.stringify(unique))
-
-                return unique;
-                
-            },[]);
-           
-              
-
-            for (let i = 10; i < scene.children.length; i++) {
-                correctModelPosition.push({
-                    name: scene.children[i].children[0].name,
-                    position: scene.children[i].position
-                });
-          }
-    }
-  }
-
-  saveBtn.addEventListener('click', saveProgress)
+  saveBtn.addEventListener('click', () => {
+    saveProgress(scene, listofmodels, getactiveStorage)
+     })
 
   })
-
-
-
-   
-  
-   
 
   function reset() {
     localStorage.clear();
@@ -696,6 +378,9 @@ window.addEventListener('resize', function() {
     <div>
       <div className='absolute w-[15%] m-8 border-solid border-sky-500 border-4 rounded-lg h-[90%]'>
         <div className='flex flex-row basis-full flex-wrap'>
+        <button className=' w-[80px] h-[80px] p-1 m-1  ' id='roadSquareBtn'>
+          road square
+        </button>
         <button className=' w-[80px] h-[80px] p-1 m-1  ' id='largeBuildingBtn'>
             <img src={large_buildingAimg} alt="React Logo" className=' relative rounded-md'/>
         </button>
