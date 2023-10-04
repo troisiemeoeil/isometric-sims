@@ -17,7 +17,7 @@ import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
 // import tree_plateau_fallpng from './assets/modelsImg/city/tree_plateau_fall.png'
 
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { addBuilding, 
       // addRoadSquare, 
       adddetail_awningWide,
@@ -42,19 +42,20 @@ import { loadScene } from './scripts/loadScene';
 
 
 function App() {
-let stag = []
+  let stag = []
     const renderer = new THREE.WebGLRenderer({antialias: true});
 
     const scene = new THREE.Scene();
 
       //principal camera
   const camera = new THREE.PerspectiveCamera(
-    45,
+    60,
     window.innerWidth / window.innerHeight,
     0.1,
     1000
 );
     camera.position.set(0, 30, 0);
+    // camera.updateProjectionMatrix()
     scene.add(camera)
 
 
@@ -154,15 +155,18 @@ else if (getactiveStorage === "active" && getStorageItems.length > 0) {
   console.log('scene children at load time',scene.children);
 
 }
-  useEffect(()=> {
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setClearColor (0xEEE0C9, 1);
-  document.body.appendChild(renderer.domElement);
+const canvas = useRef()
 
+
+  useEffect(()=> {
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor (0xEEE0C9, 1);
+    canvas.current.appendChild(renderer.domElement);
   const loader = new THREE.TextureLoader();
   loader.load('/bgpixel.webp' , function(texture)
               {
-               scene.background = texture;  
+               scene.background = texture
               });
   window.addEventListener('mousemove', function(e) {
     Raycast(e,mousePosition, raycaster, intersects, camera, planeMesh, highlightMesh, objects)
@@ -383,29 +387,34 @@ useEffect(()=> {
   //=================TOOLTIP====================
   let tooltip = document.querySelectorAll(".tooltip");
   let itemTooltip = document.querySelectorAll(".item__tooltip");
+  let items__container = document.querySelectorAll(".items__container");
+
+  // document.addEventListener("mousemove", fn);
+  tooltip.forEach((t, e) => {
+    let x = e.clientX;
+    let y = e.clientY;
+
+    let newposX = x / 10;
+    let newposY = y / 2;
+    t.style.transform = "translate3d(" + newposX + "px," + newposY + "px,0px)";
+  });
+  items__container.forEach((item) => {
   
-  document.addEventListener("mousemove", fn);
   
-  function fn(e) {
-    tooltip.forEach((t) => {
-      let x = e.clientX;
-      let y = e.clientY;
-  
-      let newposX = x / 20;
-      let newposY = y / 2;
-      t.style.transform = "translate3d(" + newposX + "px," + newposY + "px,0px)";
-    });
-  
-    itemTooltip.forEach((t) => {
-      let x = e.clientX;
-      let y = e.clientY;
-  
-      let newposX = x / 30;
-      let newposY = y / 10;
-      t.style.transform = "translate3d(" + newposX + "px," + newposY + "px,0px)";
-    });
-  }
-  
+      item.addEventListener('click', (e)=> {
+        itemTooltip.forEach((t) => {
+          let x = e.clientX;
+          let y = e.clientY;
+      
+          let newposX = x / 30;
+          let newposY = y / 100;
+          t.style.transform = "translate3d(" + newposX + "px," + newposY + "px,0px)";
+        });
+      })
+      
+    
+  })
+    
   //=======DRAG AND DROP================
   const items = document.querySelectorAll(".item__container");
   const itemContainers = document.querySelectorAll(".items__container");
@@ -447,7 +456,7 @@ useEffect(()=> {
 
   return (
     <>
-      <div className="marquee">
+     <div className="marquee">
   <div className="clouds">
     <img src="/clouds.webp" alt="clouds" />
   </div>
@@ -467,9 +476,10 @@ useEffect(()=> {
     <img src="/clouds.webp" alt="clouds" />
   </div>
 </div>
-<div className="menu">
-    <div className="menu__content">
-      <div className="menu__content__inventory">
+      <div ref={canvas}></div>
+
+     
+<div className="menu__content__inventory">
         <div className="inventory--hotbar">
           <div className="items__container">
             <span className="items__number items__number--first">1</span>
@@ -492,9 +502,6 @@ useEffect(()=> {
               <div className="item__tooltip" draggable="false">
                 <div className="item__tooltip__title">
                   <h2>Iridium Pickaxe</h2>
-                  <h3 className="item__tooltip__category item__tooltip__category--tool">
-                    Tool
-                  </h3>
                 </div>
                 <div className="item__tooltip__info">Used to break stones.</div>
               </div>
@@ -507,9 +514,7 @@ useEffect(()=> {
               <div className="item__tooltip" draggable="false">
                 <div className="item__tooltip__title">
                   <h2>Iridium Axe</h2>
-                  <h3 className="item__tooltip__category item__tooltip__category--tool">
-                    Tool
-                  </h3>
+             
                 </div>
                 <div className="item__tooltip__info">Used to chop wood.</div>
               </div>
@@ -522,9 +527,7 @@ useEffect(()=> {
               <div className="item__tooltip" draggable="false">
                 <div className="item__tooltip__title">
                   <h2>Iridium Hoe</h2>
-                  <h3 className="item__tooltip__category item__tooltip__category--tool">
-                    Tool
-                  </h3>
+              
                 </div>
                 <div className="item__tooltip__info">
                   Used to dig and till soil.
@@ -539,9 +542,7 @@ useEffect(()=> {
               <div className="item__tooltip" draggable="false">
                 <div className="item__tooltip__title">
                   <h2>Iridium Hoe</h2>
-                  <h3 className="item__tooltip__category item__tooltip__category--tool">
-                    Tool
-                  </h3>
+                
                 </div>
                 <div className="item__tooltip__info">
                   Used to water crops. It can be refilled at any water source
@@ -556,9 +557,7 @@ useEffect(()=> {
               <div className="item__tooltip" draggable="false">
                 <div className="item__tooltip__title">
                   <h2>Golden Scythe</h2>
-                  <h3 className="item__tooltip__category item__tooltip__category--tool">
-                    Tool
-                  </h3>
+               
                 </div>
                 <div className="item__tooltip__info">
                   It is more powerful than a normal scythe.
@@ -573,9 +572,7 @@ useEffect(()=> {
               <div className="item__tooltip" draggable="false">
                 <div className="item__tooltip__title">
                   <h2>Copper Pan</h2>
-                  <h3 className="item__tooltip__category item__tooltip__category--tool">
-                    Tool
-                  </h3>
+                 
                 </div>
                 <div className="item__tooltip__info">
                   Use to gather ore from streams.
@@ -606,15 +603,6 @@ useEffect(()=> {
         </div>
       
       </div>
-    </div>
-
-
-      
- 
-
-      
-
-        </div>
     </>
    
   )

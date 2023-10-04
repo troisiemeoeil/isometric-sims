@@ -74,16 +74,20 @@
   ::-webkit-scrollbar-thumb {
     background: #ad520b;
   }
-  
+  img, video {
+    max-width: 100%;
+    height: 30vh;
+}
   .marquee {
     z-index: 0;
-    position: fixed;
+    position: absolute;
     opacity: 0.8;
     display: flex;
     animation: marquee 150s linear infinite running;
   }
   .marquee .clouds {
-    width: 100vw;
+    width: 90vw;
+    height: 20vh;
   }
   
   @keyframes marquee {
@@ -220,6 +224,13 @@
     .menu__content__inventory, .menu__content__info {
       overflow: auto;
     }
+  }
+  .menu__content__inventory {
+    position: absolute;
+    background: #f6b86f;
+    width: 35%;
+    bottom: 2%;
+    left: 32.5%;
   }
   .menu__content__inventory .items__container,
   .menu__content__inventory .items__container--disabled, .menu__content__info .items__container,
@@ -365,7 +376,7 @@
   .menu__content__inventory .items__container .item__container .item__tooltip .item__tooltip__title h2,
   .menu__content__inventory .items__container--disabled .item__container .item__tooltip .item__tooltip__title h2, .menu__content__info .items__container .item__container .item__tooltip .item__tooltip__title h2,
   .menu__content__info .items__container--disabled .item__container .item__tooltip .item__tooltip__title h2 {
-    font-size: 3rem;
+    font-size: 1rem;
   }
   .menu__content__inventory .items__container .item__container .item__tooltip .item__tooltip__title .item__tooltip__category,
   .menu__content__inventory .items__container--disabled .item__container .item__tooltip .item__tooltip__title .item__tooltip__category, .menu__content__info .items__container .item__container .item__tooltip .item__tooltip__title .item__tooltip__category,
@@ -447,7 +458,7 @@
     border-image-repeat: round;
     border-radius: 20px;
     border-image-source: url("https://assets.codepen.io/7237686/tooltipborderbottom.png");
-    font-size: 2rem;
+    font-size: 1rem;
     text-shadow: var(--text_shadow) -2px 1px;
   }
   .menu__content__inventory .items__container .item__container .item__tooltip .item__tooltip__info ul,
