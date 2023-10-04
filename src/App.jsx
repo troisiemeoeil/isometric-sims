@@ -1,6 +1,6 @@
 
 import './App.css'
-
+import "./UI/minimenu.css"
 import * as THREE from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
@@ -36,9 +36,7 @@ import {addModel} from './scripts/addModel';
 import { deleteModel } from './scripts/deleteModel';
 import { loadSavedScene } from './scripts/loadSavedScene';
 import { loadScene } from './scripts/loadScene';
-import MiniMenu from './UI/miniMenu';
-// import MiniMenu from './UI/miniMenu';
-
+import MiniMenu from './UI/MiniMenu';
 
 
 function App() {
