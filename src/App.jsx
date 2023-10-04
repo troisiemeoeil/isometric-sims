@@ -1,23 +1,25 @@
 
 import './App.css'
+import "./UI/miniMenu.css"
+
 import * as THREE from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
-import large_buildingAimg from './assets/modelsImg/city/largebuildingA.png'
-import detail_amingwidpng from './assets/modelsImg/city/detail_amingwid.png'
-import lowbuildingCpng from './assets/modelsImg/city/lowbuildingC.png'
-import skyscraperDpng from './assets/modelsImg/city/skyscraperD.png'
-import smallbuildingCpng from './assets/modelsImg/city/smallbuildingC.png'
-import tree_oak_fallpng from './assets/modelsImg/city/tree_oak_fall.png'
-import tree_palmTallpng from './assets/modelsImg/city/tree_palmTall.png'
-import tree_pineDefaultApng from './assets/modelsImg/city/tree_pineDefaultA.png'
-import tree_plateau_fallpng from './assets/modelsImg/city/tree_plateau_fall.png'
+// import large_buildingAimg from './assets/modelsImg/city/largebuildingA.png'
+// import detail_amingwidpng from './assets/modelsImg/city/detail_amingwid.png'
+// import lowbuildingCpng from './assets/modelsImg/city/lowbuildingC.png'
+// import skyscraperDpng from './assets/modelsImg/city/skyscraperD.png'
+// import smallbuildingCpng from './assets/modelsImg/city/smallbuildingC.png'
+// import tree_oak_fallpng from './assets/modelsImg/city/tree_oak_fall.png'
+// import tree_palmTallpng from './assets/modelsImg/city/tree_palmTall.png'
+// import tree_pineDefaultApng from './assets/modelsImg/city/tree_pineDefaultA.png'
+// import tree_plateau_fallpng from './assets/modelsImg/city/tree_plateau_fall.png'
 
 
 import { useEffect } from 'react';
 import { addBuilding, 
-      addRoadSquare, 
+      // addRoadSquare, 
       adddetail_awningWide,
       addlowBuilding,
       addoakTreemodel,
@@ -26,22 +28,22 @@ import { addBuilding,
       addplateauFallmodel,
       addskyScraperBtn,
       addsmallBuildingmodel
-     } from './selectModel';
+     } from './scripts/selectModel';
 
 
-import { Raycast } from './Raycast';
-import {saveProgress} from './saveProgress';
-import {addModel} from './addModel';
-import { deleteModel } from './deleteModel';
-import { loadSavedScene } from './loadSavedScene';
-import { loadScene } from './loadScene';
+import { Raycast } from './scripts/Raycast';
+import {saveProgress} from './scripts/saveProgress';
+import {addModel} from './scripts/addModel';
+import { deleteModel } from './scripts/deleteModel';
+import { loadSavedScene } from './scripts/loadSavedScene';
+import { loadScene } from './scripts/loadScene';
+// import MiniMenu from './UI/miniMenu';
 
 
 
 function App() {
 let stag = []
-
-    const renderer = new THREE.WebGLRenderer();
+    const renderer = new THREE.WebGLRenderer({antialias: true});
 
     const scene = new THREE.Scene();
 
@@ -157,7 +159,11 @@ else if (getactiveStorage === "active" && getStorageItems.length > 0) {
   renderer.setClearColor (0xEEE0C9, 1);
   document.body.appendChild(renderer.domElement);
 
-
+  const loader = new THREE.TextureLoader();
+  loader.load('/bgpixel.webp' , function(texture)
+              {
+               scene.background = texture;  
+              });
   window.addEventListener('mousemove', function(e) {
     Raycast(e,mousePosition, raycaster, intersects, camera, planeMesh, highlightMesh, objects)
   });
@@ -166,12 +172,12 @@ else if (getactiveStorage === "active" && getStorageItems.length > 0) {
   
   let objects = [];
 
-  const roadSquareBtn = document.getElementById('roadSquareBtn')
-  roadSquareBtn.addEventListener('click', ()=> {
-    addRoadSquare(selectedModel, stag, models)
-    loadScene( selectedModel, stag)
+//   const roadSquareBtn = document.getElementById('roadSquareBtn')
+//   roadSquareBtn.addEventListener('click', ()=> {
+//     addRoadSquare(selectedModel, stag, models)
+//     loadScene( selectedModel, stag)
 
-})
+// })
 
   const largeBuildingBtn = document.getElementById('largeBuildingBtn')
   largeBuildingBtn.addEventListener('click', ()=> {
@@ -358,10 +364,10 @@ function save(blob) {
 
 }
 
-function animate() {
+function animate(time) {
       
   renderer.setAnimationLoop(animate);
-  // highlightMesh.material.opacity = 1 + Math.sin(time / 120);
+  highlightMesh.material.opacity = 1 + Math.sin(time / 120);
   renderer.render(scene, camera);
   
 }
@@ -373,64 +379,244 @@ window.addEventListener('resize', function() {
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
+useEffect(()=> {
+  //=================TOOLTIP====================
+  let tooltip = document.querySelectorAll(".tooltip");
+  let itemTooltip = document.querySelectorAll(".item__tooltip");
+  
+  document.addEventListener("mousemove", fn);
+  
+  function fn(e) {
+    tooltip.forEach((t) => {
+      let x = e.clientX;
+      let y = e.clientY;
+  
+      let newposX = x / 20;
+      let newposY = y / 2;
+      t.style.transform = "translate3d(" + newposX + "px," + newposY + "px,0px)";
+    });
+  
+    itemTooltip.forEach((t) => {
+      let x = e.clientX;
+      let y = e.clientY;
+  
+      let newposX = x / 30;
+      let newposY = y / 10;
+      t.style.transform = "translate3d(" + newposX + "px," + newposY + "px,0px)";
+    });
+  }
+  
+  //=======DRAG AND DROP================
+  const items = document.querySelectorAll(".item__container");
+  const itemContainers = document.querySelectorAll(".items__container");
+  
+  items.forEach((item) => {
+    item.addEventListener("dragstart", dragStart);
+  });
+  
+  itemContainers.forEach((square) => {
+    square.addEventListener("dragover", dragOver);
+    square.addEventListener("drop", dragDrop);
+  });
+  
+  let beingDragged;
+  
+  function dragStart(e) {
+    beingDragged = e.target;
+  
+    let img = new Image();
+    img.src =
+      "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=";
+    e.dataTransfer.setDragImage(img, 0, 0);
+  }
+  
+  function dragDrop(e) {
+    if (e.target.tagName === "IMG") {
+      return;
+    }
+  
+    e.target.append(beingDragged);
+  }
+  
+  function dragOver(e) {
+    e.preventDefault();
+  }
+  
+      })
+
 
   return (
-    <div>
-      <div className='absolute w-[15%] m-8 border-solid border-sky-500 border-4 rounded-lg h-[90%]'>
-        <div className='flex flex-row basis-full flex-wrap'>
-        <button className=' w-[80px] h-[80px] p-1 m-1  ' id='roadSquareBtn'>
-          road square
-        </button>
-        <button className=' w-[80px] h-[80px] p-1 m-1  ' id='largeBuildingBtn'>
-            <img src={large_buildingAimg} alt="React Logo" className=' relative rounded-md'/>
-        </button>
-      
-        <button className= {`w-[90px] h-[90px] text-sm p-1 m-1 rounded-lg border-2 object-fill border-solid border-blue-300" border-white text-white`}
-         id='skyScraperBtn' 
-         >
-        <img src={skyscraperDpng} alt="React Logo" className='relative rounded-md' />
-        </button>
-        <button className='w-[80px] h-[80px] text-sm p-1 m-1 rounded-lg  text-white' id="detail_awningWide">
-        <img src={detail_amingwidpng} alt="React Logo" className='object-contain relative rounded-md' />
-          
-        </button>
-        
-        <button className='w-[80px] h-[80px] text-sm p-1 m-1 rounded-lg  text-white' id='lowBuilding'>
-        <img src={lowbuildingCpng} alt="React Logo" className='object-contain relative rounded-md'/>
-           
-        </button>
-        <button className='w-[80px] h-[80px]  text-sm p-1 m-1 rounded-lg  text-white' id='smallBuilding'>
-        <img src={smallbuildingCpng} alt="React Logo" className=' relative rounded-md'/>
-          
-        </button>
-        <button className='w-[80px] h-[80px] text-sm p-1 m-1 rounded-lg  text-white' id="oakTree">
-        <img src={tree_oak_fallpng} alt="React Logo" className=' relative rounded-md'/>
-          
-        </button>
-        <button className='w-[80px] h-[80px] text-sm p-1 m-1 rounded-lg  text-white' id='palmTree'>
-        <img src={tree_palmTallpng} alt="React Logo" className=' relative rounded-md'/>
-          
-        </button>
-        <button className='w-[80px] h-[80px] text-sm p-1 m-1 rounded-lg  text-white' id='pineTree'>
-        <img src={tree_pineDefaultApng} alt="React Logo" className=' relative rounded-md'/>
-          
-        </button>
-        <button className='w-[80px] h-[80px] text-sm p-1 m-1 rounded-lg  text-white' id='plateauFall'>
-        <img src={tree_plateau_fallpng} alt="React Logo" className=' relative rounded-md'/>
-          
-        </button>
-
+    <>
+      <div className="marquee">
+  <div className="clouds">
+    <img src="/clouds.webp" alt="clouds" />
+  </div>
+  <div className="clouds">
+    <img src="/clouds.webp" alt="clouds" />
+  </div>
+  <div className="clouds">
+    <img src="/clouds.webp" alt="clouds" />
+  </div>
+  <div className="clouds">
+    <img src="/clouds.webp" alt="clouds" />
+  </div>
+  <div className="clouds">
+    <img src="/clouds.webp" alt="clouds" />
+  </div>
+  <div className="clouds">
+    <img src="/clouds.webp" alt="clouds" />
+  </div>
+</div>
+<div className="menu">
+    <div className="menu__content">
+      <div className="menu__content__inventory">
+        <div className="inventory--hotbar">
+          <div className="items__container">
+            <span className="items__number items__number--first">1</span>
+            <div className="item__container" draggable="true"  id='largeBuildingBtn'>
+              <img className="item__img" src="https://assets.codepen.io/7237686/infinity_blade.svg?format=auto" alt="infinity_blade" draggable="false" />
+              <div className="item__tooltip" draggable="false">
+                <div className="item__tooltip__title">
+                  <h2>Infinity Blade</h2>
+                </div>
+                <div className="item__tooltip__info">
+                  The true form of the Galaxy Sword
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="items__container" id='skyScraperBtn'>
+            <span className="items__number">2</span>
+            <div className="item__container" draggable="true">
+              <img className="item__img" src="https://assets.codepen.io/7237686/iridium_pickaxe.svg?format=auto" alt="iridium_pickaxe" draggable="false" />
+              <div className="item__tooltip" draggable="false">
+                <div className="item__tooltip__title">
+                  <h2>Iridium Pickaxe</h2>
+                  <h3 className="item__tooltip__category item__tooltip__category--tool">
+                    Tool
+                  </h3>
+                </div>
+                <div className="item__tooltip__info">Used to break stones.</div>
+              </div>
+            </div>
+          </div>
+          <div className="items__container" id="detail_awningWide" >
+            <span className="items__number">3</span>
+            <div className="item__container" draggable="true">
+              <img className="item__img" src="https://assets.codepen.io/7237686/iridium_axe.svg?format=auto" alt="iridium_axe" draggable="false" />
+              <div className="item__tooltip" draggable="false">
+                <div className="item__tooltip__title">
+                  <h2>Iridium Axe</h2>
+                  <h3 className="item__tooltip__category item__tooltip__category--tool">
+                    Tool
+                  </h3>
+                </div>
+                <div className="item__tooltip__info">Used to chop wood.</div>
+              </div>
+            </div>
+          </div>
+          <div className="items__container"  id="lowBuilding">
+            <span className="items__number">4</span>
+            <div className="item__container" draggable="true">
+              <img className="item__img" src="https://assets.codepen.io/7237686/iridium_hoe.svg?format=auto" alt="iridium_hoe" draggable="false" />
+              <div className="item__tooltip" draggable="false">
+                <div className="item__tooltip__title">
+                  <h2>Iridium Hoe</h2>
+                  <h3 className="item__tooltip__category item__tooltip__category--tool">
+                    Tool
+                  </h3>
+                </div>
+                <div className="item__tooltip__info">
+                  Used to dig and till soil.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="items__container" id="smallBuilding">
+            <span className="items__number">5</span>
+            <div className="item__container" draggable="true">
+              <img className="item__img" src="https://assets.codepen.io/7237686/iridium_watering_can.svg?format=auto" alt="iridium_watering_can" draggable="false" />
+              <div className="item__tooltip" draggable="false">
+                <div className="item__tooltip__title">
+                  <h2>Iridium Hoe</h2>
+                  <h3 className="item__tooltip__category item__tooltip__category--tool">
+                    Tool
+                  </h3>
+                </div>
+                <div className="item__tooltip__info">
+                  Used to water crops. It can be refilled at any water source
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="items__container" id="oakTree">
+            <span className="items__number">6</span>
+            <div className="item__container" draggable="true">
+              <img className="item__img" src="https://assets.codepen.io/7237686/golden_scythe.svg?format=auto" alt="golden_scythe" draggable="false" />
+              <div className="item__tooltip" draggable="false">
+                <div className="item__tooltip__title">
+                  <h2>Golden Scythe</h2>
+                  <h3 className="item__tooltip__category item__tooltip__category--tool">
+                    Tool
+                  </h3>
+                </div>
+                <div className="item__tooltip__info">
+                  It is more powerful than a normal scythe.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="items__container" id="palmTree">
+            <span className="items__number">7</span>
+            <div className="item__container" draggable="true">
+              <img className="item__img" src="https://assets.codepen.io/7237686/copper_pan.svg?format=auto" alt="copper_pan" draggable="false" />
+              <div className="item__tooltip" draggable="false">
+                <div className="item__tooltip__title">
+                  <h2>Copper Pan</h2>
+                  <h3 className="item__tooltip__category item__tooltip__category--tool">
+                    Tool
+                  </h3>
+                </div>
+                <div className="item__tooltip__info">
+                  Use to gather ore from streams.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="items__container" id="pineTree">
+            <span className="items__number">8</span>
+            <div className="item__container"></div>
+          </div>
+          <div className="items__container" id="plateauFall">
+            <span className="items__number">9</span>
+            <div className="item__container"></div>
+          </div>
+          <div className="items__container" >
+            <span className="items__number">0</span>
+            <div className="item__container"></div>
+          </div>
+          <div className="items__container"  id="saveBtn">
+            <span className="items__number">-</span>
+            <div className="item__container"></div>
+          </div>
+          <div className="items__container"  onClick={reset}>
+            <span className="items__number">=</span>
+            <div className="item__container"></div>
+          </div>
         </div>
+      
+      </div>
+    </div>
+
+
+      
  
 
-        <div className='flex flex-col'>
-        <button className=' p-1 m-3 rounded-lg bg-blue-300 text-white' id='saveBtn'  >Save</button>
-        <button className=' p-1 m-3 rounded-lg bg-red-600 text-white' onClick={reset}>Reset</button>
-        <button id='link' className=' p-1 m-3 rounded-lg bg-green-300 text-white' onClick={download} >Export as GLTF</button>
-        </div>
+      
 
         </div>
-      </div>
+    </>
+   
   )
 }
 

@@ -2,3 +2,13 @@
   margin: 0 auto;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: url(/cursor.webp), auto;
+}
+
+canvas {
+  z-index: 10;
+}
