@@ -83,7 +83,7 @@
     animation: marquee 150s linear infinite running;
   }
   .marquee .clouds {
-    width: 180vw;
+    width: 100vw;
   }
   
   @keyframes marquee {
