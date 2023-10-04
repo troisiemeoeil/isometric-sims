@@ -1,12 +1,15 @@
 
 
-import "./miniMenu.css"
+import "../miniMenu.css"
 
 
 function MiniMenu() {
 
 
-
+  function reset() {
+    localStorage.clear();
+    location.reload()
+  }
   return (
     <div className="menu__content__inventory">
     <div className="inventory--hotbar">
@@ -125,7 +128,7 @@ function MiniMenu() {
         <span className="items__number">-</span>
         <div className="item__container"></div>
       </div>
-      <div className="items__container" >
+      <div className="items__container" onClick={reset} >
         <span className="items__number">=</span>
         <div className="item__container"></div>
       </div>

@@ -1,11 +1,11 @@
 
 import './App.css'
-import "./UI/miniMenu.css"
+import "./miniMenu.css"
 
 import * as THREE from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
+// import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
 // import large_buildingAimg from './assets/modelsImg/city/largebuildingA.png'
 // import detail_amingwidpng from './assets/modelsImg/city/detail_amingwid.png'
 // import lowbuildingCpng from './assets/modelsImg/city/lowbuildingC.png'
@@ -337,37 +337,34 @@ plateauFallmodel.addEventListener('click', ()=> {
 
   })
 
-  function reset() {
-    localStorage.clear();
-    location.reload()
-  }
+ 
 
-  function download(){
-    const exporter = new GLTFExporter();
-    exporter.parse(
-        scene,
-        function (result) {
-            saveArrayBuffer(result, 'ThreejsScene.glb'); 
-            console.log(result);
-        },
-        { 
-            binary: true
-        }
-    );
-}
+//   function download(){
+//     const exporter = new GLTFExporter();
+//     exporter.parse(
+//         scene,
+//         function (result) {
+//             saveArrayBuffer(result, 'ThreejsScene.glb'); 
+//             console.log(result);
+//         },
+//         { 
+//             binary: true
+//         }
+//     );
+// }
 
-function saveArrayBuffer(buffer, filename) {
-    save(new Blob([buffer], { type: 'application/octet-stream' }), filename);
-}
+// function saveArrayBuffer(buffer, filename) {
+//     save(new Blob([buffer], { type: 'application/octet-stream' }), filename);
+// }
    
-function save(blob) {
-  let scenelink = JSON.stringify(URL.createObjectURL(blob))
-  var scenelinksanit = scenelink.replace('blob:','');
-   console.log("link href",  URL.createObjectURL(blob), typeof(URL.createObjectURL(blob)));
-   localStorage.setItem('scenelink', scenelink)
-   console.log("link href", scenelinksanit);
+// function save(blob) {
+//   let scenelink = JSON.stringify(URL.createObjectURL(blob))
+//   var scenelinksanit = scenelink.replace('blob:','');
+//    console.log("link href",  URL.createObjectURL(blob), typeof(URL.createObjectURL(blob)));
+//    localStorage.setItem('scenelink', scenelink)
+//    console.log("link href", scenelinksanit);
 
-}
+// }
 
 function animate(time) {
       
