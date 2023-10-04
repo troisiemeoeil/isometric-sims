@@ -1,6 +1,6 @@
 
 
-import "./miniMenu.css"
+import "./minimenu.css"
 
 
 function MiniMenu() {
