@@ -453,7 +453,7 @@ useEffect(()=> {
 
   return (
     <>
-     <div className="marquee">
+     <div className="marquee" style={{width: "320vw"}}>
   <div className="clouds">
     <img src="/clouds.webp" alt="clouds" />
   </div>
