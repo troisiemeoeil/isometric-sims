@@ -4,6 +4,8 @@ import "./UI/minimenu.css"
 import * as THREE from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
+
+import MiniMenu from './UI/MiniMenu';
 // import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
 // import large_buildingAimg from './assets/modelsImg/city/largebuildingA.png'
 // import detail_amingwidpng from './assets/modelsImg/city/detail_amingwid.png'
@@ -36,7 +38,6 @@ import {addModel} from './scripts/addModel';
 import { deleteModel } from './scripts/deleteModel';
 import { loadSavedScene } from './scripts/loadSavedScene';
 import { loadScene } from './scripts/loadScene';
-import MiniMenu from './UI/MiniMenu';
 
 
 function App() {
@@ -169,8 +170,7 @@ const canvas = useRef()
   window.addEventListener('mousemove', function(e) {
     Raycast(e,mousePosition, raycaster, intersects, camera, planeMesh, highlightMesh, objects)
   });
-  
-  
+ 
   
   let objects = [];
 
@@ -181,6 +181,7 @@ const canvas = useRef()
 
 // })
 
+ window.addEventListener("load", ()=> {
   const largeBuildingBtn = document.getElementById('largeBuildingBtn')
   largeBuildingBtn.addEventListener('click', ()=> {
     addBuilding(selectedModel, stag, models)
@@ -243,6 +244,7 @@ plateauFallmodel.addEventListener('click', ()=> {
 
 })
 
+ })
   let selectedObj = []
 
 
@@ -427,7 +429,7 @@ useEffect(()=> {
   
   function dragStart(e) {
     beingDragged = e.target;
-  
+    console.log(e.target);
     let img = new Image();
     img.src =
       "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=";
@@ -438,15 +440,15 @@ useEffect(()=> {
     if (e.target.tagName === "IMG") {
       return;
     }
-  
     e.target.append(beingDragged);
+    e.target.removeAttribute('id');
   }
   
   function dragOver(e) {
     e.preventDefault();
   }
   
-      })
+      }, [])
 
 
   return (
@@ -471,7 +473,7 @@ useEffect(()=> {
     <img src="/clouds.webp" alt="clouds" />
   </div>
 </div>
-      <div ref={canvas}></div>
+      <div id='canvas' ref={canvas}></div>
 
      
 <MiniMenu />

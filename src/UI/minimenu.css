@@ -75,13 +75,10 @@
     background: #ad520b;
   }
 
-
-  img, video {
-    max-width: 100%;
-    height: 30vh;
+.addBlur {
+  filter: blur(1.5rem);
 }
-
-
+ 
   .marquee {
     z-index: 0;
     position: absolute;
@@ -93,6 +90,11 @@
     width: 90vw;
     height: 20vh;
   }
+
+  img, video {
+    max-width: 100%;
+    height: 30vh;
+}
   
   @keyframes marquee {
     0% {
@@ -233,9 +235,18 @@
     position: absolute;
     background: #f6b86f;
     width: 35%;
-    bottom: 2%;
+    bottom: 0%;
     left: 32.5%;
   }
+
+  .full__menu__content__inventory {
+    position: absolute;
+    background: #f6b86f;
+    width: 35%;
+    bottom: 10%;
+    left: 32.5%;
+  }
+
   .menu__content__inventory .items__container,
   .menu__content__inventory .items__container--disabled, .menu__content__info .items__container,
   .menu__content__info .items__container--disabled {
