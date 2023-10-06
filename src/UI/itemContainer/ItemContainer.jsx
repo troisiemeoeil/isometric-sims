@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import '../minimenu.css'
+import {  useEffect, useRef } from 'react';
 
 export default function ItemContainer({
     number,
@@ -12,8 +13,58 @@ export default function ItemContainer({
     title,
     description
 }) {
+
+  let source = "./sounds/Menu-Selection-Click.mp3"
+  function Playit() {
+   
+   var audio = new Audio(source);
+   audio.play();
+  }
+
+ const selectedOption = useRef()
+
+useEffect(()=> {
+ const inventoryhotbar = document.querySelector('.inventory--hotbar')
+ //Loop through all this div's children and set Selected to false
+ for (const child of inventoryhotbar.children) {
+  child.setAttribute("selected", "false")
+
+}
+
+  function select() {
+      // Loop through the div's children
+       for (const child of inventoryhotbar.children) {
+        // If there's any element that is true other than the 
+        // one clicked on, set it to false and make it transparent
+        if (child.getAttribute("selected") === "true") {
+          child.setAttribute("selected", "false")
+          child.style.backgroundColor = "transparent"
+          child.style.borderRadius = 0
+        // Set the clicked option attribute to true
+       selectedOption.current.setAttribute("selected", "true")
+          //adjust the styling 
+       selectedOption.current.style.backgroundColor = "#faebd7"
+       selectedOption.current.style.borderRadius = 0
+
+
+        }
+        //if there's no other elemnent selected, just set selected to
+        //true and adjust the styling
+        else {
+       selectedOption.current.setAttribute("selected", "true")
+       selectedOption.current.style.backgroundColor = "#faebd7"
+       selectedOption.current.style.borderRadius = 0
+
+        }
+      }
+
+     }
+     selectedOption.current.addEventListener("click", select)
+
+}, [])
+
   return (
-    <div className="items__container">
+    <div className="items__container" onMouseEnter={Playit}  ref={selectedOption}>
     <span className="items__number items__number--first">{number}</span>
     <div className="item__container" draggable={containerdraggable}  id={id}>
       <img className="item__img" src={imgUrl} alt={alt} draggable={imgDrag} />
@@ -31,8 +82,6 @@ export default function ItemContainer({
 }
 
 ItemContainer.propTypes = {
-  // You can declare that a prop is a specific JS primitive.
-  // By default, these are all optional.
   number: PropTypes.string,
   containerdraggable: PropTypes.string,
   id: PropTypes.string,
@@ -42,14 +91,4 @@ ItemContainer.propTypes = {
   tooltipDrag: PropTypes.string,
   title: PropTypes.string,
   description: PropTypes.string,
-
 }
-//1
-// true
-// largeBuildingBtn
-// https://assets.codepen.io/7237686/infinity_blade.svg?format=auto
-// infinity_blade
-// false
-// false
-// Infinity Blade
-// The true form of the Galaxy Sword

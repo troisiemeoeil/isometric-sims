@@ -79,8 +79,15 @@ function App() {
       directionalLight.position.set(-3, 3, -3);
       directionalLight.position.set(3, 3, 3);
       scene.add(directionalLight);
-    
-    
+
+    // let source = "./sounds/backgroundmusic.mp3"
+//    window.addEventListener('click', function Playit(e) {
+//     e.currentTarget.removeEventListener(e.type, Playit);
+//     var audio = new Audio(source);
+//     audio.play();
+//     audio.loop()
+// })
+
 
 let getStorageItems = localStorage.getItem('listofobjects')
 let getactiveStorage = localStorage.getItem('active')
@@ -170,7 +177,8 @@ const canvas = useRef()
   window.addEventListener('mousemove', function(e) {
     Raycast(e,mousePosition, raycaster, intersects, camera, planeMesh, highlightMesh, objects)
   });
- 
+
+
   
   let objects = [];
 
@@ -321,6 +329,8 @@ plateauFallmodel.addEventListener('click', ()=> {
       }
   });
 
+
+
   let listofmodels = []
   window.addEventListener('dblclick', () => {
     addModel(scene,intersects, raycaster, planeMesh, objects, highlightMesh, stag, listofmodels)
@@ -334,6 +344,8 @@ plateauFallmodel.addEventListener('click', ()=> {
     saveProgress(scene, listofmodels, getactiveStorage)
      })
 
+
+     
   })
 
  
@@ -415,7 +427,8 @@ useEffect(()=> {
   //=======DRAG AND DROP================
   const items = document.querySelectorAll(".item__container");
   const itemContainers = document.querySelectorAll(".items__container");
-  
+ 
+
   items.forEach((item) => {
     item.addEventListener("dragstart", dragStart);
   });
@@ -425,11 +438,14 @@ useEffect(()=> {
     square.addEventListener("drop", dragDrop);
   });
   
+
+
   let beingDragged;
-  
+ 
   function dragStart(e) {
     beingDragged = e.target;
     console.log(e.target);
+
     let img = new Image();
     img.src =
       "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=";
@@ -446,11 +462,12 @@ useEffect(()=> {
   
   function dragOver(e) {
     e.preventDefault();
+    
   }
   
       }, [])
 
-
+   
   return (
     <>
      <div className="marquee" style={{width: "320vw"}}>

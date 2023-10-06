@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import ItemContainer from "./itemContainer/ItemContainer";
+
 import "./minimenu.css"
 
 
@@ -26,10 +27,13 @@ function MiniMenu() {
   }, [isOn]);
   
 
+ 
 useEffect(()=> {
   
   const inventory = document.getElementById('inventory')
   const full_inventory = document.getElementById('full_inventory')
+  const inventoryhotbar = document.querySelector('.inventory--hotbar')
+
   // const marquee = document.querySelector('.marquee')
   const canvas = document.querySelector('#canvas')
 
@@ -49,7 +53,9 @@ useEffect(()=> {
 
   }
 
-
+  for (const child of inventoryhotbar.children) {
+    console.log(child.tagName);
+  }
 
 
 
@@ -69,6 +75,7 @@ useEffect(()=> {
 
       {/* {render} */}
         <ItemContainer
+          
           number="1"
           containerdraggable="true"
           id="largeBuildingBtn"
@@ -101,97 +108,81 @@ useEffect(()=> {
           title="Iridium Axe"
           description="Used to chop wood."
         />
+      <ItemContainer
+          number="4"
+          containerdraggable="true"
+          id="lowBuilding"
+          imgUrl="https://assets.codepen.io/7237686/iridium_hoe.svg?format=auto"
+          alt="iridium_hoe"
+          imgDrag="false"
+          tooltipDrag="false"
+          title="Iridium Hoe"
+          description="Used to dig and till soil."
+        />
+      
+      <ItemContainer
+          number="5"
+          containerdraggable="true"
+          id="smallBuilding"
+          imgUrl="https://assets.codepen.io/7237686/iridium_watering_can.svg?format=auto"
+          alt="iridium_watering_can"
+          imgDrag="false"
+          tooltipDrag="false"
+          title="Iridium Watering Can"
+          description="Used to water crops. It can be refilled at any water source"
+        />
+    
+    <ItemContainer
+          number="6"
+          containerdraggable="true"
+          id="oakTree"
+          imgUrl="https://assets.codepen.io/7237686/golden_scythe.svg?format=auto"
+          alt="golden_scythe"
+          imgDrag="false"
+          tooltipDrag="false"
+          title="Golden Scythe"
+          description="It is more powerful than a normal scythe."
+        />
+
+      <ItemContainer
+          number="7"
+          containerdraggable="true"
+          id="palmTree"
+          imgUrl="https://assets.codepen.io/7237686/copper_pan.svg?format=auto"
+          alt="copper_pan"
+          imgDrag="false"
+          tooltipDrag="false"
+          title="Copper Pan"
+          description="Use to gather ore from streams."
+        />
+ 
+    
+       <ItemContainer
+          number="8"
+          containerdraggable="true"
+          id="pineTree"
+          imgUrl="https://assets.codepen.io/7237686/corn.svg?format=auto"
+          alt="copper_pan"
+          imgDrag="false"
+          tooltipDrag="false"
+          title="Pine Tree"
+          description=" Use to gather ore from streams."
+        />
    
-      <div className="items__container"  >
-        <span className="items__number">4</span>
-        <div className="item__container" draggable="true" id="lowBuilding">
-          <img className="item__img" src="https://assets.codepen.io/7237686/iridium_hoe.svg?format=auto" alt="iridium_hoe" draggable="false" />
-          <div className="item__tooltip" draggable="false">
-            <div className="item__tooltip__title">
-              <h2>Iridium Hoe</h2>
-          
-            </div>
-            <div className="item__tooltip__info">
-              Used to dig and till soil.
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="items__container" >
-        <span className="items__number">5</span>
-        <div className="item__container" draggable="true" id="smallBuilding">
-          <img className="item__img" src="https://assets.codepen.io/7237686/iridium_watering_can.svg?format=auto" alt="iridium_watering_can" draggable="false" />
-          <div className="item__tooltip" draggable="false">
-            <div className="item__tooltip__title">
-              <h2>Iridium Hoe</h2>
-            
-            </div>
-            <div className="item__tooltip__info">
-              Used to water crops. It can be refilled at any water source
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="items__container" >
-        <span className="items__number">6</span>
-        <div className="item__container" draggable="true" id="oakTree">
-          <img className="item__img" src="https://assets.codepen.io/7237686/golden_scythe.svg?format=auto" alt="golden_scythe" draggable="false" />
-          <div className="item__tooltip" draggable="false">
-            <div className="item__tooltip__title">
-              <h2>Golden Scythe</h2>
-           
-            </div>
-            <div className="item__tooltip__info">
-              It is more powerful than a normal scythe.
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="items__container" >
-        <span className="items__number">7</span>
-        <div className="item__container" draggable="true" id="palmTree">
-          <img className="item__img" src="https://assets.codepen.io/7237686/copper_pan.svg?format=auto" alt="copper_pan" draggable="false" />
-          <div className="item__tooltip" draggable="false">
-            <div className="item__tooltip__title">
-              <h2>Copper Pan</h2>
-             
-            </div>
-            <div className="item__tooltip__info">
-              Use to gather ore from streams.
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="items__container" >
-        <span className="items__number">8</span>
-        <div className="item__container" draggable="true"id="pineTree">
-          <img className="item__img" src="https://assets.codepen.io/7237686/corn.svg?format=auto" alt="copper_pan" draggable="false" />
-          <div className="item__tooltip" draggable="false">
-            <div className="item__tooltip__title">
-              <h2>Pine Tree</h2>
-             
-            </div>
-            <div className="item__tooltip__info">
-              Use to gather ore from streams.
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="items__container" >
-        <span className="items__number">9</span>
-        <div className="item__container" draggable="true"id="plateauFall">
-          <img className="item__img" src="https://assets.codepen.io/7237686/sunflower.svg?format=auto" alt="copper_pan" draggable="false" />
-          <div className="item__tooltip" draggable="false">
-            <div className="item__tooltip__title">
-              <h2>Plateau Fall</h2>
-             
-            </div>
-            <div className="item__tooltip__info">
-              Use to gather ore from streams.
-            </div>
-          </div>
-        </div>
-      </div>
+
+       <ItemContainer
+          number="9"
+          containerdraggable="true"
+          id="plateauFall"
+          imgUrl="https://assets.codepen.io/7237686/sunflower.svg?format=auto"
+          alt="copper_pan"
+          imgDrag="false"
+          tooltipDrag="false"
+          title="Plateau Fall"
+          description=" Use to gather ore from streams."
+        />
+   
+    
    
       <div className="items__container" >
         <span className="items__number">0</span>
