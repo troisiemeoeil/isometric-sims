@@ -45,11 +45,9 @@ useEffect(()=> {
           //adjust the styling 
        selectedOption.current.style.backgroundColor = "#faebd7"
        selectedOption.current.style.borderRadius = 0
-
-
         }
         //if there's no other elemnent selected, just set selected to
-        //true and adjust the styling
+        //true and adjust the styling 
         else {
        selectedOption.current.setAttribute("selected", "true")
        selectedOption.current.style.backgroundColor = "#faebd7"
@@ -65,9 +63,9 @@ useEffect(()=> {
 
   return (
     <div className="items__container" onMouseEnter={Playit}  ref={selectedOption}>
-    <span className="items__number items__number--first">{number}</span>
+    <span className="items__number ">{number}</span>
     <div className="item__container" draggable={containerdraggable}  id={id}>
-      <img className="item__img" src={imgUrl} alt={alt} draggable={imgDrag} />
+      <img className="item__img" src={imgUrl} alt={alt} draggable={imgDrag}  style={{maxWidth: "100px", width:"40px"}}/>
       <div className="item__tooltip" draggable={tooltipDrag}>
         <div className="item__tooltip__title">
           <h2>{title}</h2>

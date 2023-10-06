@@ -38,6 +38,7 @@ import {addModel} from './scripts/addModel';
 import { deleteModel } from './scripts/deleteModel';
 import { loadSavedScene } from './scripts/loadSavedScene';
 import { loadScene } from './scripts/loadScene';
+import addModelSound from './scripts/audio/addModelSound';
 
 
 function App() {
@@ -80,13 +81,13 @@ function App() {
       directionalLight.position.set(3, 3, 3);
       scene.add(directionalLight);
 
-    // let source = "./sounds/backgroundmusic.mp3"
-//    window.addEventListener('click', function Playit(e) {
-//     e.currentTarget.removeEventListener(e.type, Playit);
-//     var audio = new Audio(source);
-//     audio.play();
-//     audio.loop()
-// })
+    let source = "./sounds/backgroundmusic.mp3"
+   window.addEventListener('click', function Playit(e) {
+    e.currentTarget.removeEventListener(e.type, Playit);
+    var audio = new Audio(source);
+    audio.play();
+    audio.loop()
+})
 
 
 let getStorageItems = localStorage.getItem('listofobjects')
@@ -105,12 +106,15 @@ scene.add(planeMesh);
 
 const grid = new THREE.GridHelper(20, 20);
 scene.add(grid);
-
+let map = new THREE.TextureLoader().load("./platformPack_tile009.png")
+// let material = new THREE.MeshPhongMaterial({
+//   map: map
+// })
 const highlightMesh = new THREE.Mesh(
   new THREE.PlaneGeometry(1, 1),
-  new THREE.MeshBasicMaterial({
-      side: THREE.DoubleSide,
-      transparent: true
+  new THREE.MeshPhongMaterial({
+    map: map,
+    transparent: true
   })
 );
 
@@ -262,7 +266,7 @@ plateauFallmodel.addEventListener('click', ()=> {
   
   
   );
-  
+ 
   window.addEventListener('contextmenu', function() {
      
       const objectExist = objects.find(function(object) {
@@ -278,7 +282,7 @@ plateauFallmodel.addEventListener('click', ()=> {
                   selectedObj.pop();
               }
               selectedObj.push(objectExist)
-              highlightMesh.material.color.setHex(0x8BACAA);
+              // highlightMesh.material.color.setHex(0x8BACAA);
              }
   console.log(selectedObj[0]);
   
@@ -333,7 +337,10 @@ plateauFallmodel.addEventListener('click', ()=> {
 
   let listofmodels = []
   window.addEventListener('dblclick', () => {
+
     addModel(scene,intersects, raycaster, planeMesh, objects, highlightMesh, stag, listofmodels)
+    addModelSound()
+
   }
   );
   
@@ -377,10 +384,9 @@ plateauFallmodel.addEventListener('click', ()=> {
 
 // }
 
-function animate(time) {
+function animate() {
       
   renderer.setAnimationLoop(animate);
-  highlightMesh.material.opacity = 1 + Math.sin(time / 120);
   renderer.render(scene, camera);
   
 }

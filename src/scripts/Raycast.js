@@ -3,7 +3,7 @@ import * as THREE from 'three';
 export function Raycast(e,mousePosition, raycaster, intersects, camera, planeMesh, highlightMesh, objects) {
     mousePosition.x = (e.clientX / window.innerWidth) * 2 - 1;
     mousePosition.y = -(e.clientY / window.innerHeight) * 2 + 1;
-    
+  
     raycaster.setFromCamera(mousePosition, camera);
     intersects = raycaster.intersectObject(planeMesh);
     if(intersects.length > 0) {

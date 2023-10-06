@@ -360,8 +360,8 @@
   .menu__content__info .items__container--disabled .item__container .item__tooltip {
     display: none;
     position: absolute;
-    left: 3.125rem;
-    top: 0;
+    left: 3rem;
+    bottom: 2rem;
     z-index: 89999;
     min-width: 22rem;
     border-radius: 1.125rem;

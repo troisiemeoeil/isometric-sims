@@ -1,8 +1,9 @@
 import {intersect } from './Raycast';
+import addModelSound from './audio/addModelSound';
 
 
 export  function addModel(scene, intersects, raycaster, planeMesh, objects, highlightMesh, stag, listofmodels) {
-
+    addModelSound()
         console.log(stag);
     intersect(intersects, raycaster, planeMesh)
         const objectExist = objects.find(function(object) {
