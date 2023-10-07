@@ -31,25 +31,41 @@ function MiniMenu() {
 useEffect(()=> {
   
   const inventory = document.getElementById('inventory')
+  
   const full_inventory = document.getElementById('full_inventory')
   const inventoryhotbar = document.querySelector('.inventory--hotbar')
+  const menu = document.querySelector('.menu')
+  const menu__tabs__container = document.querySelector('.menu__tabs__container')
 
-  // const marquee = document.querySelector('.marquee')
+
+  const marquee = document.querySelector('.marquee')
   const canvas = document.querySelector('#canvas')
 
   if (isOn === false) {
     inventory.style.bottom = '20%'
     full_inventory.style.display = 'grid'
-    // marquee.classList.add("addBlur");
+    menu.style.height = '100%'
+    menu.style.top = '20vh'
+
+    menu__tabs__container.style.top = "33%"
+    marquee.style.zIndex = '1'
+  
+
     canvas.classList.add("addBlur");
 
+    marquee.classList.add("addBlur");
     // console.log(marquee);
   }
   else {
     inventory.style.bottom = '0%'
     full_inventory.style.display = 'none'
-    // marquee.classList.remove("addBlur");
+    menu.style.height = '25%'
+    menu.style.top = '68vh'
+    marquee.style.zIndex = '0'
+    marquee.style.opacity = '1'
+
     canvas.classList.remove("addBlur");
+    marquee.classList.remove("addBlur");
 
   }
 
@@ -67,8 +83,40 @@ useEffect(()=> {
     location.reload()
   }
   return (
- <>
-  <div >
+ <div className="menu">
+    <div className="menu__tabs__container">
+    <div className="btn menu__tab menu__tab--active disabled">
+      <img src="https://assets.codepen.io/7237686/backpack.svg?format=auto" className="menu__img" alt="inventory_tab_image" />
+      <span className="tooltip" id="tp1">Inventory</span>
+    </div>
+    <div className="btn menu__tab disabled">
+      <img src="https://assets.codepen.io/7237686/avatar.svg?format=auto" className="menu__img" alt="inventory_tab_image" />
+      <span className="tooltip" id="tp2" >Skills</span>
+    </div>
+    <div className="btn menu__tab disabled">
+      <img src="https://assets.codepen.io/7237686/heart.svg?format=auto" className="menu__img" alt="inventory_tab_image" />
+      <span className="tooltip" id="tp3" >Socials</span>
+    </div>
+    <div className="btn menu__tab disabled">
+      <img src="https://assets.codepen.io/7237686/map.svg?format=auto" className="menu__img" alt="inventory_tab_image" />
+      <span className="tooltip" id="tp4" >Map</span>
+    </div>
+    <div className="btn menu__tab disabled">
+      <img src="https://assets.codepen.io/7237686/tool.svg?format=auto" className="menu__img" alt="inventory_tab_image" />
+      <span className="tooltip" id="tp5" >Crafting</span>
+    </div>
+    <div className="btn menu__tab disabled">
+      <img src="https://assets.codepen.io/7237686/bag.svg?format=auto" className="menu__img" alt="inventory_tab_image" />
+      <span className="tooltip" id="tp6" >Collection</span>
+    </div>
+    <div className="btn menu__tab disabled">
+      <img src="https://assets.codepen.io/7237686/console.svg?format=auto" className="menu__img" alt="inventory_tab_image" />
+      <span className="tooltip" id="tp7" >Options</span>
+    </div>
+    <div className="btn menu__tab disabled">
+      <img src="https://assets.codepen.io/7237686/close.svg?format=auto" className="menu__img" alt="inventory_tab_image" />
+      <span className="tooltip" id="tp8" >Exit Game</span>
+    </div>
   </div>
       <div id="inventory"  className="menu__content__inventory" >
     <div className="inventory--hotbar">
@@ -610,7 +658,7 @@ useEffect(()=> {
       </div>
   
   </div>
-  </>
+  </div>
 
   )
 }

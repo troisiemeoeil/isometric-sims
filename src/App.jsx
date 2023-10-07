@@ -71,15 +71,19 @@ function App() {
       const spotLight = new THREE.SpotLight( 0xffffff );
       spotLight.intensity = 2;
       spotLight.position.set( 1000, 1000, 1000 );
-      spotLight.position.set( 1000, 1000, -1000 );
+      // spotLight.position.set( 1000, 1000, -1000 );
       
       
       scene.add(spotLight)
       
-      const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1);
-      directionalLight.position.set(-3, 3, -3);
-      directionalLight.position.set(3, 3, 3);
-      scene.add(directionalLight);
+      // const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1);
+      // // directionalLight.position.set(-3, 3, -3);
+      // directionalLight.position.set(3, 3, 3);
+      // directionalLight.position.set(3, 3, -3);
+      // directionalLight.position.set(-3, 3, 3);
+
+
+      // scene.add(directionalLight);
 
     let source = "./sounds/backgroundmusic.mp3"
    window.addEventListener('click', function Playit(e) {
@@ -92,24 +96,26 @@ function App() {
 
 let getStorageItems = localStorage.getItem('listofobjects')
 let getactiveStorage = localStorage.getItem('active')
+let planemap = new THREE.TextureLoader().load("./planeTexture.png")
    
 const planeMesh = new THREE.Mesh(
   new THREE.PlaneGeometry(20, 20),
-  new THREE.MeshBasicMaterial({
-      side: THREE.DoubleSide,
-      visible: false
+  new THREE.MeshPhongMaterial({
+    map: planemap,
+    depthWrite: false,
+    precision: "highp",
+    
   })
 );
 planeMesh.rotation.x = Math.PI * - 0.5;
 scene.add(planeMesh);
 
 
-const grid = new THREE.GridHelper(20, 20);
-scene.add(grid);
+// const grid = new THREE.GridHelper(20, 20);
+// scene.add(grid);
+
+
 let map = new THREE.TextureLoader().load("./platformPack_tile009.png")
-// let material = new THREE.MeshPhongMaterial({
-//   map: map
-// })
 const highlightMesh = new THREE.Mesh(
   new THREE.PlaneGeometry(1, 1),
   new THREE.MeshPhongMaterial({
@@ -124,10 +130,11 @@ scene.add(highlightMesh);
 
 const mousePosition = new THREE.Vector2();
 const raycaster = new THREE.Raycaster();
+const raycasterObj = new THREE.Raycaster();
+
 let intersects;
 
-   
-  
+
     
 const largeBuilding = new URL('./assets/large_buildingA.glb', import.meta.url);
 const skyScraper = new URL('./assets/skyscraperD.glb', import.meta.url);
@@ -183,6 +190,14 @@ const canvas = useRef()
   });
 
 
+  // GET A SPECIFIC OBJECT ON SCREN
+   let canvas3 = document.getElementById('canvas')
+   canvas3.addEventListener('click', ()=> {
+   raycasterObj.setFromCamera(mousePosition, camera)
+   let intersect = raycasterObj.intersectObjects(scene.children)
+   console.log(intersect[0].object.material);
+   intersect[0].object.material.color.setHex( 0xffffff );
+   })
   
   let objects = [];
 
@@ -395,6 +410,7 @@ animate()
 
 window.addEventListener('resize', function() {
   camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix ()
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
@@ -498,7 +514,7 @@ useEffect(()=> {
 </div>
       <div id='canvas' ref={canvas}></div>
 
-     
+    
 <MiniMenu />
     </>
    
