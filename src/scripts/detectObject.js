@@ -15,16 +15,19 @@ export  function detectObject(scene,  raycasterObj, mousePosition, camera) {
         console.log('selectedModelId',selectedModelObj);
         const box = new THREE.BoxHelper( selectedModelObj, 0xf5ebe0 );
         scene.add( box );
+
+        // let worldPosition = intersect[0].object.getWorldPosition(new THREE.Vector3)
+
+        // let localStorageItems = JSON.parse(localStorage.getItem('listofobjects'))
+    
+     
+        // DELETE MODEL 
         let deletedModel = selectedModelObj.parent
         setTimeout(()=> {
 
             deletedModel.parent.remove(deletedModel)
             scene.remove(box)
         }, 2000)
-      
+
           
-          
-          for (let i = 1; i < scene.children.length; i++ ) {
-              console.log(scene.children[i]);
-          }
       }

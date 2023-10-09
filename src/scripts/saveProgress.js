@@ -7,37 +7,46 @@ export function saveProgress(scene, listofmodels, getactiveStorage) {
         let sceneContent = scene.children
         console.log("content of list of models",listofmodels);
         console.log("list of scene children",sceneContent);
-       
+       console.log('name', sceneContent[5].children[0].name);
+
     
         if (getactiveStorage === null) {
-             localStorage.clear();
-            localStorage.setItem('active', "active")
-            localStorage.setItem("listofobjects", JSON.stringify(listofmodels))
+   
+            let savedItems = []
+            for (let i = 5; i < sceneContent.length; i++) {
+              savedItems.push({
+                name: sceneContent[i].children[0].name,
+                position: {
+                  x: sceneContent[i].position.x,
+                  y: sceneContent[i].position.y,
+                  z: sceneContent[i].position.z,
+                }
+              })
+              }
+
+              localStorage.clear();
+              localStorage.setItem('active', "active")
+              localStorage.setItem("listofobjects", JSON.stringify(savedItems))
             console.log("saved items when there's NO save", JSON.parse(localStorage.getItem("listofobjects")));
         }
         else if (getactiveStorage === "active") {
                 // correct method
-                  // "Producing Code" (May take some time)
-                console.log("list of models to be added",listofmodels);
-                  
-                  let modelsInStorage = JSON.parse(localStorage.getItem("listofobjects"))
-                console.log("models in storage before setting storage",modelsInStorage);
-    
-                  console.log("current models in storage",  modelsInStorage);
-                  for (let i = 0; i < listofmodels.length; i++) {
-                  modelsInStorage.push(listofmodels[i])
-                  }
-                  var result = modelsInStorage.reduce((unique, o) => {
-                    if(!unique.some(obj => obj.name === o.name && obj.position.x === o.position.x && obj.position.z === o.position.z )) {
-                      unique.push(o);
-                    }
-                console.log(result);
-    
-                console.log("clean models", unique);
-                localStorage.setItem("listofobjects", JSON.stringify(unique))
-    
-                    return unique;
-                    
-                },[]);
+                  // "Producing Code" (May take some time)  
+                  let savedItems = []
+            for (let i = 5; i < sceneContent.length; i++) {
+              savedItems.push({
+                name: sceneContent[i].children[0].name,
+                position: {
+                  x: sceneContent[i].position.x,
+                  y: sceneContent[i].position.y,
+                  z: sceneContent[i].position.z,
+                }
+              })
+              }
+
+              localStorage.clear();
+              localStorage.setItem('active', "active")
+              localStorage.setItem("listofobjects", JSON.stringify(savedItems))
+            console.log("saved items when there's NO save", JSON.parse(localStorage.getItem("listofobjects")));
         }
 }
