@@ -13,21 +13,33 @@ export  function detectObject(scene,  raycasterObj, mousePosition, camera) {
         //   let selectedModelMesh = intersect[0].object
 
         console.log('selectedModelId',selectedModelObj);
-        const box = new THREE.BoxHelper( selectedModelObj, 0xf5ebe0 );
-        scene.add( box );
-
-        // let worldPosition = intersect[0].object.getWorldPosition(new THREE.Vector3)
-
-        // let localStorageItems = JSON.parse(localStorage.getItem('listofobjects'))
+    console.log("is it mesh?", selectedModelObj.isMesh);
+        if (selectedModelObj.type == "Scene") {
+            return;
+        }
+        else {
+            let bbox = new THREE.Box3().setFromObject(selectedModelObj);
+            const box = new THREE.BoxHelper( selectedModelObj, 0xf5ebe0 );
+            let size = bbox.getSize(new THREE.Vector3());
+            scene.add( box );
+        console.log(size);
+            // let worldPosition = intersect[0].object.getWorldPosition(new THREE.Vector3)
     
-     
-        // DELETE MODEL 
-        let deletedModel = selectedModelObj.parent
-        setTimeout(()=> {
-
-            deletedModel.parent.remove(deletedModel)
-            scene.remove(box)
-        }, 2000)
+            // let localStorageItems = JSON.parse(localStorage.getItem('listofobjects'))
+        
+         
+            // DELETE MODEL 
+            let deletedModel = selectedModelObj.parent
+            window.addEventListener('keypress', (e)=> {
+                switch (e.code) {
+                    case 'KeyX':
+                    
+                    deletedModel.parent.remove(deletedModel)
+                    scene.remove(box)
+                        break  
+                }  
+            })
+        }
 
           
       }

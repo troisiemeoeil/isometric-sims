@@ -18,6 +18,9 @@ export function addBuilding(selectedModel, stag, models) {
     while(stag.length > 0) {
         stag.pop();
     }
+ 
+
+
     selectedModel.push(models[0])
     console.log(selectedModel);
 }

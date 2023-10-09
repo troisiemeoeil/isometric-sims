@@ -35,7 +35,7 @@ import { addBuilding,
 import { Raycast } from './scripts/Raycast';
 import {saveProgress} from './scripts/saveProgress';
 import {addModel} from './scripts/addModel';
-import { deleteModel } from './scripts/deleteModel';
+// import { deleteModel } from './scripts/deleteModel';
 import { loadSavedScene } from './scripts/loadSavedScene';
 import { loadScene } from './scripts/loadScene';
 import addModelSound from './scripts/audio/addModelSound';
@@ -44,8 +44,8 @@ import { detectObject } from './scripts/detectObject';
 
 function App() {
   let stag = []
-    const renderer = new THREE.WebGLRenderer({antialias: true});
 
+    const renderer = new THREE.WebGLRenderer({antialias: true});
     const scene = new THREE.Scene();
 
       //principal camera
@@ -107,7 +107,8 @@ const planeMesh = new THREE.Mesh(
     map: planemap,
     depthWrite: false,
     precision: "highp",
-    
+    side: THREE.DoubleSide,
+    transparent: false
   })
 );
 planeMesh.rotation.x = Math.PI * - 0.5;
@@ -182,23 +183,25 @@ const canvas = useRef()
 
 
   useEffect(()=> {
-
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor (0xEEE0C9, 1);
+    
+    renderer.toneMapping = THREE.NoToneMapping;
     canvas.current.appendChild(renderer.domElement);
   const loader = new THREE.TextureLoader();
   loader.load('/bgpixel.webp' , function(texture)
               {
                scene.background = texture
               });
+ 
+  }); 
+
+useEffect(()=> {
   window.addEventListener('mousemove', function Raycasting(e) {
     Raycast(e,mousePosition, raycaster, intersects, camera, planeMesh, highlightMesh, objects)
     return () => {
       window.removeEventListener("mousemove", Raycasting);
     }
-  });
-
-
+})
 
   
   let objects = [];
@@ -304,12 +307,12 @@ return () => {
 // })
 
 
-  window.addEventListener('keypress', function deleteModelEvent(e) {
-    deleteModel(e, intersects, raycaster, planeMesh, objects, highlightMesh, selectedObj)
-    return () => {
-      window.removeEventListener("keypress", deleteModelEvent);
-    }
-  });
+  // window.addEventListener('keypress', function deleteModelEvent(e) {
+  //   deleteModel(e, intersects, raycaster, planeMesh, objects, highlightMesh, selectedObj)
+  //   return () => {
+  //     window.removeEventListener("keypress", deleteModelEvent);
+  //   }
+  // });
 
    
   
