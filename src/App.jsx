@@ -39,6 +39,7 @@ import { deleteModel } from './scripts/deleteModel';
 import { loadSavedScene } from './scripts/loadSavedScene';
 import { loadScene } from './scripts/loadScene';
 import addModelSound from './scripts/audio/addModelSound';
+import { detectObject } from './scripts/detectObject';
 
 
 function App() {
@@ -64,7 +65,6 @@ function App() {
       orbit.saveState()
 
       const ambientLight = new THREE.AmbientLight(0xFFFFFF);
-      console.log(scene);
       ambientLight.intensity = 2;
       scene.add(ambientLight);
       
@@ -85,13 +85,16 @@ function App() {
 
       // scene.add(directionalLight);
 
-    let source = "./sounds/backgroundmusic.mp3"
-   window.addEventListener('click', function Playit(e) {
-    e.currentTarget.removeEventListener(e.type, Playit);
-    var audio = new Audio(source);
-    audio.play();
-    audio.loop()
-})
+
+      //reactivate sound
+//     let source = "./sounds/backgroundmusic.mp3"
+//    window.addEventListener('click', function Playit(e) {
+//     e.currentTarget.removeEventListener(e.type, Playit);
+//     var audio = new Audio(source);
+//     audio.play();
+//     audio.loop()
+  
+// })
 
 
 let getStorageItems = localStorage.getItem('listofobjects')
@@ -161,8 +164,11 @@ const roadSquare = new URL('./assets/road_square.glb', import.meta.url);
   
 if (getactiveStorage === null) {
    
-window.addEventListener('load', ()=> {
+window.addEventListener('load', function loadScene2() {
   loadScene(selectedModel, stag)
+  return () => {
+    window.removeEventListener("load", loadScene2);
+  }
 })
 
 }
@@ -185,19 +191,15 @@ const canvas = useRef()
               {
                scene.background = texture
               });
-  window.addEventListener('mousemove', function(e) {
+  window.addEventListener('mousemove', function Raycasting(e) {
     Raycast(e,mousePosition, raycaster, intersects, camera, planeMesh, highlightMesh, objects)
+    return () => {
+      window.removeEventListener("mousemove", Raycasting);
+    }
   });
 
 
-  // GET A SPECIFIC OBJECT ON SCREN
-   let canvas3 = document.getElementById('canvas')
-   canvas3.addEventListener('click', ()=> {
-   raycasterObj.setFromCamera(mousePosition, camera)
-   let intersect = raycasterObj.intersectObjects(scene.children)
-   console.log(intersect[0].object.material);
-   intersect[0].object.material.color.setHex( 0xffffff );
-   })
+
   
   let objects = [];
 
@@ -208,82 +210,113 @@ const canvas = useRef()
 
 // })
 
- window.addEventListener("load", ()=> {
+ window.addEventListener("load", function loadAddedModels() {
   const largeBuildingBtn = document.getElementById('largeBuildingBtn')
-  largeBuildingBtn.addEventListener('click', ()=> {
+  largeBuildingBtn.addEventListener('click', function loadLargeBuilding() {
     addBuilding(selectedModel, stag, models)
     loadScene( selectedModel, stag)
-
+    return () => {
+      largeBuildingBtn.removeEventListener("click", loadLargeBuilding);
+    }
 })
  
 const skyScraperBtn = document.getElementById('skyScraperBtn')
-skyScraperBtn.addEventListener('click', ()=> {
+skyScraperBtn.addEventListener('click', function loadSkyScraper() {
 addskyScraperBtn(selectedModel, stag, models)
 loadScene( selectedModel, stag)
-
+return () => {
+  skyScraperBtn.removeEventListener("click", loadSkyScraper);
+}
 })
 
  
 const detail_awningWide = document.getElementById('detail_awningWide')
-detail_awningWide.addEventListener('click', ()=> {
+detail_awningWide.addEventListener('click', function loadAmingWide() {
     adddetail_awningWide(selectedModel, stag, models)
    loadScene( selectedModel, stag)
-
+   return () => {
+    detail_awningWide.removeEventListener("click", loadAmingWide);
+  }
 })
 
 const lowBuildingmodel = document.getElementById('lowBuilding')
-lowBuildingmodel.addEventListener('click', ()=> {
+lowBuildingmodel.addEventListener('click', function loadLowBuilding() {
     addlowBuilding(selectedModel, stag, models)
     loadScene( selectedModel, stag)
-
+    return () => {
+      lowBuildingmodel.removeEventListener("click", loadLowBuilding);
+    }
 })
 
 const smallBuildingmodel = document.getElementById('smallBuilding')
-smallBuildingmodel.addEventListener('click', ()=> {
+smallBuildingmodel.addEventListener('click', function loadSmallBuilding() {
     addsmallBuildingmodel(selectedModel, stag, models)
     loadScene( selectedModel, stag)
-
+    return () => {
+      smallBuildingmodel.removeEventListener("click", loadSmallBuilding);
+    }
 })
 
 const oakTreemodel = document.getElementById('oakTree')
-oakTreemodel.addEventListener('click', ()=> {
+oakTreemodel.addEventListener('click', function loadOakTree() {
     addoakTreemodel(selectedModel, stag, models)
     loadScene( selectedModel, stag)
-
+    return () => {
+      oakTreemodel.removeEventListener("click", loadOakTree);
+    }
 })
 
 const palmTreemodel = document.getElementById('palmTree')
-palmTreemodel.addEventListener('click', ()=> {
+palmTreemodel.addEventListener('click', function loadPalmTree() {
     addpalmTreemodel(selectedModel, stag, models)
     loadScene( selectedModel, stag)
-
+    return () => {
+      palmTreemodel.removeEventListener("click", loadPalmTree);
+    }
 })
 const pineTreemodel = document.getElementById('pineTree')
-pineTreemodel.addEventListener('click', ()=> {
+pineTreemodel.addEventListener('click', function loadPineTree() {
     addpineTreemodel(selectedModel, stag, models)
     loadScene( selectedModel, stag)
-
+    return () => {
+      pineTreemodel.removeEventListener("click", loadPineTree);
+    }
 })
 const plateauFallmodel = document.getElementById('plateauFall')
-plateauFallmodel.addEventListener('click', ()=> {
+plateauFallmodel.addEventListener('click', function loadPlateauFall() {
     addplateauFallmodel(selectedModel, stag, models)
     loadScene( selectedModel, stag)
-
+    return () => {
+      plateauFallmodel.removeEventListener("click", loadPlateauFall);
+    }
 })
-
+return () => {
+  window.removeEventListener("load", loadAddedModels);
+}
  })
   let selectedObj = []
 
+//   const raycasterObj = new THREE.Raycaster();
+//   window.addEventListener('click', (event)=> {
+//     mousePosition.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+//     mousePosition.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+//     detectObject(raycasterObj, mousePosition, camera, scene)
+// })
 
-  window.addEventListener('keypress', (e) => {
+
+  window.addEventListener('keypress', function deleteModelEvent(e) {
     deleteModel(e, intersects, raycaster, planeMesh, objects, highlightMesh, selectedObj)
-  }
+    return () => {
+      window.removeEventListener("keypress", deleteModelEvent);
+    }
+  });
+
+   
   
-  
-  );
  
-  window.addEventListener('contextmenu', function() {
-     
+  window.addEventListener('contextmenu', function selectObject() {
+
+   
       const objectExist = objects.find(function(object) {
              return (object.position.x === highlightMesh.position.x)
              && (object.position.z === highlightMesh.position.z)
@@ -300,13 +333,18 @@ plateauFallmodel.addEventListener('click', ()=> {
               // highlightMesh.material.color.setHex(0x8BACAA);
              }
   console.log(selectedObj[0]);
-  
+
+
+
+  return () => {
+    window.removeEventListener("contextmenu", selectObject);
+  }
   });
 
   
 
   
-  window.addEventListener('keypress', function (event) {
+  window.addEventListener('keypress', function translateObjects(event) {
   
           switch (event.code) {
               case 'KeyS':
@@ -326,9 +364,12 @@ plateauFallmodel.addEventListener('click', ()=> {
               //     controls.setMode('scale')
               //     break
           }
+          return () => {
+            window.removeEventListener("keypress", translateObjects);
+          }
   })
   
-  window.addEventListener('keydown', function (event) {
+  window.addEventListener('keydown', function rotateObjects (event) {
       if (event.ctrlKey  && event.code === 'KeyC') {
           selectedObj[0].rotation.y += 0.05
                   
@@ -346,28 +387,42 @@ plateauFallmodel.addEventListener('click', ()=> {
           selectedObj[0].scale.y -= 0.5
           selectedObj[0].scale.z -= 0.5
       }
+      return () => {
+        window.removeEventListener("keydown", rotateObjects);
+      }
   });
 
+  
 
 
   let listofmodels = []
-  window.addEventListener('dblclick', () => {
+  window.addEventListener('dblclick', function insertSelectedModel() {
 
-    addModel(scene,intersects, raycaster, planeMesh, objects, highlightMesh, stag, listofmodels)
+    addModel(scene,intersects, raycaster, planeMesh, objects, highlightMesh, stag, listofmodels , mousePosition, camera)
     addModelSound()
+    return () => {
+      window.removeEventListener("dblclick", insertSelectedModel);
+    }
+  });
 
-  }
-  );
+  window.addEventListener('auxclick', function detectObj() {
+
+    detectObject(scene,  raycasterObj, mousePosition, camera)
+    return () => {
+      window.removeEventListener("dblclick", detectObj);
+    }
+  });
   
 
   const saveBtn = document.getElementById("saveBtn")
 
-  saveBtn.addEventListener('click', () => {
+  saveBtn.addEventListener('click', function saveScene() {
     saveProgress(scene, listofmodels, getactiveStorage)
+    return () => {
+      saveBtn.removeEventListener("click", saveScene);
+    }
      })
-
-
-     
+   
   })
 
  
@@ -414,6 +469,8 @@ window.addEventListener('resize', function() {
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
+
+
 useEffect(()=> {
   //=================TOOLTIP====================
   let tooltip = document.querySelectorAll(".tooltip");
@@ -432,7 +489,7 @@ useEffect(()=> {
   items__container.forEach((item) => {
   
   
-      item.addEventListener('click', (e)=> {
+      item.addEventListener('click', function tooltipFollow (e) {
         itemTooltip.forEach((t) => {
           let x = e.clientX;
           let y = e.clientY;
@@ -441,6 +498,10 @@ useEffect(()=> {
           let newposY = y / 100;
           t.style.transform = "translate3d(" + newposX + "px," + newposY + "px,0px)";
         });
+
+        return () => {
+          item.removeEventListener("click", tooltipFollow);
+        }
       })
       
     
@@ -453,6 +514,7 @@ useEffect(()=> {
 
   items.forEach((item) => {
     item.addEventListener("dragstart", dragStart);
+    
   });
   
   itemContainers.forEach((square) => {
@@ -492,27 +554,29 @@ useEffect(()=> {
    
   return (
     <>
-     <div className="marquee" style={{width: "320vw"}}>
-  <div className="clouds">
-    <img src="/clouds.webp" alt="clouds" />
-  </div>
-  <div className="clouds">
-    <img src="/clouds.webp" alt="clouds" />
-  </div>
-  <div className="clouds">
-    <img src="/clouds.webp" alt="clouds" />
-  </div>
-  <div className="clouds">
-    <img src="/clouds.webp" alt="clouds" />
-  </div>
-  <div className="clouds">
-    <img src="/clouds.webp" alt="clouds" />
-  </div>
-  <div className="clouds">
-    <img src="/clouds.webp" alt="clouds" />
-  </div>
+<div className="marquee" style={{width: "320vw"}}>
+          <div className="clouds">
+            <img src="/clouds.webp" alt="clouds" />
+          </div>
+          <div className="clouds">
+            <img src="/clouds.webp" alt="clouds" />
+          </div>
+          <div className="clouds">
+            <img src="/clouds.webp" alt="clouds" />
+          </div>
+          <div className="clouds">
+            <img src="/clouds.webp" alt="clouds" />
+          </div>
+          <div className="clouds">
+            <img src="/clouds.webp" alt="clouds" />
+          </div>
+          <div className="clouds">
+            <img src="/clouds.webp" alt="clouds" />
+          </div>
 </div>
-      <div id='canvas' ref={canvas}></div>
+
+
+<div id='canvas' ref={canvas}></div>
 
     
 <MiniMenu />
