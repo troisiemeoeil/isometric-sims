@@ -8,10 +8,23 @@ export  function detectObject(scene,  raycasterObj, mousePosition, camera) {
           // TO GET THE FIRST INTERSECTION POINT AKA THE MODEL YOU'RE LOOKING FOR, YOU NEED
           // TO LOOK OUT FOR THE FURTHEST DISTANCE FROM CAMERA
           console.log("intersect of clicked model",intersect)
-          console.log("intersect uuid",intersect[0].object.uuid)
-          var cloned = intersect[0].object.material.clone()
-          cloned.emissive.r = 0.92; // or cloned.color
-          cloned.emissive.g = 0.92;
-          cloned.emissive.b = 1;
-          intersect[0].object.material = cloned;
+          console.log("intersect uuid",intersect[0].object.parent.userData.id)
+          let selectedModelObj = intersect[0].object.parent
+        //   let selectedModelMesh = intersect[0].object
+
+        console.log('selectedModelId',selectedModelObj);
+        const box = new THREE.BoxHelper( selectedModelObj, 0xf5ebe0 );
+        scene.add( box );
+        let deletedModel = selectedModelObj.parent
+        setTimeout(()=> {
+
+            deletedModel.parent.remove(deletedModel)
+            scene.remove(box)
+        }, 2000)
+      
+          
+          
+          for (let i = 1; i < scene.children.length; i++ ) {
+              console.log(scene.children[i]);
+          }
       }
