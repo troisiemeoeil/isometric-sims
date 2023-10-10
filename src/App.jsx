@@ -64,7 +64,7 @@ function App() {
     orbit.enabled = true
       orbit.saveState()
 
-      const ambientLight = new THREE.AmbientLight(0xFFFFFF);
+      const ambientLight = new THREE.AmbientLight(0xf5e1e5);
       ambientLight.intensity = 2;
       scene.add(ambientLight);
       
@@ -78,7 +78,7 @@ function App() {
       
       const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1);
       // directionalLight.position.set(-3, 3, -3);
-      directionalLight.position.set(3, 3, 3);
+      // directionalLight.position.set(3, 3, 3);
       directionalLight.position.set(3, 3, -3);
       directionalLight.position.set(-3, 3, 3);
 

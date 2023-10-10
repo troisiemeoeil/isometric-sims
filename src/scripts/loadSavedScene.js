@@ -33,7 +33,7 @@ export  function loadSavedScene(scene, assetLoader, models) {
                         console.error(error);
                     });
                 }
-                else if(listofSavedModels[i].name === "detail_awningWide") {
+                else if(listofSavedModels[i].name === "house_type21") {
                     assetLoader.load(models[2].href, function(gltf) {
                         const model = gltf.scene;
                         model.scale.set(0.5, 0.5, 0.5);
@@ -63,7 +63,7 @@ export  function loadSavedScene(scene, assetLoader, models) {
                     });
                 }
                 
-                else if(listofSavedModels[i].name === "small_buildingA") {
+                else if(listofSavedModels[i].name === "towerRound_crystals") {
                     assetLoader.load(models[4].href, function(gltf) {
                         const model = gltf.scene;
                         model.scale.set(0.5, 0.5, 0.5);

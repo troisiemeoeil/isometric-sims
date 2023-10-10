@@ -14,8 +14,8 @@ export  function detectObject(scene,  raycasterObj, mousePosition, camera) {
         }
         else {
             let bbox = new THREE.Box3().setFromObject(selectedModelObj);
-            const box = new THREE.BoxHelper( bbox, 0xf5ebe0 );
-            // let size = bbox.getSize(new THREE.Vector3());
+            const box = new THREE.BoxHelper( selectedModelObj, 0xf5ebe0 );
+            let size = bbox.getSize(new THREE.Vector3());
             scene.add( box );
             // let worldPosition = intersect[0].object.getWorldPosition(new THREE.Vector3)
     

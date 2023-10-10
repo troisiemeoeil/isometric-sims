@@ -65,7 +65,7 @@ useEffect(()=> {
     <div className="items__container" onMouseEnter={Playit}  ref={selectedOption}>
     <span className="items__number ">{number}</span>
     <div className="item__container" draggable={containerdraggable}  id={id}>
-      <img className="item__img" src={imgUrl} alt={alt} draggable={imgDrag}  style={{maxWidth: "100px", width:"40px"}}/>
+      <img className="item__img" src={imgUrl} alt={alt} draggable={imgDrag}  style={{maxWidth: "100px", width:"40px" , height:"40px"}}/>
       <div className="item__tooltip" draggable={tooltipDrag}>
         <div className="item__tooltip__title">
           <h2>{title}</h2>
