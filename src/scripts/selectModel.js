@@ -44,7 +44,7 @@ export function addskyScraperBtn(selectedModel, stag, models) {
 assetLoader.load(selectedModel[0].href, function(gltf) {
     const model = gltf.scene;
         console.log("this is true");
-    // model.scale.set(0.8,0.8,0.8);
+    model.scale.set(0.5,0.5,0.5);
     model.traverse( function(child) {
         if (child instanceof THREE.Mesh) {
           child.material.metalness = 0
@@ -69,7 +69,7 @@ export function adddetail_awningWide(selectedModel, stag, models) {
     assetLoader.load(selectedModel[0].href, function(gltf) {
         const model = gltf.scene;
             console.log("this is true");
-        // model.scale.set(0.8,0.8,0.8);
+    model.scale.set(0.5,0.5,0.5);
         model.traverse( function(child) {
             if (child instanceof THREE.Mesh) {
               child.material.metalness = 0
@@ -117,7 +117,8 @@ export function addsmallBuildingmodel(selectedModel, stag, models) {
     selectedModel.push(models[4])
     assetLoader.load(selectedModel[0].href, function(gltf) {
         const model = gltf.scene;
-        // model.scale.set(0.8,0.8,0.8);
+    model.scale.set(0.5,0.5,0.5);
+
         model.traverse( function(child) {
             if (child instanceof THREE.Mesh) {
               child.material.metalness = 0

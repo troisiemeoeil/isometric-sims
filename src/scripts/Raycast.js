@@ -13,8 +13,8 @@ export function Raycast(e,mousePosition, raycaster, intersects, camera, planeMes
      
 
         const objectExist = objects.find(function(object) {
-            return (object.position.x === highlightMesh.position.x)
-            && (object.position.z === highlightMesh.position.z)
+            return (object.position.x === mousePosition.x)
+            && (object.position.z === mousePosition.z)
         });
         
         if(!objectExist)

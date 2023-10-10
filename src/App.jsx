@@ -62,15 +62,18 @@ function App() {
 
     const orbit = new OrbitControls(camera, renderer.domElement);
     orbit.enabled = true
+    orbit.enableDamping = true;
+    orbit.zoomSpeed = 0.5;
+    orbit.maxPolarAngle = Math.PI / 2.5
       orbit.saveState()
 
-      const ambientLight = new THREE.AmbientLight(0xf5e1e5);
+      const ambientLight = new THREE.AmbientLight(0xFFFFFF);
       ambientLight.intensity = 2;
       scene.add(ambientLight);
       
       const spotLight = new THREE.SpotLight( 0xffffff );
       spotLight.intensity = 2;
-      spotLight.position.set( 1000, 1000, 1000 );
+      spotLight.position.set( 100, 100, 100 );
       // spotLight.position.set( 1000, 1000, -1000 );
       
       
@@ -80,7 +83,7 @@ function App() {
       // directionalLight.position.set(-3, 3, -3);
       // directionalLight.position.set(3, 3, 3);
       directionalLight.position.set(3, 3, -3);
-      directionalLight.position.set(-3, 3, 3);
+      // directionalLight.position.set(-3, 3, 3);
 
 
       scene.add(directionalLight);
@@ -101,27 +104,31 @@ function App() {
 
 let getStorageItems = localStorage.getItem('listofobjects')
 let getactiveStorage = localStorage.getItem('active')
+// let planeTexture = new THREE.TextureLoader().load("./Model_Images/white-plain-textured-background-fabric-block-prints_53876-121806.jpg")
    
 const planeMesh = new THREE.Mesh(
   new THREE.PlaneGeometry(20, 20),
-  new THREE.MeshBasicMaterial({
+  new THREE.MeshLambertMaterial({
+    color: '#eed7c5',
+    // map: planeTexture,
     side: THREE.DoubleSide,
-    visible: false,
-    transparent:true 
+    visible: true,
+    transparent:false, 
+    depthWrite: false
 })
 );
 planeMesh.rotation.x = Math.PI * - 0.5;
 scene.add(planeMesh);
 
 
-const grid = new THREE.GridHelper(20, 20, 0xFFFFFF, 0xFFFFFF);
-scene.add(grid);
+// const grid = new THREE.GridHelper(20, 20, 0xFFFFFF, 0xFFFFFF);
+// scene.add(grid);
 
 
 let map = new THREE.TextureLoader().load("./platformPack_tile009.png")
 const highlightMesh = new THREE.Mesh(
   new THREE.PlaneGeometry(1, 1),
-  new THREE.MeshPhongMaterial({
+  new THREE.MeshBasicMaterial({
     map: map,
     transparent: true
   })
@@ -428,7 +435,7 @@ function animate() {
       
   renderer.setAnimationLoop(animate);
   renderer.render(scene, camera); 
-  
+  orbit.update();
 }
 animate()
 

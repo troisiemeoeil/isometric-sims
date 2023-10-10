@@ -10,7 +10,6 @@ export function saveProgress(scene, listofmodels, getactiveStorage) {
 
     
         if (getactiveStorage === null) {
-   
             let savedItems = []
             for (let i = 7; i < sceneContent.length; i++) {
               savedItems.push({
