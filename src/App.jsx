@@ -56,7 +56,7 @@ function App() {
     1000
 );
     camera.position.set(0, 30, 0);
-    // camera.updateProjectionMatrix()
+    camera.updateProjectionMatrix()
     scene.add(camera)
 
 
@@ -76,14 +76,14 @@ function App() {
       
       scene.add(spotLight)
       
-      // const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1);
-      // // directionalLight.position.set(-3, 3, -3);
-      // directionalLight.position.set(3, 3, 3);
-      // directionalLight.position.set(3, 3, -3);
-      // directionalLight.position.set(-3, 3, 3);
+      const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1);
+      // directionalLight.position.set(-3, 3, -3);
+      directionalLight.position.set(3, 3, 3);
+      directionalLight.position.set(3, 3, -3);
+      directionalLight.position.set(-3, 3, 3);
 
 
-      // scene.add(directionalLight);
+      scene.add(directionalLight);
 
 
       //reactivate sound
@@ -97,6 +97,8 @@ function App() {
 // })
 
 
+
+
 let getStorageItems = localStorage.getItem('listofobjects')
 let getactiveStorage = localStorage.getItem('active')
    
@@ -104,7 +106,8 @@ const planeMesh = new THREE.Mesh(
   new THREE.PlaneGeometry(20, 20),
   new THREE.MeshBasicMaterial({
     side: THREE.DoubleSide,
-    visible: false
+    visible: false,
+    transparent:true 
 })
 );
 planeMesh.rotation.x = Math.PI * - 0.5;
@@ -125,7 +128,7 @@ const highlightMesh = new THREE.Mesh(
 );
 
 highlightMesh.rotation.x = Math.PI * - 0.5;
-highlightMesh.position.set(0.5, 0, 0.5);
+highlightMesh.position.set(0.5, 0.5, 0.5);
 scene.add(highlightMesh);
 
 const mousePosition = new THREE.Vector2();
@@ -364,15 +367,10 @@ return () => {
 
     addModel(scene,intersects, raycaster, planeMesh, objects, highlightMesh, stag, listofmodels , mousePosition, camera)
     addModelSound()
-    return () => {
-      window.removeEventListener("dblclick", insertSelectedModel);
-    }
+   
   });
 
-  window.addEventListener('auxclick', function detectObj(e) {
-    e.stopPropagation()
-    e.preventDefault()
-
+  window.addEventListener('auxclick', function detectObj() {
     detectObject(scene,  raycasterObj, mousePosition, camera)
   });
   
@@ -395,7 +393,6 @@ loader.load('/bgpixel.webp' , function(texture)
           });
 
   })
-
  
 
 //   function download(){
@@ -430,8 +427,7 @@ loader.load('/bgpixel.webp' , function(texture)
 function animate() {
       
   renderer.setAnimationLoop(animate);
-  renderer.render(scene, camera);
-  camera.updateProjectionMatrix()
+  renderer.render(scene, camera); 
   
 }
 animate()
@@ -439,7 +435,6 @@ animate()
 
 window.addEventListener('resize', function() {
   camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix()
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 

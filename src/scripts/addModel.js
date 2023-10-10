@@ -4,6 +4,7 @@ import {intersect } from './Raycast';
 
 export  function addModel(scene, intersects, raycaster, planeMesh, objects, highlightMesh, stag, listofmodels ) {
         console.log(stag);
+        
     intersect(intersects, raycaster, planeMesh)
         const objectExist = objects.find(function(object) {
             return (object.position.x === highlightMesh.position.x)
@@ -15,7 +16,7 @@ export  function addModel(scene, intersects, raycaster, planeMesh, objects, high
         // console.log("world position of clicked model", intersection[0].object.getWorldPosition(new THREE.Vector3))
 
         //RETURNS AN ARRAY OF EXISTING MODELS IN A SPECIFIC HIGHLIGHTED TERRAIN
-        const avengers = listofmodels.filter(modelPos => modelPos.position.x === highlightMesh.position.x)
+        const avengers = listofmodels.filter(modelPos => modelPos.position.x === highlightMesh.position.x &&  modelPos.position.z === highlightMesh.position.z)
       
      
             // CASE 1 : THERE IS AN EXISTING OBJECT
@@ -23,6 +24,7 @@ export  function addModel(scene, intersects, raycaster, planeMesh, objects, high
             if(intersect(intersects, raycaster, planeMesh).length > 0 && objectExist) {
                 //STEP 1: SUM THE HEIGHT
                 //STEP 2: ADD THE TOTAL HEIGHT TO POSITION Y
+                // eslint-disable-next-line no-inner-declarations
                 function calculateSum(array, property) {
                   const total = array.reduce((accumulator, object) => {
                     return accumulator + object[property];
@@ -30,8 +32,8 @@ export  function addModel(scene, intersects, raycaster, planeMesh, objects, high
                 
                   return total;
                 }
-                const totalHeight = calculateSum(avengers, 'height');
-
+                const totalHeigh = calculateSum(avengers, 'height');
+                const totalHeight = totalHeigh.toFixed(2)
                 // GET A COPY OF THE SELECTED MODEL
                 const stagClone = stag[0].clone();
                 // ASSIGN A BOX HELPER TO MEASURE ITS SIZE
