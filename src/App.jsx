@@ -99,24 +99,20 @@ function App() {
 
 let getStorageItems = localStorage.getItem('listofobjects')
 let getactiveStorage = localStorage.getItem('active')
-let planemap = new THREE.TextureLoader().load("./planeTexture.png")
    
 const planeMesh = new THREE.Mesh(
   new THREE.PlaneGeometry(20, 20),
-  new THREE.MeshPhongMaterial({
-    map: planemap,
-    depthWrite: false,
-    precision: "highp",
+  new THREE.MeshBasicMaterial({
     side: THREE.DoubleSide,
-    transparent: false
-  })
+    visible: false
+})
 );
 planeMesh.rotation.x = Math.PI * - 0.5;
 scene.add(planeMesh);
 
 
-// const grid = new THREE.GridHelper(20, 20);
-// scene.add(grid);
+const grid = new THREE.GridHelper(20, 20, 0xFFFFFF, 0xFFFFFF);
+scene.add(grid);
 
 
 let map = new THREE.TextureLoader().load("./platformPack_tile009.png")
@@ -183,25 +179,9 @@ const canvas = useRef()
 
 
   useEffect(()=> {
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    
-    renderer.toneMapping = THREE.NoToneMapping;
-    canvas.current.appendChild(renderer.domElement);
-  const loader = new THREE.TextureLoader();
-  loader.load('/bgpixel.webp' , function(texture)
-              {
-               scene.background = texture
-              });
- 
-  }); 
-
-useEffect(()=> {
-  window.addEventListener('mousemove', function Raycasting(e) {
-    Raycast(e,mousePosition, raycaster, intersects, camera, planeMesh, highlightMesh, objects)
-    return () => {
-      window.removeEventListener("mousemove", Raycasting);
-    }
-})
+    window.addEventListener('mousemove', function Raycasting(e) {
+      Raycast(e,mousePosition, raycaster, intersects, camera, planeMesh, highlightMesh, objects)
+}); 
 
   
   let objects = [];
@@ -298,28 +278,7 @@ return () => {
 }
  })
   let selectedObj = []
-
-//   const raycasterObj = new THREE.Raycaster();
-//   window.addEventListener('click', (event)=> {
-//     mousePosition.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-//     mousePosition.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-//     detectObject(raycasterObj, mousePosition, camera, scene)
-// })
-
-
-  // window.addEventListener('keypress', function deleteModelEvent(e) {
-  //   deleteModel(e, intersects, raycaster, planeMesh, objects, highlightMesh, selectedObj)
-  //   return () => {
-  //     window.removeEventListener("keypress", deleteModelEvent);
-  //   }
-  // });
-
-   
-  
- 
   window.addEventListener('contextmenu', function selectObject() {
-
-   
       const objectExist = objects.find(function(object) {
              return (object.position.x === highlightMesh.position.x)
              && (object.position.z === highlightMesh.position.z)
@@ -399,7 +358,9 @@ return () => {
 
 
   let listofmodels = []
-  window.addEventListener('dblclick', function insertSelectedModel() {
+  window.addEventListener('dblclick', function insertSelectedModel(e) {
+    e.stopPropagation()
+    e.preventDefault()
 
     addModel(scene,intersects, raycaster, planeMesh, objects, highlightMesh, stag, listofmodels , mousePosition, camera)
     addModelSound()
@@ -408,24 +369,31 @@ return () => {
     }
   });
 
-  window.addEventListener('auxclick', function detectObj() {
+  window.addEventListener('auxclick', function detectObj(e) {
+    e.stopPropagation()
+    e.preventDefault()
 
     detectObject(scene,  raycasterObj, mousePosition, camera)
-    return () => {
-      window.removeEventListener("dblclick", detectObj);
-    }
   });
   
 
   const saveBtn = document.getElementById("saveBtn")
 
-  saveBtn.addEventListener('click', function saveScene() {
+  saveBtn.addEventListener('click', function saveScene(e) {
+    e.stopPropagation()
+    e.preventDefault()
+
     saveProgress(scene, listofmodels, getactiveStorage)
-    return () => {
-      saveBtn.removeEventListener("click", saveScene);
-    }
      })
-   
+
+renderer.setSize(window.innerWidth, window.innerHeight);
+canvas.current.appendChild(renderer.domElement);
+const loader = new THREE.TextureLoader();
+loader.load('/bgpixel.webp' , function(texture)
+          {
+           scene.background = texture
+          });
+
   })
 
  
@@ -457,10 +425,13 @@ return () => {
 
 // }
 
+
+
 function animate() {
       
   renderer.setAnimationLoop(animate);
   renderer.render(scene, camera);
+  camera.updateProjectionMatrix()
   
 }
 animate()
@@ -468,7 +439,7 @@ animate()
 
 window.addEventListener('resize', function() {
   camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix ()
+  camera.updateProjectionMatrix()
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 

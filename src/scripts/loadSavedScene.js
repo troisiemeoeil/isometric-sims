@@ -66,10 +66,10 @@ export  function loadSavedScene(scene, assetLoader, models) {
                     });
                 }
     
-                else if(listofSavedModels[i].name === "low_buildingC") {
+                else if(listofSavedModels[i].name === "snow_tile") {
                     assetLoader.load(models[3].href, function(gltf) {
                         const model = gltf.scene;
-                        model.scale.set(0.5, 0.5, 0.5);
+                        model.scale.set(1, 1, 1);
                         model.position.copy(listofSavedModels[i].position);
                         let meshArr = model.children[0].children
                         for (let i = 0; i < meshArr.length; i++) {

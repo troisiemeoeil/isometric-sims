@@ -65,10 +65,6 @@ export  function addModel(scene, intersects, raycaster, planeMesh, objects, high
                   }
                 }
                 listofmodels.push(addedModels)
-                
-              //TASK: THERE'S A BUG HAPPENING WHEN THE USER RELOAD THE PAGE AFTER SAVING
-              // AND WANTING TO ADD MODELS IN AN EXISTING OCCUPIED SPACE, THE FUNCTION DONT ADD TO 
-              // THE HIGHEST POINT BUT IT STARTS FROM THE BEGINING AS IF THERE S NO EXISTING OBJECT 
               console.log("list of models in that mesh", listofmodels);
             }
 
@@ -89,6 +85,8 @@ export  function addModel(scene, intersects, raycaster, planeMesh, objects, high
               scene.add(stagClone);
               objects.push(stagClone);
               highlightMesh.material.color.setHex(0xFF6666);
+              console.log("position of cube", highlightMesh.position);
+              console.log("details of cube", stagClone.children[0].name);
 
               
               let bbox = new THREE.Box3().setFromObject(stagClone.children[0]);    
@@ -100,11 +98,11 @@ export  function addModel(scene, intersects, raycaster, planeMesh, objects, high
                 position: {
                     x: highlightMesh.position.x,
                     y: highlightMesh.position.y ,
+
                     z: highlightMesh.position.z,
                 }
               }
               listofmodels.push(addedModels)
-
               //TASK: THERE'S A BUG HAPPENING WHEN THE USER RELOAD THE PAGE AFTER SAVING
               // AND WANTING TO ADD MODELS IN AN EXISTING OCCUPIED SPACE, THE FUNCTION DONT ADD TO 
               // THE HIGHEST POINT BUT IT STARTS FROM THE BEGINING AS IF THERE S NO EXISTING OBJECT 

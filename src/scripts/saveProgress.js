@@ -7,7 +7,6 @@ export function saveProgress(scene, listofmodels, getactiveStorage) {
         let sceneContent = scene.children
         console.log("content of list of models",listofmodels);
         console.log("list of scene children",sceneContent);
-       console.log('name', sceneContent[5].children[0].name);
 
     
         if (getactiveStorage === null) {
