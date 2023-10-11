@@ -72,32 +72,33 @@ function App() {
       scene.add(ambientLight);
       
       const spotLight = new THREE.SpotLight( 0xffffff );
-      spotLight.intensity = 2;
-      spotLight.position.set( 100, 100, 100 );
-      // spotLight.position.set( 1000, 1000, -1000 );
+      spotLight.intensity = 1;
+      spotLight.castShadow = true
+      spotLight.position.set( 10, 20, 10 );
+      spotLight.position.set( 1000, 1000, -1000 );
       
       
       scene.add(spotLight)
       
       const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1);
-      // directionalLight.position.set(-3, 3, -3);
-      // directionalLight.position.set(3, 3, 3);
+      directionalLight.position.set(-3, 3, -3);
+      directionalLight.position.set(3, 3, 3);
       directionalLight.position.set(3, 3, -3);
-      // directionalLight.position.set(-3, 3, 3);
+      directionalLight.position.set(-3, 3, 3);
 
 
       scene.add(directionalLight);
 
 
-      //reactivate sound
-//     let source = "./sounds/backgroundmusic.mp3"
-//    window.addEventListener('click', function Playit(e) {
-//     e.currentTarget.removeEventListener(e.type, Playit);
-//     var audio = new Audio(source);
-//     audio.play();
-//     audio.loop()
+      // reactivate sound
+    let source = "./sounds/backgroundmusic.mp3"
+   window.addEventListener('click', function Playit(e) {
+    e.currentTarget.removeEventListener(e.type, Playit);
+    var audio = new Audio(source);
+    audio.play();
+    audio.loop()
   
-// })
+})
 
 
 
@@ -393,6 +394,7 @@ return () => {
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 canvas.current.appendChild(renderer.domElement);
+renderer.shadowMap.enabled = true
 const loader = new THREE.TextureLoader();
 loader.load('/bgpixel.webp' , function(texture)
           {
