@@ -10,7 +10,7 @@ export  function loadScene( selectedModel, stag) {
                 model.scale.set(0.5,0.5,0.5);
                 let meshArr = model.children[0].children
                 for (let i = 0; i < meshArr.length; i++) {
-                  meshArr[i].material.metalness = 0
+                  meshArr[i].material.metalness = 1
                 }
                 stag.push(model);
             
