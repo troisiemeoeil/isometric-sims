@@ -23,7 +23,6 @@ export function addBuilding(selectedModel, stag, models) {
             if (child instanceof THREE.Mesh) {
               child.material.metalness = 0
               child.castShadow = true
-
               }
               });
         stag.push(model);

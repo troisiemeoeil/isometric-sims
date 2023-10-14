@@ -38,7 +38,7 @@ useEffect(()=> {
   const menu__tabs__container = document.querySelector('.menu__tabs__container')
 
 
-  const marquee = document.querySelector('.marquee')
+  // const marquee = document.querySelector('.marquee')
   const canvas = document.querySelector('#canvas')
 
   if (isOn === false) {
@@ -48,12 +48,12 @@ useEffect(()=> {
     menu.style.top = '20vh'
 
     menu__tabs__container.style.top = "33%"
-    marquee.style.zIndex = '1'
+    // marquee.style.zIndex = '1'
   
 
     canvas.classList.add("addBlur");
 
-    marquee.classList.add("addBlur");
+    // marquee.classList.add("addBlur");
     // console.log(marquee);
   }
   else {
@@ -61,11 +61,11 @@ useEffect(()=> {
     full_inventory.style.display = 'none'
     menu.style.height = '25%'
     menu.style.top = '68vh'
-    marquee.style.zIndex = '0'
-    marquee.style.opacity = '1'
+    // marquee.style.zIndex = '0'
+    // marquee.style.opacity = '1'
 
     canvas.classList.remove("addBlur");
-    marquee.classList.remove("addBlur");
+    // marquee.classList.remove("addBlur");
 
   }
 

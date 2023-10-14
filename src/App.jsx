@@ -43,92 +43,360 @@ import { detectObject } from './scripts/detectObject';
 
 
 function App() {
+  const assetLoader = new GLTFLoader()
   let stag = []
 
-    const renderer = new THREE.WebGLRenderer({antialias: true});
+    const renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      logarithmicDepthBuffer: true,
+      depth: true
+    });
     const scene = new THREE.Scene();
-
+    scene.fog = true
+    // scene.fog.color.set(0x39c09f)
+    // scene.background.set(0x39c09f)
+		const color = 0xe0d6ff;
+    const near = 40;
+		const far = 50;
+    // const density = 0.03;
+		scene.fog = new THREE.Fog( color, near, far );
+    // scene.fog = new THREE.FogExp2(color, density);
+		scene.background = new THREE.Color( color );
       //principal camera
-  const camera = new THREE.PerspectiveCamera(
-    60,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-);
-    camera.position.set(0, 30, 0);
+      const sizes = {
+        width: window.innerWidth,
+        height: window.innerHeight,
+      }
+
+      /**
+       * Camera
+       */
+      const resolution = new THREE.Vector2(20, 20)
+      const fov = 30
+      const camera = new THREE.PerspectiveCamera(fov, sizes.width / sizes.height, 0.5, 1000)
+      // camera.zoom.toFixed(5)
+ 
+      const initialPosition = new THREE.Vector3(
+        resolution.x / 2 + 5,
+        6,
+        resolution.y / 2 + 4
+      )
+      camera.position.copy(initialPosition)
     camera.updateProjectionMatrix()
     scene.add(camera)
-
 
     const orbit = new OrbitControls(camera, renderer.domElement);
     orbit.enabled = true
     orbit.enableDamping = true;
     orbit.zoomSpeed = 0.5;
+    orbit.maxDistance = 30
     orbit.maxPolarAngle = Math.PI / 2.5
-      orbit.saveState()
+    orbit.enablePan = false
+    orbit.saveState()
 
-      const ambientLight = new THREE.AmbientLight(0xFFFFFF);
-      ambientLight.intensity = 2;
-      scene.add(ambientLight);
-      
-      const spotLight = new THREE.SpotLight( 0xffffff );
-      spotLight.intensity = 1;
-      spotLight.castShadow = true
-      spotLight.position.set( 10, 20, 10 );
-      spotLight.position.set( 1000, 1000, -1000 );
-      
-      
-      scene.add(spotLight)
-      
-      const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1);
-      directionalLight.position.set(-3, 3, -3);
-      directionalLight.position.set(3, 3, 3);
-      directionalLight.position.set(3, 3, -3);
-      directionalLight.position.set(-3, 3, 3);
-
-
-      scene.add(directionalLight);
-
+    const ambLight = new THREE.AmbientLight(0xffffff, 1.7)
+    const dirLight = new THREE.DirectionalLight(0xffffff, 1)
+    scene.add(ambLight)
+    dirLight.position.set(20, 20, 18)
+    dirLight.target.position.set(resolution.x , 0, resolution.y )
+    // dirLight.shadow.mapSize.set(1024, 1024)
+    // dirLight.shadow.radius = 7
+    // dirLight.shadow.blurSamples = 20
+    // dirLight.shadow.camera.top = 30
+    // dirLight.shadow.camera.bottom = -30
+    // dirLight.shadow.camera.left = -30
+    // dirLight.shadow.camera.right = 30
+    
+    // dirLight.castShadow = true
+    scene.add(dirLight)
 
       // reactivate sound
-    let source = "./sounds/backgroundmusic.mp3"
-   window.addEventListener('click', function Playit(e) {
-    e.currentTarget.removeEventListener(e.type, Playit);
-    var audio = new Audio(source);
-    audio.play();
-    audio.loop()
+  //   let source = "./sounds/backgroundmusic.mp3"
+  //  window.addEventListener('click', function Playit(e) {
+  //   e.currentTarget.removeEventListener(e.type, Playit);
+  //   var audio = new Audio(source);
+  //   audio.play();
+  //   audio.loop()
+  // })
+
+  // for (let i = 2;  i <= 10; i++ ) {
+  //   assetLoader.load(
+  //     // resource URL
+  //     'src/assets/detail_awningWide.glb',
+  //     // called when the resource is loaded
+  //     function ( gltf ) {
+  //       scene.add( gltf.scene );
+  //       let model = gltf.scene
+  //       model.position.set(Math.floor(Math.random()* 6) ,0, Math.floor(Math.random()* 6))
+       
+  //       model.traverse( function(child) {
+  //         if (child instanceof THREE.Mesh) {
+  //           child.material.metalness = 0
+  //             child.castShadow = true
+  //             }
+  //           });
+  //       gltf.animations; // Array<THREE.AnimationClip>
+  //       gltf.scene; // THREE.Group
+  //       gltf.scenes; // Array<THREE.Group>
+  //       gltf.cameras; // Array<THREE.Camera>
+  //       gltf.asset; // Object
+    
+  //     },
+  //     // called while loading is progressing
+  //     function ( xhr ) {
+    
+  //       console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+    
+  //     },
+  //     // called when loading has errors
+  //   );
+  //   }
+
+const treeData = [
+	new THREE.Vector4(-5, 0, 10, 1),
+	new THREE.Vector4(-6, 0, 15, 1.2),
+	new THREE.Vector4(-5, 0, 16, 0.8),
+	new THREE.Vector4(-10, 0, 4, 1.3),
+	// new THREE.Vector4(-5, 0, -3, 2),
+	// new THREE.Vector4(-4, 0, -4, 1.5),
+	new THREE.Vector4(-2, 0, -15, 1),
+	new THREE.Vector4(5, 0, -20, 1.2),
+	new THREE.Vector4(24, 0, -12, 1.2),
+	new THREE.Vector4(2, 0, -6, 1.2),
+	new THREE.Vector4(3, 0, -7, 1.8),
+	new THREE.Vector4(1, 0, -9, 1.0),
+	new THREE.Vector4(15, 0, -8, 1.8),
+	new THREE.Vector4(7, 0, -9, 1.1),
+	new THREE.Vector4(8, 0, -7, 1.3),
+	new THREE.Vector4(12, 0, -1, 1.3),
+	new THREE.Vector4(13, 0, 0, 1.8),
+	new THREE.Vector4(15, 0, 0, 1),
+	new THREE.Vector4(12, 0, 6, 1.7),
+	new THREE.Vector4(19, 0, 15, 1.1),
+	new THREE.Vector4(8, 0, 23, 1.1),
+	new THREE.Vector4(4, 0, 24, 0.9),
+	new THREE.Vector4(-3, 0, -13, 0.7),
+	new THREE.Vector4(5, 0, 10, 0.7),
+]
+treeData.forEach(({ x, y, z }) => {
+  assetLoader.load(
+    // resource URL
+    'src/assets/tree_plateau_fall.glb',
+    // called when the resource is loaded
+    function ( gltf ) {
+      scene.add( gltf.scene );
+      let model = gltf.scene
+      model.position.set(x ,y, z)
+      // model.scale.setScalar(w)
+     
+      model.traverse( function(child) {
+        if (child instanceof THREE.Mesh) {
+          child.material.metalness = 0
+            child.castShadow = true
+            }
+          });
+      gltf.animations; // Array<THREE.AnimationClip>
+      gltf.scene; // THREE.Group
+      gltf.scenes; // Array<THREE.Group>
+      gltf.cameras; // Array<THREE.Camera>
+      gltf.asset; // Object
   
+    },
+    // called while loading is progressing
+    function ( xhr ) {
+  
+      console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+  
+    },
+    // called when loading has errors
+  );
+	
+  assetLoader.load(
+    // resource URL
+    'src/assets/tree_oak_fall.glb',
+    // called when the resource is loaded
+    function ( gltf ) {
+      scene.add( gltf.scene );
+      let model = gltf.scene
+      model.position.set(x - 3,y  , z - 3)
+      // model.scale.setScalar(w)
+     
+      model.traverse( function(child) {
+        if (child instanceof THREE.Mesh) {
+          child.material.metalness = 0
+            child.castShadow = true
+            }
+          });
+      gltf.animations; // Array<THREE.AnimationClip>
+      gltf.scene; // THREE.Group
+      gltf.scenes; // Array<THREE.Group>
+      gltf.cameras; // Array<THREE.Camera>
+      gltf.asset; // Object
+  
+    },
+    // called while loading is progressing
+    function ( xhr ) {
+  
+      console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+  
+    },
+    // called when loading has errors
+  );
+  assetLoader.load(
+    // resource URL
+    'src/assets/tree_palmTall.glb',
+    // called when the resource is loaded
+    function ( gltf ) {
+      scene.add( gltf.scene );
+      let model = gltf.scene
+      model.position.set(x * 2,y  , z - 5)
+      // model.scale.setScalar(w)
+     
+      model.traverse( function(child) {
+        if (child instanceof THREE.Mesh) {
+          child.material.metalness = 0
+            child.castShadow = true
+            }
+          });
+      gltf.animations; // Array<THREE.AnimationClip>
+      gltf.scene; // THREE.Group
+      gltf.scenes; // Array<THREE.Group>
+      gltf.cameras; // Array<THREE.Camera>
+      gltf.asset; // Object
+  
+    },
+    // called while loading is progressing
+    function ( xhr ) {
+  
+      console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+  
+    },
+    // called when loading has errors
+  );
+
+  assetLoader.load(
+    // resource URL
+    'src/assets/tree_pineDefaultA.glb',
+    // called when the resource is loaded
+    function ( gltf ) {
+      scene.add( gltf.scene );
+      let model = gltf.scene
+      model.position.set(x + 4,y  , z * 2)
+      // model.scale.setScalar(w)
+     
+      model.traverse( function(child) {
+        if (child instanceof THREE.Mesh) {
+          child.material.metalness = 0
+            child.castShadow = true
+            }
+          });
+      gltf.animations; // Array<THREE.AnimationClip>
+      gltf.scene; // THREE.Group
+      gltf.scenes; // Array<THREE.Group>
+      gltf.cameras; // Array<THREE.Camera>
+      gltf.asset; // Object
+  
+    },
+    // called while loading is progressing
+    function ( xhr ) {
+  
+      console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+  
+    },
+    // called when loading has errors
+  );
+	
 })
-
-
-
+ 
 
 let getStorageItems = localStorage.getItem('listofobjects')
 let getactiveStorage = localStorage.getItem('active')
 // let planeTexture = new THREE.TextureLoader().load("./Model_Images/white-plain-textured-background-fabric-block-prints_53876-121806.jpg")
+
+// const planeMesh = new THREE.Mesh(
+//   new THREE.PlaneGeometry(20, 20),
+//   new THREE.MeshStandardMaterial({
+//     // color: '#eed7c5',
+//     // map: planeTexture,
+//     color: 0xf1f1ee,
+//     side: THREE.FrontSide,
+//     visible: false,
+//     transparent:true, 
+//     depthWrite: false
+// })
+// );
+// // planeMaterial.color.set(groundColor)
+// planeMesh.rotation.x = Math.PI * - 0.5;
+// planeMesh.receiveShadow = true
+
+// scene.add(planeMesh);
+
+// const planeMesh2 = new THREE.Mesh(
+//   new THREE.PlaneGeometry(100, 100),
+//   new THREE.MeshStandardMaterial({
+//     // color: '#eed7c5',
+//     // map: planeTexture,
+//     color: 0xf1f1ee,
+//     side: THREE.FrontSide,
+//     transparent:true, 
+//     depthWrite: false
+// })
+// );
+// // planeMaterial.color.set(groundColor)
+// planeMesh2.rotation.x = Math.PI * - 0.5;
+// planeMesh2.receiveShadow = true
+
+// scene.add(planeMesh2);
+
+
+
+// const grid = new THREE.GridHelper(0, 20, 0xFFFFFF, 0xFFFFFF);
+// scene.add(grid);
+
    
 const planeMesh = new THREE.Mesh(
-  new THREE.PlaneGeometry(20, 20),
-  new THREE.MeshLambertMaterial({
-    color: '#eed7c5',
+  new THREE.PlaneGeometry(10, 10),
+  new THREE.MeshStandardMaterial({
+    // color: '#eed7c5',
     // map: planeTexture,
-    side: THREE.DoubleSide,
-    visible: true,
-    transparent:false, 
+    visible: false,
+    side: THREE.FrontSide,
+    transparent:true, 
     depthWrite: false
 })
 );
+// planeMaterial.color.set(groundColor)
 planeMesh.rotation.x = Math.PI * - 0.5;
+planeMesh.receiveShadow = true
+
 scene.add(planeMesh);
 
+const planeMesh2 = new THREE.Mesh(
+  new THREE.PlaneGeometry(100, 100),
+  new THREE.MeshStandardMaterial({
+    // color: '#eed7c5',
+    // map: planeTexture,
+    color: 0xffffff,
+    side: THREE.FrontSide,
+    transparent:true, 
+    depthWrite: false
+})
+);
+// planeMaterial.color.set(groundColor)
+planeMesh2.rotation.x = Math.PI * - 0.5;
+planeMesh2.receiveShadow = true
 
-// const grid = new THREE.GridHelper(20, 20, 0xFFFFFF, 0xFFFFFF);
-// scene.add(grid);
+scene.add(planeMesh2);
+
+
+
+const grid = new THREE.GridHelper(10, 10, 0xFFFFFF, 0xFFFFFF);
+scene.add(grid);
 
 
 let map = new THREE.TextureLoader().load("./platformPack_tile009.png")
 const highlightMesh = new THREE.Mesh(
-  new THREE.PlaneGeometry(1, 1),
+  new THREE.PlaneGeometry(0.9, 0.9),
   new THREE.MeshBasicMaterial({
     map: map,
     transparent: true
@@ -136,7 +404,7 @@ const highlightMesh = new THREE.Mesh(
 );
 
 highlightMesh.rotation.x = Math.PI * - 0.5;
-highlightMesh.position.set(0.5, 0.5, 0.5);
+highlightMesh.position.set(0.5, 0, 0.5);
 scene.add(highlightMesh);
 
 const mousePosition = new THREE.Vector2();
@@ -162,7 +430,9 @@ const roadSquare = new URL('./assets/road_square.glb', import.meta.url);
 
   let models = [largeBuilding, skyScraper, awing, lowBuilding, smallBuilding, oakTree, palmTree, pineTree, plateauFall, roadSquare ]
 
-  let assetLoader = new GLTFLoader()
+ 
+ 
+            
 
   let selectedModel = [models[0]] 
   
@@ -394,14 +664,31 @@ return () => {
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 canvas.current.appendChild(renderer.domElement);
+renderer.toneMapping = THREE.ACESFilmicToneMapping
+renderer.toneMappingExposure = 1.2
 renderer.shadowMap.enabled = true
-const loader = new THREE.TextureLoader();
-loader.load('/bgpixel.webp' , function(texture)
-          {
-           scene.background = texture
-          });
+renderer.shadowMap.type = THREE.VSMShadowMap
 
-  })
+// const loader = new THREE.TextureLoader();
+// loader.load('/bgpixel.webp' , function(texture)
+//           {
+//            scene.background = texture
+//           });
+})
+window.addEventListener('resize', handleResize)
+
+function handleResize() {
+	sizes.width = window.innerWidth
+	sizes.height = window.innerHeight
+
+	camera.aspect = sizes.width / sizes.height
+	camera.updateProjectionMatrix()
+
+	renderer.setSize(sizes.width, sizes.height)
+
+	const pixelRatio = Math.min(window.devicePixelRatio, 2)
+	renderer.setPixelRatio(pixelRatio)
+}
  
 
 //   function download(){
@@ -432,7 +719,6 @@ loader.load('/bgpixel.webp' , function(texture)
 // }
 
 
-
 function animate() {
       
   renderer.setAnimationLoop(animate);
@@ -442,10 +728,6 @@ function animate() {
 animate()
 
 
-window.addEventListener('resize', function() {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  renderer.setSize(window.innerWidth, window.innerHeight);
-});
 
 
 
@@ -532,28 +814,6 @@ useEffect(()=> {
    
   return (
     <>
-<div className="marquee" style={{width: "320vw"}}>
-          <div className="clouds">
-            <img src="/clouds.webp" alt="clouds" />
-          </div>
-          <div className="clouds">
-            <img src="/clouds.webp" alt="clouds" />
-          </div>
-          <div className="clouds">
-            <img src="/clouds.webp" alt="clouds" />
-          </div>
-          <div className="clouds">
-            <img src="/clouds.webp" alt="clouds" />
-          </div>
-          <div className="clouds">
-            <img src="/clouds.webp" alt="clouds" />
-          </div>
-          <div className="clouds">
-            <img src="/clouds.webp" alt="clouds" />
-          </div>
-</div>
-
-
 <div id='canvas' ref={canvas}></div>
 
     
