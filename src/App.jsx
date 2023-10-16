@@ -277,7 +277,7 @@ treeData.forEach(({ x, y, z }) => {
     // called when loading has errors
   );
 
-  assetLoader.load(
+  assetLoader.load( 
     // resource URL
     '/models/tree_pineDefaultA.glb',
     // called when the resource is loaded
