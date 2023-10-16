@@ -183,7 +183,7 @@ const treeData = [
 treeData.forEach(({ x, y, z }) => {
   assetLoader.load(
     // resource URL
-    'src/assets/tree_plateau_fall.glb',
+    '/assets/tree_plateau_fall.glb',
     // called when the resource is loaded
     function ( gltf ) {
       scene.add( gltf.scene );
@@ -216,7 +216,7 @@ treeData.forEach(({ x, y, z }) => {
 	
   assetLoader.load(
     // resource URL
-    'src/assets/tree_oak_fall.glb',
+    '/models/tree_oak_fall.glb',
     // called when the resource is loaded
     function ( gltf ) {
       scene.add( gltf.scene );
@@ -247,7 +247,7 @@ treeData.forEach(({ x, y, z }) => {
   );
   assetLoader.load(
     // resource URL
-    'src/assets/tree_palmTall.glb',
+    '/models/tree_palmTall.glb',
     // called when the resource is loaded
     function ( gltf ) {
       scene.add( gltf.scene );
@@ -279,7 +279,7 @@ treeData.forEach(({ x, y, z }) => {
 
   assetLoader.load(
     // resource URL
-    'src/assets/tree_pineDefaultA.glb',
+    '/models/tree_pineDefaultA.glb',
     // called when the resource is loaded
     function ( gltf ) {
       scene.add( gltf.scene );
