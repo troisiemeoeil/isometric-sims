@@ -183,7 +183,7 @@ const treeData = [
 treeData.forEach(({ x, y, z }) => {
   assetLoader.load(
     // resource URL
-    '/assets/tree_plateau_fall.glb',
+    '/models/tree_plateau_fall.glb',
     // called when the resource is loaded
     function ( gltf ) {
       scene.add( gltf.scene );
@@ -314,47 +314,6 @@ treeData.forEach(({ x, y, z }) => {
 
 let getStorageItems = localStorage.getItem('listofobjects')
 let getactiveStorage = localStorage.getItem('active')
-// let planeTexture = new THREE.TextureLoader().load("./Model_Images/white-plain-textured-background-fabric-block-prints_53876-121806.jpg")
-
-// const planeMesh = new THREE.Mesh(
-//   new THREE.PlaneGeometry(20, 20),
-//   new THREE.MeshStandardMaterial({
-//     // color: '#eed7c5',
-//     // map: planeTexture,
-//     color: 0xf1f1ee,
-//     side: THREE.FrontSide,
-//     visible: false,
-//     transparent:true, 
-//     depthWrite: false
-// })
-// );
-// // planeMaterial.color.set(groundColor)
-// planeMesh.rotation.x = Math.PI * - 0.5;
-// planeMesh.receiveShadow = true
-
-// scene.add(planeMesh);
-
-// const planeMesh2 = new THREE.Mesh(
-//   new THREE.PlaneGeometry(100, 100),
-//   new THREE.MeshStandardMaterial({
-//     // color: '#eed7c5',
-//     // map: planeTexture,
-//     color: 0xf1f1ee,
-//     side: THREE.FrontSide,
-//     transparent:true, 
-//     depthWrite: false
-// })
-// );
-// // planeMaterial.color.set(groundColor)
-// planeMesh2.rotation.x = Math.PI * - 0.5;
-// planeMesh2.receiveShadow = true
-
-// scene.add(planeMesh2);
-
-
-
-// const grid = new THREE.GridHelper(0, 20, 0xFFFFFF, 0xFFFFFF);
-// scene.add(grid);
 
    
 const planeMesh = new THREE.Mesh(
@@ -368,7 +327,6 @@ const planeMesh = new THREE.Mesh(
     depthWrite: false
 })
 );
-// planeMaterial.color.set(groundColor)
 planeMesh.rotation.x = Math.PI * - 0.5;
 planeMesh.receiveShadow = true
 
