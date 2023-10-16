@@ -178,6 +178,8 @@ const treeData = [
 	new THREE.Vector4(-3, 0, -13, 0.7),
 	new THREE.Vector4(5, 0, 10, 0.7),
 ]
+
+
 treeData.forEach(({ x, y, z }) => {
   assetLoader.load(
     // resource URL
@@ -193,6 +195,7 @@ treeData.forEach(({ x, y, z }) => {
         if (child instanceof THREE.Mesh) {
           child.material.metalness = 0
             child.castShadow = true
+            child.receiveShadow = true
             }
           });
       gltf.animations; // Array<THREE.AnimationClip>
@@ -612,28 +615,28 @@ return () => {
           }
   })
   
-  window.addEventListener('keydown', function rotateObjects (event) {
-      if (event.ctrlKey  && event.code === 'KeyC') {
-          selectedObj[0].rotation.y += 0.05
+  // window.addEventListener('keydown', function rotateObjects(event) {
+  //     if (event.ctrlKey  && event.code === 'KeyC') {
+  //         selectedObj[0].rotation.y += 0.05
                   
-      }
-      else if (event.ctrlKey  && event.code === 'KeyX') {
-          selectedObj[0].rotation.y -= 0.05
-      }
-      else if ( event.shiftKey ) {
-          selectedObj[0].scale.x += 0.5
-          selectedObj[0].scale.y += 0.5
-          selectedObj[0].scale.z += 0.5
-      }
-      else if (event.altKey) {
-          selectedObj[0].scale.x -= 0.5
-          selectedObj[0].scale.y -= 0.5
-          selectedObj[0].scale.z -= 0.5
-      }
-      return () => {
-        window.removeEventListener("keydown", rotateObjects);
-      }
-  });
+  //     }
+  //     else if (event.ctrlKey  && event.code === 'KeyX') {
+  //         selectedObj[0].rotation.y -= 0.05
+  //     }
+  //     else if ( event.shiftKey ) {
+  //         selectedObj[0].scale.x += 0.5
+  //         selectedObj[0].scale.y += 0.5
+  //         selectedObj[0].scale.z += 0.5
+  //     }
+  //     else if (event.altKey) {
+  //         selectedObj[0].scale.x -= 0.5
+  //         selectedObj[0].scale.y -= 0.5
+  //         selectedObj[0].scale.z -= 0.5
+  //     }
+  //     return () => {
+  //       window.removeEventListener("keydown", rotateObjects);
+  //     }
+  // });
 
   
 
@@ -650,6 +653,9 @@ return () => {
 
   window.addEventListener('auxclick', function detectObj() {
     detectObject(scene,  raycasterObj, mousePosition, camera)
+    return () => {
+      window.removeEventListener("click", detectObj);
+    }
   });
   
 
