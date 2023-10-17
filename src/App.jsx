@@ -53,8 +53,6 @@ function App() {
     });
     const scene = new THREE.Scene();
     scene.fog = true
-    // scene.fog.color.set(0x39c09f)
-    // scene.background.set(0x39c09f)
 		const color = 0xe0d6ff;
     const near = 40;
 		const far = 50;
@@ -72,12 +70,12 @@ function App() {
        * Camera
        */
       const resolution = new THREE.Vector2(20, 20)
-      const fov = 30
+      const fov = 20
       const camera = new THREE.PerspectiveCamera(fov, sizes.width / sizes.height, 0.5, 1000)
       // camera.zoom.toFixed(5)
  
       const initialPosition = new THREE.Vector3(
-        resolution.x / 2 + 5,
+        resolution.x - 50,
         6,
         resolution.y / 2 + 4
       )
@@ -319,14 +317,15 @@ let getactiveStorage = localStorage.getItem('active')
 const planeMesh = new THREE.Mesh(
   new THREE.PlaneGeometry(10, 10),
   new THREE.MeshStandardMaterial({
-    // color: '#eed7c5',
-    // map: planeTexture,
-    visible: false,
+    
+    color: 0xf5ebe0,
+    visible: true,
     side: THREE.FrontSide,
-    transparent:true, 
+    // transparent:false, 
     depthWrite: false
 })
 );
+planeMesh.renderOrder = 1
 planeMesh.rotation.x = Math.PI * - 0.5;
 planeMesh.receiveShadow = true
 
@@ -335,15 +334,11 @@ scene.add(planeMesh);
 const planeMesh2 = new THREE.Mesh(
   new THREE.PlaneGeometry(100, 100),
   new THREE.MeshStandardMaterial({
-    // color: '#eed7c5',
-    // map: planeTexture,
     color: 0xffffff,
     side: THREE.FrontSide,
-    transparent:true, 
     depthWrite: false
 })
 );
-// planeMaterial.color.set(groundColor)
 planeMesh2.rotation.x = Math.PI * - 0.5;
 planeMesh2.receiveShadow = true
 
@@ -351,8 +346,8 @@ scene.add(planeMesh2);
 
 
 
-const grid = new THREE.GridHelper(10, 10, 0xFFFFFF, 0xFFFFFF);
-scene.add(grid);
+// const grid = new THREE.GridHelper(10, 10, 0xFFFFFF, 0xFFFFFF);
+// scene.add(grid);
 
 
 let map = new THREE.TextureLoader().load("./platformPack_tile009.png")
@@ -360,7 +355,9 @@ const highlightMesh = new THREE.Mesh(
   new THREE.PlaneGeometry(0.9, 0.9),
   new THREE.MeshBasicMaterial({
     map: map,
-    transparent: true
+    transparent: true,
+    depthWrite: true
+
   })
 );
 
