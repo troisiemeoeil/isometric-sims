@@ -334,7 +334,7 @@ scene.add(planeMesh);
 const planeMesh2 = new THREE.Mesh(
   new THREE.PlaneGeometry(100, 100),
   new THREE.MeshStandardMaterial({
-    color: 0xffffff,
+    color: 0xdbe7ab,
     side: THREE.FrontSide,
     depthWrite: false
 })
@@ -605,9 +605,10 @@ return () => {
     addModelSound()
    
   });
+  
 
   window.addEventListener('auxclick', function detectObj() {
-    detectObject(scene,  raycasterObj, mousePosition, camera)
+    detectObject(scene,  raycasterObj, mousePosition, camera, renderer)
     return () => {
       window.removeEventListener("click", detectObj);
     }

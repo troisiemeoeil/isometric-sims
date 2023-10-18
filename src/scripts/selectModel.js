@@ -19,6 +19,8 @@ export function addBuilding(selectedModel, stag, models) {
         const model = gltf.scene;
             console.log("this is true");
         model.scale.set(0.5,0.5,0.5);
+        model.isDraggable = true;
+
         model.traverse( function(child) {
             if (child instanceof THREE.Mesh) {
               child.material.metalness = 0
@@ -46,6 +48,8 @@ assetLoader.load(selectedModel[0].href, function(gltf) {
     const model = gltf.scene;
         console.log("this is true");
     model.scale.set(0.5,0.5,0.5);
+    model.isDraggable = true;
+
     model.traverse( function(child) {
         if (child instanceof THREE.Mesh) {
           child.material.metalness = 0

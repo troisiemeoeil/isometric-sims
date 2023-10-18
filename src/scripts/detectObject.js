@@ -2,19 +2,13 @@ import * as THREE from 'three'
 
 
 export  function detectObject(scene,  raycasterObj, mousePosition, camera) {
-  
           raycasterObj.setFromCamera(mousePosition, camera)
           let intersect = raycasterObj.intersectObjects(scene.children, true)
         
           // TO GET THE FIRST INTERSECTION POINT AKA THE MODEL YOU'RE LOOKING FOR, YOU NEED
           // TO LOOK OUT FOR THE FURTHEST DISTANCE FROM CAMERA
-       console.log(scene);
-       const intersectModel = []
-     
-       for (let i = 10; i < scene.children.length; i++) {
-          intersect.push(scene.children[i])
-       }
-       console.log(intersectModel);
+          
+
 
   function parseObjects(i) {
     console.log(intersect[i].object);
@@ -36,9 +30,15 @@ export  function detectObject(scene,  raycasterObj, mousePosition, camera) {
       // scene.remove(box)
     }
   }
-parseObjects(0)
-    
-        }
+  window.addEventListener('keypress', function translateObjects(event) {
+  
+    switch (event.code) {
+        case 'KeyX':
+          parseObjects(0)
+            break
+    }
+    })
+  }
 
           
       
