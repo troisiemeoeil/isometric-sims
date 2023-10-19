@@ -605,14 +605,16 @@ return () => {
     addModelSound()
    
   });
-  
+
 
   window.addEventListener('auxclick', function detectObj() {
-    detectObject(scene,  raycasterObj, mousePosition, camera, renderer)
+    detectObject(scene,  raycasterObj, mousePosition, camera)  
     return () => {
       window.removeEventListener("click", detectObj);
     }
   });
+
+
   
 
   const saveBtn = document.getElementById("saveBtn")

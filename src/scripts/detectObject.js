@@ -7,7 +7,6 @@ export  function detectObject(scene,  raycasterObj, mousePosition, camera) {
         
           // TO GET THE FIRST INTERSECTION POINT AKA THE MODEL YOU'RE LOOKING FOR, YOU NEED
           // TO LOOK OUT FOR THE FURTHEST DISTANCE FROM CAMERA
-          
 
 
   function parseObjects(i) {
@@ -30,8 +29,9 @@ export  function detectObject(scene,  raycasterObj, mousePosition, camera) {
       // scene.remove(box)
     }
   }
+
+
   window.addEventListener('keypress', function translateObjects(event) {
-  
     switch (event.code) {
         case 'KeyX':
           parseObjects(0)
