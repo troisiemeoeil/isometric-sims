@@ -11,7 +11,7 @@ export function saveProgress(scene, listofmodels, getactiveStorage) {
     
         if (getactiveStorage === null) {
             let savedItems = []
-            for (let i = 7; i < sceneContent.length; i++) {
+            for (let i = 95; i < sceneContent.length; i++) {
               savedItems.push({
                 name: sceneContent[i].children[0].name,
                 position: {
@@ -30,7 +30,7 @@ export function saveProgress(scene, listofmodels, getactiveStorage) {
         else if (getactiveStorage === "active") {
                 // correct method
                   let savedItems = []
-            for (let i = 7; i < sceneContent.length; i++) {
+            for (let i = 95; i < sceneContent.length; i++) {
               savedItems.push({
                 name: sceneContent[i].children[0].name,
                 position: {

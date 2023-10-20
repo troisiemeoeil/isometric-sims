@@ -115,46 +115,15 @@ function App() {
     
 
       // reactivate sound
-  //   let source = "./sounds/backgroundmusic.mp3"
-  //  window.addEventListener('click', function Playit(e) {
-  //   e.currentTarget.removeEventListener(e.type, Playit);
-  //   var audio = new Audio(source);
-  //   audio.play();
-  //   audio.loop()
-  // })
+    let source = "./sounds/backgroundmusic.mp3"
+   window.addEventListener('click', function Playit(e) {
+    e.currentTarget.removeEventListener(e.type, Playit);
+    var audio = new Audio(source);
+    audio.play();
+    audio.loop()
+  })
 
-  // for (let i = 2;  i <= 10; i++ ) {
-  //   assetLoader.load(
-  //     // resource URL
-  //     'src/assets/detail_awningWide.glb',
-  //     // called when the resource is loaded
-  //     function ( gltf ) {
-  //       scene.add( gltf.scene );
-  //       let model = gltf.scene
-  //       model.position.set(Math.floor(Math.random()* 6) ,0, Math.floor(Math.random()* 6))
-       
-  //       model.traverse( function(child) {
-  //         if (child instanceof THREE.Mesh) {
-  //           child.material.metalness = 0
-  //             child.castShadow = true
-  //             }
-  //           });
-  //       gltf.animations; // Array<THREE.AnimationClip>
-  //       gltf.scene; // THREE.Group
-  //       gltf.scenes; // Array<THREE.Group>
-  //       gltf.cameras; // Array<THREE.Camera>
-  //       gltf.asset; // Object
-    
-  //     },
-  //     // called while loading is progressing
-  //     function ( xhr ) {
-    
-  //       console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-    
-  //     },
-  //     // called when loading has errors
-  //   );
-  //   }
+
 
 const treeData = [
 	new THREE.Vector4(-5, 0, 10, 1),
@@ -323,7 +292,7 @@ let getactiveStorage = localStorage.getItem('active')
 
    
 const planeMesh = new THREE.Mesh(
-  new THREE.PlaneGeometry(10, 10),
+  new THREE.PlaneGeometry(10, 10, 10,10),
   new THREE.MeshStandardMaterial({
     
     color: 0xf5ebe0,
@@ -360,7 +329,7 @@ scene.add(planeMesh2);
 
 let map = new THREE.TextureLoader().load("./platformPack_tile009.png")
 const highlightMesh = new THREE.Mesh(
-  new THREE.PlaneGeometry(0.9, 0.9),
+  new THREE.PlaneGeometry(1.1,1.1),
   new THREE.MeshBasicMaterial({
     map: map,
     transparent: true,
@@ -370,7 +339,7 @@ const highlightMesh = new THREE.Mesh(
 );
 
 highlightMesh.rotation.x = Math.PI * - 0.5;
-highlightMesh.position.set(0.5, 0, 0.5);
+highlightMesh.position.set(0.9, 0, 0.9);
 scene.add(highlightMesh);
 
 const mousePosition = new THREE.Vector2();
@@ -578,28 +547,28 @@ return () => {
           }
   })
   
-  // window.addEventListener('keydown', function rotateObjects(event) {
-  //     if (event.ctrlKey  && event.code === 'KeyC') {
-  //         selectedObj[0].rotation.y += 0.05
+  window.addEventListener('keydown', function rotateObjects(event) {
+      if (event.ctrlKey  && event.code === 'KeyC') {
+          selectedObj[0].rotation.y += 0.05
                   
-  //     }
-  //     else if (event.ctrlKey  && event.code === 'KeyX') {
-  //         selectedObj[0].rotation.y -= 0.05
-  //     }
-  //     else if ( event.shiftKey ) {
-  //         selectedObj[0].scale.x += 0.5
-  //         selectedObj[0].scale.y += 0.5
-  //         selectedObj[0].scale.z += 0.5
-  //     }
-  //     else if (event.altKey) {
-  //         selectedObj[0].scale.x -= 0.5
-  //         selectedObj[0].scale.y -= 0.5
-  //         selectedObj[0].scale.z -= 0.5
-  //     }
-  //     return () => {
-  //       window.removeEventListener("keydown", rotateObjects);
-  //     }
-  // });
+      }
+      else if (event.ctrlKey  && event.code === 'KeyX') {
+          selectedObj[0].rotation.y -= 0.05
+      }
+      else if ( event.shiftKey ) {
+          selectedObj[0].scale.x += 0.5
+          selectedObj[0].scale.y += 0.5
+          selectedObj[0].scale.z += 0.5
+      }
+      else if (event.altKey) {
+          selectedObj[0].scale.x -= 0.5
+          selectedObj[0].scale.y -= 0.5
+          selectedObj[0].scale.z -= 0.5
+      }
+      return () => {
+        window.removeEventListener("keydown", rotateObjects);
+      }
+  });
 
   
 
