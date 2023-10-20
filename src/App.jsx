@@ -92,7 +92,10 @@ function App() {
     orbit.enablePan = false
     orbit.saveState()
 
-    const ambLight = new THREE.AmbientLight(0xffffff, 1.7)
+    const ambLight = new THREE.AmbientLight(0xffffff, 2)
+    var hemiLight = new THREE.HemisphereLight( 0xffffff, 0x444444 );
+    hemiLight.position.set( 0, 300, 0 );
+    scene.add( hemiLight );
     const dirLight = new THREE.DirectionalLight(0xffffff, 1)
     scene.add(ambLight)
     dirLight.position.set(20, 20, 18)
@@ -107,6 +110,9 @@ function App() {
     
     // dirLight.castShadow = true
     scene.add(dirLight)
+
+    
+    
 
       // reactivate sound
   //   let source = "./sounds/backgroundmusic.mp3"
@@ -187,6 +193,8 @@ treeData.forEach(({ x, y, z }) => {
       scene.add( gltf.scene );
       let model = gltf.scene
       model.position.set(x ,y, z)
+      model.rotation.set(0 ,Math.random() * 10, 0)
+
       // model.scale.setScalar(w)
      
       model.traverse( function(child) {

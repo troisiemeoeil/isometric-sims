@@ -178,4 +178,18 @@ export function addplateauFallmodel(selectedModel, stag, models) {
         stag.pop();
     }
     selectedModel.push(models[8])
+    assetLoader.load(selectedModel[0].href, function(gltf) {
+        const model = gltf.scene;
+    model.scale.set(1.5,1.5,1.5);
+
+        model.traverse( function(child) {
+            if (child instanceof THREE.Mesh) {
+              child.material.metalness = 0
+              }
+              });
+        stag.push(model);
+        console.log(stag);
+    }, undefined, function(error) {
+        console.error(error);
+    });
 }
