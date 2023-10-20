@@ -193,3 +193,27 @@ export function addplateauFallmodel(selectedModel, stag, models) {
         console.error(error);
     });
 }
+
+export function addfarmLevel13(selectedModel, stag, models) {
+    while(selectedModel.length > 0) {
+        selectedModel.pop();
+    }
+    while(stag.length > 0) {
+        stag.pop();
+    }
+    selectedModel.push(models[9])
+    assetLoader.load(selectedModel[0].href, function(gltf) {
+        const model = gltf.scene;
+    model.scale.set(0.5,0.5,0.5);
+
+        model.traverse( function(child) {
+            if (child instanceof THREE.Mesh) {
+              child.material.metalness = 0
+              }
+              });
+        stag.push(model);
+        console.log(stag);
+    }, undefined, function(error) {
+        console.error(error);
+    });
+}

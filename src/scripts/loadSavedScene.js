@@ -135,6 +135,20 @@ export  function loadSavedScene(scene, assetLoader, models) {
                         console.error(error);
                     });
                 }
+                else if(listofSavedModels[i].name === "Farm_SecondAge_Level3") {
+                  assetLoader.load(models[9].href, function(gltf) {
+                      const model = gltf.scene;
+                      model.scale.set(0.5, 0.5, 0.5);
+                      model.position.copy(listofSavedModels[i].position);
+                      let meshArr = model.children[0].children
+                      for (let i = 0; i < meshArr.length; i++) {
+                        meshArr[i].material.metalness = 0
+                      }
+                scene.add(model);
+                  }, undefined, function(error) {
+                      console.error(error);
+                  });
+              }
             }
       
 }
