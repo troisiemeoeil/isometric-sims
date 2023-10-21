@@ -16,9 +16,9 @@ export  function detectObject(scene,  raycasterObj, mousePosition, camera) {
       console.log("Found it!", intersect[i].object.name);
       console.log(selectedModelObj);
       let bbox = new THREE.Box3().setFromObject(selectedModelObj);
-      // const box = new THREE.BoxHelper( selectedModelObj, 0xf5ebe0 );
+      const box = new THREE.BoxHelper( selectedModelObj, 0xf5ebe0 );
       let size = bbox.getSize(new THREE.Vector3());
-      // scene.add( box );
+      scene.add( box );
       console.log(size);
       // let worldPosition = intersect[0].object.getWorldPosition(new THREE.Vector3)
       // let localStorageItems = JSON.parse(localStorage.getItem('listofobjects'))

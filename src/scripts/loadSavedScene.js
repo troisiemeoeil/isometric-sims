@@ -40,7 +40,7 @@ export  function loadSavedScene(scene, assetLoader, models) {
                         model.position.copy(listofSavedModels[i].position);
                         let meshArr = model.children[0].children
                         for (let i = 0; i < meshArr.length; i++) {
-                          meshArr[i].material.metalness = 0
+                          meshArr[i].material.metalness = -0.5
                         }
                   scene.add(model);
                     }, undefined, function(error) {
@@ -70,7 +70,7 @@ export  function loadSavedScene(scene, assetLoader, models) {
                         model.position.copy(listofSavedModels[i].position);
                         let meshArr = model.children[0].children
                         for (let i = 0; i < meshArr.length; i++) {
-                          meshArr[i].material.metalness = 0
+                          meshArr[i].material.metalness = -0.5
                         }
                   scene.add(model);
                     }, undefined, function(error) {
@@ -95,7 +95,7 @@ export  function loadSavedScene(scene, assetLoader, models) {
                 else if(listofSavedModels[i].name === "Resource_PineTree_Group") {
                     assetLoader.load(models[6].href, function(gltf) {
                         const model = gltf.scene;
-                        model.scale.set(0.5, 0.5, 0.5);
+                        model.scale.set(0.75, 0.75, 0.75);
                         model.position.copy(listofSavedModels[i].position);
                         let meshArr = model.children[0].children
                         for (let i = 0; i < meshArr.length; i++) {
@@ -124,11 +124,11 @@ export  function loadSavedScene(scene, assetLoader, models) {
                 else if(listofSavedModels[i].name === "Resource_Gold_3") {
                     assetLoader.load(models[8].href, function(gltf) {
                         const model = gltf.scene;
-                        model.scale.set(0.5, 0.5, 0.5);
+                        model.scale.set(1.5, 1.5, 1.5);
                         model.position.copy(listofSavedModels[i].position);
                         let meshArr = model.children[0].children
                         for (let i = 0; i < meshArr.length; i++) {
-                          meshArr[i].material.metalness = 0
+                          meshArr[i].material.metalness = -0.5
                         }
                   scene.add(model);
                     }, undefined, function(error) {
