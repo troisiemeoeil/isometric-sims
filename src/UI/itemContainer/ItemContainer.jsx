@@ -61,6 +61,44 @@ useEffect(()=> {
 
 }, [])
 
+useEffect(()=> {
+  const inventoryRows = document.querySelector('.inventory--rows')
+  //Loop through all this div's children and set Selected to false
+  for (const child of inventoryRows.children) {
+   child.setAttribute("selected", "false")
+ 
+ }
+ 
+   function select() {
+       // Loop through the div's children
+        for (const child of inventoryRows.children) {
+         // If there's any element that is true other than the 
+         // one clicked on, set it to false and make it transparent
+         if (child.getAttribute("selected") === "true") {
+           child.setAttribute("selected", "false")
+           child.style.backgroundColor = "transparent"
+           child.style.borderRadius = 0
+         // Set the clicked option attribute to true
+        selectedOption.current.setAttribute("selected", "true")
+           //adjust the styling 
+        selectedOption.current.style.backgroundColor = "#faebd7"
+        selectedOption.current.style.borderRadius = 0
+         }
+         //if there's no other elemnent selected, just set selected to
+         //true and adjust the styling 
+         else {
+        selectedOption.current.setAttribute("selected", "true")
+        selectedOption.current.style.backgroundColor = "#faebd7"
+        selectedOption.current.style.borderRadius = 0
+ 
+         }
+       }
+ 
+      }
+      selectedOption.current.addEventListener("click", select)
+ 
+ }, [])
+
   return (
     <div className="items__container" onMouseEnter={Playit}  ref={selectedOption}>
     <span className="items__number ">{number}</span>

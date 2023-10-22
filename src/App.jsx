@@ -6,16 +6,6 @@ import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 import MiniMenu from './UI/MiniMenu';
-// import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
-// import large_buildingAimg from './assets/modelsImg/city/largebuildingA.png'
-// import detail_amingwidpng from './assets/modelsImg/city/detail_amingwid.png'
-// import lowbuildingCpng from './assets/modelsImg/city/lowbuildingC.png'
-// import skyscraperDpng from './assets/modelsImg/city/skyscraperD.png'
-// import smallbuildingCpng from './assets/modelsImg/city/smallbuildingC.png'
-// import tree_oak_fallpng from './assets/modelsImg/city/tree_oak_fall.png'
-// import tree_palmTallpng from './assets/modelsImg/city/tree_palmTall.png'
-// import tree_pineDefaultApng from './assets/modelsImg/city/tree_pineDefaultA.png'
-// import tree_plateau_fallpng from './assets/modelsImg/city/tree_plateau_fall.png'
 
 
 import { useEffect, useRef } from 'react';
@@ -29,7 +19,8 @@ import { addBuilding,
       addplateauFallmodel,
       addskyScraperBtn,
       addsmallBuildingmodel,
-      addfarmLevel13
+      addfarmLevel13,
+      addArcherySecondAgeLevel3
      } from './scripts/selectModel';
 
 
@@ -338,10 +329,24 @@ const palmTree = new URL('./assets/tree_palmTall.glb', import.meta.url);
 const pineTree = new URL('./assets/tree_pineDefaultA.glb', import.meta.url);
 const plateauFall = new URL('./assets/tree_plateau_fall.glb', import.meta.url);
 const farmLevel13 = new URL('./assets/Farm_SecondAge_Level3.glb', import.meta.url);
+const ArcherySecondAgeLevel3 = new URL('./assets/Archery_SecondAge_Level3.glb', import.meta.url);
 
 
 
-  let models = [largeBuilding, skyScraper, awing, lowBuilding, smallBuilding, oakTree, palmTree, pineTree, plateauFall, farmLevel13 ]
+  let models = [
+    largeBuilding, 
+    skyScraper, 
+    awing, 
+    lowBuilding, 
+    smallBuilding, 
+    oakTree, 
+    palmTree, 
+    pineTree, 
+    plateauFall, 
+    farmLevel13,
+    ArcherySecondAgeLevel3,
+
+  ]
 
  
  
@@ -474,6 +479,15 @@ const farmLevel13Model = document.getElementById('farmLevel13')
     loadScene( selectedModel, stag)
     return () => {
       farmLevel13Model.removeEventListener("click", loadFarmLevel13);
+    }
+})
+
+const ArcherySecondAgeLevel3 = document.getElementById('ArcherySecondAgeLevel3')
+ArcherySecondAgeLevel3.addEventListener('click', function loadArcherySecondAgeLevel3() {
+  addArcherySecondAgeLevel3(selectedModel, stag, models)
+    loadScene( selectedModel, stag)
+    return () => {
+      ArcherySecondAgeLevel3.removeEventListener("click", loadArcherySecondAgeLevel3);
     }
 })
 

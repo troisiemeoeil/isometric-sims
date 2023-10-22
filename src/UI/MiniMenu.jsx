@@ -230,13 +230,19 @@ useEffect(()=> {
           description=" Use to gather ore from streams."
         />
    
-    
-   
-   <div className="items__container">
-          <span className="items__number">0</span>
-          <div className="item__container"></div>
-        </div>
-
+   <ItemContainer
+          number="0"
+          containerdraggable="true"
+          id=""
+          imgUrl="./Model_Images/Farm_SecondAge_Level3.png"
+          alt=""
+          imgDrag="false"
+          tooltipDrag="false"
+          title="Farm Level 13"
+          description=" Use to gather ore from streams."
+        />
+        
+         
       <div className="items__container" >
         <span className="items__number">-</span>
         <div className="item__container" draggable="true"  id="saveBtn">
@@ -274,7 +280,7 @@ useEffect(()=> {
     <div id="full_inventory" className="inventory--rows">
       
     <ItemContainer
-          number="0"
+          number="1"
           containerdraggable="true"
           id="farmLevel13"
           imgUrl="./Model_Images/Farm_SecondAge_Level3.png"
@@ -284,6 +290,23 @@ useEffect(()=> {
           title="Farm Level 13"
           description=" Use to gather ore from streams."
         />
+
+<ItemContainer
+          number="2"
+          containerdraggable="true"
+          id="ArcherySecondAgeLevel3"
+          imgUrl="./Model_Images/Archery_SecondAge_Level3.png"
+          alt="ArcherySecondAgeLevel3"
+          imgDrag="false"
+          tooltipDrag="false"
+          title="Archery SecondAge Level 3"
+          description=" Use to gather ore from streams."
+        />
+             
+
+
+
+
         <div className="items__container">
           <div className="item__container" draggable="true">
             <img className="item__img" src="https://assets.codepen.io/7237686/coffee.svg?format=auto" alt="coffee" draggable="false" />
