@@ -41,7 +41,9 @@ export  function addModel(scene, intersects, raycaster, planeMesh, objects, high
                 // FOR SOME REASON, IT'S GIVING THE DOUBLE SUM 
                 // I NEED TO DIVIDE IT BY 2    
                 let size = bbox.getSize(new THREE.Vector3());
-
+             
+                
+                  
                 // ADD THE MODEL TO THE SCENE WITH THE CORRECT POSITION
                 stagClone.position.set(
                    highlightMesh.position.x,

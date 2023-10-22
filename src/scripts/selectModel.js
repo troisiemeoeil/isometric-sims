@@ -77,7 +77,7 @@ export function adddetail_awningWide(selectedModel, stag, models) {
     model.scale.set(0.5,0.5,0.5);
         model.traverse( function(child) {
             if (child instanceof THREE.Mesh) {
-              child.material.metalness = 0
+              child.material.metalness = -0.5
               }
               });
         stag.push(model);
@@ -99,10 +99,10 @@ export function addlowBuilding(selectedModel, stag, models) {
     
     assetLoader.load(selectedModel[0].href, function(gltf) {
         const model = gltf.scene;
-        model.scale.set(1,0.5,1);
+        model.scale.set(0.75,0.75,0.75);
         model.traverse( function(child) {
             if (child instanceof THREE.Mesh) {
-              child.material.metalness = 0
+              child.material.metalness = -0.25
               }
               });
         stag.push(model);
@@ -252,7 +252,7 @@ export function addBarrel(selectedModel, stag, models) {
     selectedModel.push(models[11])
     assetLoader.load(selectedModel[0].href, function(gltf) {
         const model = gltf.scene;
-    model.scale.set(0.5,0.5,0.5);
+    model.scale.set(1.5,1.5,1.5);
 
         model.traverse( function(child) {
             if (child instanceof THREE.Mesh) {
@@ -276,7 +276,7 @@ export function addCrate_Big_Stack2(selectedModel, stag, models) {
     selectedModel.push(models[12])
     assetLoader.load(selectedModel[0].href, function(gltf) {
         const model = gltf.scene;
-    model.scale.set(0.5,0.5,0.5);
+    model.scale.set(1,1,1);
 
         model.traverse( function(child) {
             if (child instanceof THREE.Mesh) {
