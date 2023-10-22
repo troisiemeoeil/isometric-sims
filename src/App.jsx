@@ -20,7 +20,22 @@ import { addBuilding,
       addskyScraperBtn,
       addsmallBuildingmodel,
       addfarmLevel13,
-      addArcherySecondAgeLevel3
+      addArcherySecondAgeLevel3,
+      addBarrel,
+      addCrate_Big_Stack2,
+      addDock_FirstAge,
+      addFarm_FirstAge_Level2_Wheat,
+      addHouses_FirstAge_1_Level3,
+      addHouses_FirstAge_2_Level3,
+      addHouses_FirstAge_3_Level2,
+      addMarket_FirstAge_Level3,
+      addHouses_SecondAge_2_Level3,
+      addHouses_SecondAge_3_Level3,
+      addMarket_SecondAge_Level3,
+      addMine,
+      addPort_FirstAge_Level2,
+      addPort_FirstAge_Level3,
+      addPort_SecondAge_Level3,
      } from './scripts/selectModel';
 
 
@@ -330,6 +345,24 @@ const pineTree = new URL('./assets/tree_pineDefaultA.glb', import.meta.url);
 const plateauFall = new URL('./assets/tree_plateau_fall.glb', import.meta.url);
 const farmLevel13 = new URL('./assets/Farm_SecondAge_Level3.glb', import.meta.url);
 const ArcherySecondAgeLevel3 = new URL('./assets/Archery_SecondAge_Level3.glb', import.meta.url);
+const Barrel = new URL('./assets/Barrel.glb', import.meta.url);
+const Crate_Big_Stack2 = new URL('./assets/Crate_Big_Stack2.glb', import.meta.url);
+const Dock_FirstAge = new URL('./assets/Dock_FirstAge.glb', import.meta.url);
+const Farm_FirstAge_Level2_Wheat = new URL('./assets/Farm_FirstAge_Level2_Wheat.glb', import.meta.url);
+const Houses_FirstAge_1_Level3 = new URL('./assets/Houses_FirstAge_1_Level3.glb', import.meta.url);
+const Houses_FirstAge_2_Level3 = new URL('./assets/Houses_FirstAge_2_Level3.glb', import.meta.url);
+const Houses_FirstAge_3_Level2 = new URL('./assets/Houses_FirstAge_3_Level2.glb', import.meta.url);
+const Market_FirstAge_Level3 = new URL('./assets/Market_FirstAge_Level3.glb', import.meta.url);
+const Houses_SecondAge_2_Level3 = new URL('./assets/Houses_SecondAge_2_Level3.glb', import.meta.url);
+const Houses_SecondAge_3_Level3 = new URL('./assets/Houses_SecondAge_3_Level3.glb', import.meta.url);
+const Market_SecondAge_Level3 = new URL('./assets/Market_SecondAge_Level3.glb', import.meta.url);
+const Mine = new URL('./assets/Mine.glb', import.meta.url);
+const Port_FirstAge_Level2 = new URL('./assets/Port_FirstAge_Level2.glb', import.meta.url);
+const Port_FirstAge_Level3 = new URL('./assets/Port_FirstAge_Level3.glb', import.meta.url);
+const Port_SecondAge_Level3 = new URL('./assets/Port_SecondAge_Level3.glb', import.meta.url);
+// const ArcherySecondAgeLevel3 = new URL('./assets/Archery_SecondAge_Level3.glb', import.meta.url);
+// const ArcherySecondAgeLevel3 = new URL('./assets/Archery_SecondAge_Level3.glb', import.meta.url);
+
 
 
 
@@ -345,6 +378,21 @@ const ArcherySecondAgeLevel3 = new URL('./assets/Archery_SecondAge_Level3.glb', 
     plateauFall, 
     farmLevel13,
     ArcherySecondAgeLevel3,
+    Barrel,
+    Crate_Big_Stack2,
+    Dock_FirstAge,
+    Farm_FirstAge_Level2_Wheat,
+    Houses_FirstAge_1_Level3,
+    Houses_FirstAge_2_Level3,
+    Houses_FirstAge_3_Level2,
+    Market_FirstAge_Level3,
+    Houses_SecondAge_2_Level3,
+    Houses_SecondAge_3_Level3,
+    Market_SecondAge_Level3,
+    Mine,
+    Port_FirstAge_Level2,
+    Port_FirstAge_Level3,
+    Port_SecondAge_Level3,
 
   ]
 
@@ -480,7 +528,7 @@ const farmLevel13Model = document.getElementById('farmLevel13')
     return () => {
       farmLevel13Model.removeEventListener("click", loadFarmLevel13);
     }
-})
+}) 
 
 const ArcherySecondAgeLevel3 = document.getElementById('ArcherySecondAgeLevel3')
 ArcherySecondAgeLevel3.addEventListener('click', function loadArcherySecondAgeLevel3() {
@@ -488,6 +536,145 @@ ArcherySecondAgeLevel3.addEventListener('click', function loadArcherySecondAgeLe
     loadScene( selectedModel, stag)
     return () => {
       ArcherySecondAgeLevel3.removeEventListener("click", loadArcherySecondAgeLevel3);
+    }
+})
+
+
+const BarrelModel = document.getElementById('Barrel')
+BarrelModel.addEventListener('click', function loadBarrel() {
+  addBarrel(selectedModel, stag, models)
+    loadScene( selectedModel, stag)
+    return () => {
+      BarrelModel.removeEventListener("click", loadBarrel);
+    }
+})
+
+const Crate_Big_Stack2Model = document.getElementById('Crate_Big_Stack2')
+Crate_Big_Stack2Model.addEventListener('click', function loadCrate_Big_Stack2Model() {
+  addCrate_Big_Stack2(selectedModel, stag, models)
+    loadScene( selectedModel, stag)
+    return () => {
+      Crate_Big_Stack2Model.removeEventListener("click", loadCrate_Big_Stack2Model);
+    }
+})
+
+const Dock_FirstAge = document.getElementById('Dock_FirstAge')
+Dock_FirstAge.addEventListener('click', function loadDock_FirstAge() {
+  addDock_FirstAge(selectedModel, stag, models)
+    loadScene( selectedModel, stag)
+    return () => {
+      Dock_FirstAge.removeEventListener("click", loadDock_FirstAge);
+    }
+})
+
+const Farm_FirstAge_Level2_Wheat = document.getElementById('Farm_FirstAge_Level2_Wheat')
+Farm_FirstAge_Level2_Wheat.addEventListener('click', function loadFarm_FirstAge_Level2_Wheat() {
+  addFarm_FirstAge_Level2_Wheat(selectedModel, stag, models)
+    loadScene( selectedModel, stag)
+    return () => {
+      Dock_FirstAge.removeEventListener("click", loadFarm_FirstAge_Level2_Wheat);
+    }
+})
+
+const Houses_FirstAge_1_Level3 = document.getElementById('Houses_FirstAge_1_Level3')
+Farm_FirstAge_Level2_Wheat.addEventListener('click', function loadHouses_FirstAge_1_Level3() {
+  addHouses_FirstAge_1_Level3(selectedModel, stag, models)
+    loadScene( selectedModel, stag)
+    return () => {
+      Houses_FirstAge_1_Level3.removeEventListener("click", loadHouses_FirstAge_1_Level3);
+    }
+})
+
+
+const Houses_FirstAge_2_Level3 = document.getElementById('Houses_FirstAge_2_Level3')
+Houses_FirstAge_2_Level3.addEventListener('click', function loadHouses_FirstAge_2_Level3() {
+  addHouses_FirstAge_2_Level3(selectedModel, stag, models)
+    loadScene( selectedModel, stag)
+    return () => {
+      Houses_FirstAge_2_Level3.removeEventListener("click", loadHouses_FirstAge_2_Level3);
+    }
+})
+
+
+const Houses_FirstAge_3_Level2 = document.getElementById('Houses_FirstAge_3_Level2')
+Houses_FirstAge_3_Level2.addEventListener('click', function loadHouses_FirstAge_3_Level2() {
+  addHouses_FirstAge_3_Level2(selectedModel, stag, models)
+    loadScene( selectedModel, stag)
+    return () => {
+      Houses_FirstAge_3_Level2.removeEventListener("click", loadHouses_FirstAge_3_Level2);
+    }
+})
+
+const Market_FirstAge_Level3 = document.getElementById('Market_FirstAge_Level3')
+Market_FirstAge_Level3.addEventListener('click', function loadMarket_FirstAge_Level3() {
+  addMarket_FirstAge_Level3(selectedModel, stag, models)
+    loadScene( selectedModel, stag)
+    return () => {
+      loadMarket_FirstAge_Level3.removeEventListener("click", loadMarket_FirstAge_Level3);
+    }
+})
+
+const Houses_SecondAge_2_Level3 = document.getElementById('Houses_SecondAge_2_Level3')
+Houses_SecondAge_2_Level3.addEventListener('click', function loadHouses_SecondAge_2_Level3() {
+  addHouses_SecondAge_2_Level3(selectedModel, stag, models)
+    loadScene( selectedModel, stag)
+    return () => {
+      Houses_SecondAge_2_Level3.removeEventListener("click", loadHouses_SecondAge_2_Level3);
+    }
+})
+
+const Houses_SecondAge_3_Level3 = document.getElementById('Houses_SecondAge_3_Level3')
+Houses_SecondAge_3_Level3.addEventListener('click', function loadHouses_SecondAge_3_Level3() {
+  addHouses_SecondAge_3_Level3(selectedModel, stag, models)
+    loadScene( selectedModel, stag)
+    return () => {
+      Houses_SecondAge_3_Level3.removeEventListener("click", loadHouses_SecondAge_3_Level3);
+    }
+})
+
+const Market_SecondAge_Level3 = document.getElementById('Market_SecondAge_Level3')
+Market_SecondAge_Level3.addEventListener('click', function loadMarket_SecondAge_Level3() {
+  addMarket_SecondAge_Level3(selectedModel, stag, models)
+    loadScene( selectedModel, stag)
+    return () => {
+      Market_SecondAge_Level3.removeEventListener("click", loadMarket_SecondAge_Level3);
+    }
+})
+
+const Mine = document.getElementById('Mine')
+Mine.addEventListener('click', function loadMine() {
+  addMine(selectedModel, stag, models)
+    loadScene( selectedModel, stag)
+    return () => {
+      Mine.removeEventListener("click", loadMine);
+    }
+})
+
+
+const Port_FirstAge_Level2 = document.getElementById('Port_FirstAge_Level2')
+Port_FirstAge_Level2.addEventListener('click', function loadPort_FirstAge_Level2() {
+  addPort_FirstAge_Level2(selectedModel, stag, models)
+    loadScene( selectedModel, stag)
+    return () => {
+      Port_FirstAge_Level2.removeEventListener("click", loadPort_FirstAge_Level2);
+    }
+})
+
+const Port_FirstAge_Level3 = document.getElementById('Port_FirstAge_Level3')
+Port_FirstAge_Level3.addEventListener('click', function loadPort_FirstAge_Level3() {
+  addPort_FirstAge_Level3(selectedModel, stag, models)
+    loadScene( selectedModel, stag)
+    return () => {
+      Port_FirstAge_Level3.removeEventListener("click", loadPort_FirstAge_Level3);
+    }
+})
+
+const Port_SecondAge_Level3 = document.getElementById('Port_SecondAge_Level3')
+Port_SecondAge_Level3.addEventListener('click', function loadPort_SecondAge_Level3() {
+  addPort_SecondAge_Level3(selectedModel, stag, models)
+    loadScene( selectedModel, stag)
+    return () => {
+      Port_SecondAge_Level3.removeEventListener("click", loadPort_SecondAge_Level3);
     }
 })
 

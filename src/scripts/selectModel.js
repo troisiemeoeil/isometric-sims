@@ -241,3 +241,627 @@ export function addArcherySecondAgeLevel3(selectedModel, stag, models) {
         console.error(error);
     });
 }
+
+export function addBarrel(selectedModel, stag, models) {
+    while(selectedModel.length > 0) {
+        selectedModel.pop();
+    }
+    while(stag.length > 0) {
+        stag.pop();
+    }
+    selectedModel.push(models[11])
+    assetLoader.load(selectedModel[0].href, function(gltf) {
+        const model = gltf.scene;
+    model.scale.set(0.5,0.5,0.5);
+
+        model.traverse( function(child) {
+            if (child instanceof THREE.Mesh) {
+              child.material.metalness = 0
+              }
+              });
+        stag.push(model);
+        console.log(stag);
+    }, undefined, function(error) {
+        console.error(error);
+    });
+}
+
+export function addCrate_Big_Stack2(selectedModel, stag, models) {
+    while(selectedModel.length > 0) {
+        selectedModel.pop();
+    }
+    while(stag.length > 0) {
+        stag.pop();
+    }
+    selectedModel.push(models[12])
+    assetLoader.load(selectedModel[0].href, function(gltf) {
+        const model = gltf.scene;
+    model.scale.set(0.5,0.5,0.5);
+
+        model.traverse( function(child) {
+            if (child instanceof THREE.Mesh) {
+              child.material.metalness = 0
+              }
+              });
+        stag.push(model);
+        console.log(stag);
+    }, undefined, function(error) {
+        console.error(error);
+    });
+}
+
+export function addDock_FirstAge(selectedModel, stag, models) {
+    while(selectedModel.length > 0) {
+        selectedModel.pop();
+    }
+    while(stag.length > 0) {
+        stag.pop();
+    }
+    selectedModel.push(models[13])
+    assetLoader.load(selectedModel[0].href, function(gltf) {
+        const model = gltf.scene;
+    model.scale.set(0.5,0.5,0.5);
+
+        model.traverse( function(child) {
+            if (child instanceof THREE.Mesh) {
+              child.material.metalness = 0
+              }
+              });
+        stag.push(model);
+        console.log(stag);
+    }, undefined, function(error) {
+        console.error(error);
+    });
+}
+
+export function addFarm_FirstAge_Level2_Wheat(selectedModel, stag, models) {
+    while(selectedModel.length > 0) {
+        selectedModel.pop();
+    }
+    while(stag.length > 0) {
+        stag.pop();
+    }
+    selectedModel.push(models[14])
+    assetLoader.load(selectedModel[0].href, function(gltf) {
+        const model = gltf.scene;
+    model.scale.set(0.5,0.5,0.5);
+
+        model.traverse( function(child) {
+            if (child instanceof THREE.Mesh) {
+              child.material.metalness = 0
+              }
+              });
+        stag.push(model);
+        console.log(stag);
+    }, undefined, function(error) {
+        console.error(error);
+    });
+}
+
+export function addHouses_FirstAge_1_Level3(selectedModel, stag, models) {
+    while(selectedModel.length > 0) {
+        selectedModel.pop();
+    }
+    while(stag.length > 0) {
+        stag.pop();
+    }
+    selectedModel.push(models[15])
+    assetLoader.load(selectedModel[0].href, function(gltf) {
+        const model = gltf.scene;
+    model.scale.set(0.5,0.5,0.5);
+
+        model.traverse( function(child) {
+            if (child instanceof THREE.Mesh) {
+              child.material.metalness = 0
+              }
+              });
+        stag.push(model);
+        console.log(stag);
+    }, undefined, function(error) {
+        console.error(error);
+    });
+}
+
+export function addHouses_FirstAge_2_Level3(selectedModel, stag, models) {
+    while(selectedModel.length > 0) {
+        selectedModel.pop();
+    }
+    while(stag.length > 0) {
+        stag.pop();
+    }
+    selectedModel.push(models[16])
+    assetLoader.load(selectedModel[0].href, function(gltf) {
+        const model = gltf.scene;
+    model.scale.set(0.5,0.5,0.5);
+
+        model.traverse( function(child) {
+            if (child instanceof THREE.Mesh) {
+              child.material.metalness = 0
+              }
+              });
+        stag.push(model);
+        console.log(stag);
+    }, undefined, function(error) {
+        console.error(error);
+    });
+}
+
+export function addHouses_FirstAge_3_Level2(selectedModel, stag, models) {
+    while(selectedModel.length > 0) {
+        selectedModel.pop();
+    }
+    while(stag.length > 0) {
+        stag.pop();
+    }
+    selectedModel.push(models[17])
+    assetLoader.load(selectedModel[0].href, function(gltf) {
+        const model = gltf.scene;
+    model.scale.set(0.5,0.5,0.5);
+
+        model.traverse( function(child) {
+            if (child instanceof THREE.Mesh) {
+              child.material.metalness = 0
+              }
+              });
+        stag.push(model);
+        console.log(stag);
+    }, undefined, function(error) {
+        console.error(error);
+    });
+}
+
+export function addMarket_FirstAge_Level3(selectedModel, stag, models) {
+    while(selectedModel.length > 0) {
+        selectedModel.pop();
+    }
+    while(stag.length > 0) {
+        stag.pop();
+    }
+    selectedModel.push(models[18])
+    assetLoader.load(selectedModel[0].href, function(gltf) {
+        const model = gltf.scene;
+    model.scale.set(0.5,0.5,0.5);
+
+        model.traverse( function(child) {
+            if (child instanceof THREE.Mesh) {
+              child.material.metalness = 0
+              }
+              });
+        stag.push(model);
+        console.log(stag);
+    }, undefined, function(error) {
+        console.error(error);
+    });
+}
+
+export function addHouses_SecondAge_2_Level3(selectedModel, stag, models) {
+    while(selectedModel.length > 0) {
+        selectedModel.pop();
+    }
+    while(stag.length > 0) {
+        stag.pop();
+    }
+    selectedModel.push(models[19])
+    assetLoader.load(selectedModel[0].href, function(gltf) {
+        const model = gltf.scene;
+    model.scale.set(0.5,0.5,0.5);
+
+        model.traverse( function(child) {
+            if (child instanceof THREE.Mesh) {
+              child.material.metalness = 0
+              }
+              });
+        stag.push(model);
+        console.log(stag);
+    }, undefined, function(error) {
+        console.error(error);
+    });
+}
+
+export function addHouses_SecondAge_3_Level3(selectedModel, stag, models) {
+    while(selectedModel.length > 0) {
+        selectedModel.pop();
+    }
+    while(stag.length > 0) {
+        stag.pop();
+    }
+    selectedModel.push(models[20])
+    assetLoader.load(selectedModel[0].href, function(gltf) {
+        const model = gltf.scene;
+    model.scale.set(0.5,0.5,0.5);
+
+        model.traverse( function(child) {
+            if (child instanceof THREE.Mesh) {
+              child.material.metalness = 0
+              }
+              });
+        stag.push(model);
+        console.log(stag);
+    }, undefined, function(error) {
+        console.error(error);
+    });
+}
+
+export function addMarket_SecondAge_Level3(selectedModel, stag, models) {
+    while(selectedModel.length > 0) {
+        selectedModel.pop();
+    }
+    while(stag.length > 0) {
+        stag.pop();
+    }
+    selectedModel.push(models[21])
+    assetLoader.load(selectedModel[0].href, function(gltf) {
+        const model = gltf.scene;
+    model.scale.set(0.5,0.5,0.5);
+
+        model.traverse( function(child) {
+            if (child instanceof THREE.Mesh) {
+              child.material.metalness = 0
+              }
+              });
+        stag.push(model);
+        console.log(stag);
+    }, undefined, function(error) {
+        console.error(error);
+    });
+}
+
+export function addMine(selectedModel, stag, models) {
+    while(selectedModel.length > 0) {
+        selectedModel.pop();
+    }
+    while(stag.length > 0) {
+        stag.pop();
+    }
+    selectedModel.push(models[22])
+    assetLoader.load(selectedModel[0].href, function(gltf) {
+        const model = gltf.scene;
+    model.scale.set(0.5,0.5,0.5);
+
+        model.traverse( function(child) {
+            if (child instanceof THREE.Mesh) {
+              child.material.metalness = 0
+              }
+              });
+        stag.push(model);
+        console.log(stag);
+    }, undefined, function(error) {
+        console.error(error);
+    });
+}
+
+export function addPort_FirstAge_Level2(selectedModel, stag, models) {
+    while(selectedModel.length > 0) {
+        selectedModel.pop();
+    }
+    while(stag.length > 0) {
+        stag.pop();
+    }
+    selectedModel.push(models[23])
+    assetLoader.load(selectedModel[0].href, function(gltf) {
+        const model = gltf.scene;
+    model.scale.set(0.5,0.5,0.5);
+
+        model.traverse( function(child) {
+            if (child instanceof THREE.Mesh) {
+              child.material.metalness = 0
+              }
+              });
+        stag.push(model);
+        console.log(stag);
+    }, undefined, function(error) {
+        console.error(error);
+    });
+}
+
+export function addPort_FirstAge_Level3(selectedModel, stag, models) {
+    while(selectedModel.length > 0) {
+        selectedModel.pop();
+    }
+    while(stag.length > 0) {
+        stag.pop();
+    }
+    selectedModel.push(models[24])
+    assetLoader.load(selectedModel[0].href, function(gltf) {
+        const model = gltf.scene;
+    model.scale.set(0.5,0.5,0.5);
+
+        model.traverse( function(child) {
+            if (child instanceof THREE.Mesh) {
+              child.material.metalness = 0
+              }
+              });
+        stag.push(model);
+        console.log(stag);
+    }, undefined, function(error) {
+        console.error(error);
+    });
+}
+
+export function addPort_SecondAge_Level3(selectedModel, stag, models) {
+    while(selectedModel.length > 0) {
+        selectedModel.pop();
+    }
+    while(stag.length > 0) {
+        stag.pop();
+    }
+    selectedModel.push(models[25])
+    assetLoader.load(selectedModel[0].href, function(gltf) {
+        const model = gltf.scene;
+    model.scale.set(0.5,0.5,0.5);
+
+        model.traverse( function(child) {
+            if (child instanceof THREE.Mesh) {
+              child.material.metalness = 0
+              }
+              });
+        stag.push(model);
+        console.log(stag);
+    }, undefined, function(error) {
+        console.error(error);
+    });
+}
+
+// export function addArcherySecondAgeLevel3(selectedModel, stag, models) {
+//     while(selectedModel.length > 0) {
+//         selectedModel.pop();
+//     }
+//     while(stag.length > 0) {
+//         stag.pop();
+//     }
+//     selectedModel.push(models[10])
+//     assetLoader.load(selectedModel[0].href, function(gltf) {
+//         const model = gltf.scene;
+//     model.scale.set(0.5,0.5,0.5);
+
+//         model.traverse( function(child) {
+//             if (child instanceof THREE.Mesh) {
+//               child.material.metalness = 0
+//               }
+//               });
+//         stag.push(model);
+//         console.log(stag);
+//     }, undefined, function(error) {
+//         console.error(error);
+//     });
+// }
+//
+// export function addArcherySecondAgeLevel3(selectedModel, stag, models) {
+//     while(selectedModel.length > 0) {
+//         selectedModel.pop();
+//     }
+//     while(stag.length > 0) {
+//         stag.pop();
+//     }
+//     selectedModel.push(models[10])
+//     assetLoader.load(selectedModel[0].href, function(gltf) {
+//         const model = gltf.scene;
+//     model.scale.set(0.5,0.5,0.5);
+
+//         model.traverse( function(child) {
+//             if (child instanceof THREE.Mesh) {
+//               child.material.metalness = 0
+//               }
+//               });
+//         stag.push(model);
+//         console.log(stag);
+//     }, undefined, function(error) {
+//         console.error(error);
+//     });
+// }
+
+// export function addArcherySecondAgeLevel3(selectedModel, stag, models) {
+//     while(selectedModel.length > 0) {
+//         selectedModel.pop();
+//     }
+//     while(stag.length > 0) {
+//         stag.pop();
+//     }
+//     selectedModel.push(models[10])
+//     assetLoader.load(selectedModel[0].href, function(gltf) {
+//         const model = gltf.scene;
+//     model.scale.set(0.5,0.5,0.5);
+
+//         model.traverse( function(child) {
+//             if (child instanceof THREE.Mesh) {
+//               child.material.metalness = 0
+//               }
+//               });
+//         stag.push(model);
+//         console.log(stag);
+//     }, undefined, function(error) {
+//         console.error(error);
+//     });
+// }
+
+// export function addArcherySecondAgeLevel3(selectedModel, stag, models) {
+//     while(selectedModel.length > 0) {
+//         selectedModel.pop();
+//     }
+//     while(stag.length > 0) {
+//         stag.pop();
+//     }
+//     selectedModel.push(models[10])
+//     assetLoader.load(selectedModel[0].href, function(gltf) {
+//         const model = gltf.scene;
+//     model.scale.set(0.5,0.5,0.5);
+
+//         model.traverse( function(child) {
+//             if (child instanceof THREE.Mesh) {
+//               child.material.metalness = 0
+//               }
+//               });
+//         stag.push(model);
+//         console.log(stag);
+//     }, undefined, function(error) {
+//         console.error(error);
+//     });
+// }
+
+// export function addArcherySecondAgeLevel3(selectedModel, stag, models) {
+//     while(selectedModel.length > 0) {
+//         selectedModel.pop();
+//     }
+//     while(stag.length > 0) {
+//         stag.pop();
+//     }
+//     selectedModel.push(models[10])
+//     assetLoader.load(selectedModel[0].href, function(gltf) {
+//         const model = gltf.scene;
+//     model.scale.set(0.5,0.5,0.5);
+
+//         model.traverse( function(child) {
+//             if (child instanceof THREE.Mesh) {
+//               child.material.metalness = 0
+//               }
+//               });
+//         stag.push(model);
+//         console.log(stag);
+//     }, undefined, function(error) {
+//         console.error(error);
+//     });
+// }
+
+// export function addArcherySecondAgeLevel3(selectedModel, stag, models) {
+//     while(selectedModel.length > 0) {
+//         selectedModel.pop();
+//     }
+//     while(stag.length > 0) {
+//         stag.pop();
+//     }
+//     selectedModel.push(models[10])
+//     assetLoader.load(selectedModel[0].href, function(gltf) {
+//         const model = gltf.scene;
+//     model.scale.set(0.5,0.5,0.5);
+
+//         model.traverse( function(child) {
+//             if (child instanceof THREE.Mesh) {
+//               child.material.metalness = 0
+//               }
+//               });
+//         stag.push(model);
+//         console.log(stag);
+//     }, undefined, function(error) {
+//         console.error(error);
+//     });
+// }
+
+// export function addArcherySecondAgeLevel3(selectedModel, stag, models) {
+//     while(selectedModel.length > 0) {
+//         selectedModel.pop();
+//     }
+//     while(stag.length > 0) {
+//         stag.pop();
+//     }
+//     selectedModel.push(models[10])
+//     assetLoader.load(selectedModel[0].href, function(gltf) {
+//         const model = gltf.scene;
+//     model.scale.set(0.5,0.5,0.5);
+
+//         model.traverse( function(child) {
+//             if (child instanceof THREE.Mesh) {
+//               child.material.metalness = 0
+//               }
+//               });
+//         stag.push(model);
+//         console.log(stag);
+//     }, undefined, function(error) {
+//         console.error(error);
+//     });
+// }
+
+// export function addArcherySecondAgeLevel3(selectedModel, stag, models) {
+//     while(selectedModel.length > 0) {
+//         selectedModel.pop();
+//     }
+//     while(stag.length > 0) {
+//         stag.pop();
+//     }
+//     selectedModel.push(models[10])
+//     assetLoader.load(selectedModel[0].href, function(gltf) {
+//         const model = gltf.scene;
+//     model.scale.set(0.5,0.5,0.5);
+
+//         model.traverse( function(child) {
+//             if (child instanceof THREE.Mesh) {
+//               child.material.metalness = 0
+//               }
+//               });
+//         stag.push(model);
+//         console.log(stag);
+//     }, undefined, function(error) {
+//         console.error(error);
+//     });
+// }
+
+// export function addArcherySecondAgeLevel3(selectedModel, stag, models) {
+//     while(selectedModel.length > 0) {
+//         selectedModel.pop();
+//     }
+//     while(stag.length > 0) {
+//         stag.pop();
+//     }
+//     selectedModel.push(models[10])
+//     assetLoader.load(selectedModel[0].href, function(gltf) {
+//         const model = gltf.scene;
+//     model.scale.set(0.5,0.5,0.5);
+
+//         model.traverse( function(child) {
+//             if (child instanceof THREE.Mesh) {
+//               child.material.metalness = 0
+//               }
+//               });
+//         stag.push(model);
+//         console.log(stag);
+//     }, undefined, function(error) {
+//         console.error(error);
+//     });
+// }
+
+// export function addArcherySecondAgeLevel3(selectedModel, stag, models) {
+//     while(selectedModel.length > 0) {
+//         selectedModel.pop();
+//     }
+//     while(stag.length > 0) {
+//         stag.pop();
+//     }
+//     selectedModel.push(models[10])
+//     assetLoader.load(selectedModel[0].href, function(gltf) {
+//         const model = gltf.scene;
+//     model.scale.set(0.5,0.5,0.5);
+
+//         model.traverse( function(child) {
+//             if (child instanceof THREE.Mesh) {
+//               child.material.metalness = 0
+//               }
+//               });
+//         stag.push(model);
+//         console.log(stag);
+//     }, undefined, function(error) {
+//         console.error(error);
+//     });
+// }
+
+// export function addArcherySecondAgeLevel3(selectedModel, stag, models) {
+//     while(selectedModel.length > 0) {
+//         selectedModel.pop();
+//     }
+//     while(stag.length > 0) {
+//         stag.pop();
+//     }
+//     selectedModel.push(models[10])
+//     assetLoader.load(selectedModel[0].href, function(gltf) {
+//         const model = gltf.scene;
+//     model.scale.set(0.5,0.5,0.5);
+
+//         model.traverse( function(child) {
+//             if (child instanceof THREE.Mesh) {
+//               child.material.metalness = 0
+//               }
+//               });
+//         stag.push(model);
+//         console.log(stag);
+//     }, undefined, function(error) {
+//         console.error(error);
+//     });
+// }

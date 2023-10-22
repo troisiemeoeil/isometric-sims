@@ -233,7 +233,7 @@ useEffect(()=> {
    <ItemContainer
           number="0"
           containerdraggable="true"
-          id=""
+          id="farmLevel13"
           imgUrl="./Model_Images/Farm_SecondAge_Level3.png"
           alt=""
           imgDrag="false"
@@ -278,7 +278,19 @@ useEffect(()=> {
 
 
     <div id="full_inventory" className="inventory--rows">
-      
+
+    <ItemContainer
+          number="1"
+          containerdraggable="true"
+          id="ArcherySecondAgeLevel3"
+          imgUrl="./Model_Images/Archery_SecondAge_Level3.png"
+          alt="ArcherySecondAgeLevel3"
+          imgDrag="false"
+          tooltipDrag="false"
+          title="Archery Second Age Level 3"
+          description=" Use to gather ore from streams."
+        />
+
     <ItemContainer
           number="1"
           containerdraggable="true"
@@ -399,7 +411,7 @@ useEffect(()=> {
           description=" Use to gather ore from streams."
         />
 
-<ItemContainer
+{/* <ItemContainer
           number="11"
           containerdraggable="true"
           id="Market_FirstAge_Level3"
@@ -409,7 +421,7 @@ useEffect(()=> {
           tooltipDrag="false"
           title="Market First Age Level 3"
           description=" Use to gather ore from streams."
-        />
+        /> */}
 
 <ItemContainer
           number="12"
