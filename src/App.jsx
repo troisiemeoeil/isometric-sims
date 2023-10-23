@@ -114,13 +114,13 @@ function App() {
     
 
       // reactivate sound
-  //   let source = "./sounds/backgroundmusic.mp3"
-  //  window.addEventListener('click', function Playit(e) {
-  //   e.currentTarget.removeEventListener(e.type, Playit);
-  //   var audio = new Audio(source);
-  //   audio.play();
-  //   audio.loop()
-  // })
+    let source = "./sounds/backgroundmusic.mp3"
+   window.addEventListener('click', function Playit(e) {
+    e.currentTarget.removeEventListener(e.type, Playit);
+    var audio = new Audio(source);
+    audio.play();
+    audio.loop()
+  })
 
 
 
