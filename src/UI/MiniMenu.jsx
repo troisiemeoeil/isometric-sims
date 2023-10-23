@@ -280,7 +280,7 @@ useEffect(()=> {
     <div id="full_inventory" className="inventory--rows">
 
     <ItemContainer
-          number="1"
+          number="0"
           containerdraggable="true"
           id="ArcherySecondAgeLevel3"
           imgUrl="./Model_Images/Archery_SecondAge_Level3.webp"

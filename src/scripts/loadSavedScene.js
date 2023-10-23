@@ -149,6 +149,233 @@ export  function loadSavedScene(scene, assetLoader, models) {
                       console.error(error);
                   });
               }
+              else if(listofSavedModels[i].name === "Archery_SecondAge_Level3") {
+                assetLoader.load(models[10].href, function(gltf) {
+                    const model = gltf.scene;
+                    model.scale.set(0.5, 0.5, 0.5);
+                    model.position.copy(listofSavedModels[i].position);
+                    let meshArr = model.children[0].children
+                    for (let i = 0; i < meshArr.length; i++) {
+                      meshArr[i].material.metalness = 0
+                    }
+              scene.add(model);
+                }, undefined, function(error) {
+                    console.error(error);
+                });
+            }
+
+            else if(listofSavedModels[i].name === "Barrel") {
+              assetLoader.load(models[11].href, function(gltf) {
+                  const model = gltf.scene;
+                  model.scale.set(1.5, 1.5, 1.5);
+                  model.position.copy(listofSavedModels[i].position);
+                  let meshArr = model.children[0].children
+                  for (let i = 0; i < meshArr.length; i++) {
+                    meshArr[i].material.metalness = 0
+                  }
+            scene.add(model);
+              }, undefined, function(error) {
+                  console.error(error);
+              });
+          }
+
+          else if(listofSavedModels[i].name === "Crate_Big_Stack2") {
+            assetLoader.load(models[12].href, function(gltf) {
+                const model = gltf.scene;
+                model.scale.set(1, 1, 1);
+                model.position.copy(listofSavedModels[i].position);
+                let meshArr = model.children[0].children
+                for (let i = 0; i < meshArr.length; i++) {
+                  meshArr[i].material.metalness = 0
+                }
+          scene.add(model);
+            }, undefined, function(error) {
+                console.error(error);
+            });
+        }
+
+        else if(listofSavedModels[i].name === "Dock_FirstAge") {
+          assetLoader.load(models[13].href, function(gltf) {
+              const model = gltf.scene;
+              model.scale.set(0.5, 0.5, 0.5);
+              model.position.copy(listofSavedModels[i].position);
+              let meshArr = model.children[0].children
+              for (let i = 0; i < meshArr.length; i++) {
+                meshArr[i].material.metalness = 0
+              }
+        scene.add(model);
+          }, undefined, function(error) {
+              console.error(error);
+          });
+      }
+
+      else if(listofSavedModels[i].name === "Houses_FirstAge_1_Level3") {
+        assetLoader.load(models[15].href, function(gltf) {
+            const model = gltf.scene;
+            model.scale.set(0.5, 0.5, 0.5);
+            model.position.copy(listofSavedModels[i].position);
+            let meshArr = model.children[0].children
+            for (let i = 0; i < meshArr.length; i++) {
+              meshArr[i].material.metalness = 0
+            }
+      scene.add(model);
+        }, undefined, function(error) {
+            console.error(error);
+        });
+    }
+
+    else if(listofSavedModels[i].name === "Houses_FirstAge_2_Level3") {
+      assetLoader.load(models[16].href, function(gltf) {
+          const model = gltf.scene;
+          model.scale.set(0.5, 0.5, 0.5);
+          model.position.copy(listofSavedModels[i].position);
+          let meshArr = model.children[0].children
+          for (let i = 0; i < meshArr.length; i++) {
+            meshArr[i].material.metalness = 0
+          }
+    scene.add(model);
+      }, undefined, function(error) {
+          console.error(error);
+      });
+  }
+
+  else if(listofSavedModels[i].name === "Houses_FirstAge_3_Level2") {
+    assetLoader.load(models[17].href, function(gltf) {
+        const model = gltf.scene;
+        model.scale.set(0.5, 0.5, 0.5);
+        model.position.copy(listofSavedModels[i].position);
+        let meshArr = model.children[0].children
+        for (let i = 0; i < meshArr.length; i++) {
+          meshArr[i].material.metalness = 0
+        }
+  scene.add(model);
+    }, undefined, function(error) {
+        console.error(error);
+    });
+}
+
+else if(listofSavedModels[i].name === "Market_FirstAge_Level3") {
+  assetLoader.load(models[18].href, function(gltf) {
+      const model = gltf.scene;
+      model.scale.set(0.5, 0.5, 0.5);
+      model.position.copy(listofSavedModels[i].position);
+      let meshArr = model.children[0].children
+      for (let i = 0; i < meshArr.length; i++) {
+        meshArr[i].material.metalness = 0
+      }
+scene.add(model);
+  }, undefined, function(error) {
+      console.error(error);
+  });
+}
+
+else if(listofSavedModels[i].name === "Houses_SecondAge_2_Level3") {
+  assetLoader.load(models[19].href, function(gltf) {
+      const model = gltf.scene;
+      model.scale.set(0.5, 0.5, 0.5);
+      model.position.copy(listofSavedModels[i].position);
+      let meshArr = model.children[0].children
+      for (let i = 0; i < meshArr.length; i++) {
+        meshArr[i].material.metalness = 0
+      }
+scene.add(model);
+  }, undefined, function(error) {
+      console.error(error);
+  });
+}
+
+else if(listofSavedModels[i].name === "Houses_SecondAge_3_Level3") {
+  assetLoader.load(models[20].href, function(gltf) {
+      const model = gltf.scene;
+      model.scale.set(0.5, 0.5, 0.5);
+      model.position.copy(listofSavedModels[i].position);
+      let meshArr = model.children[0].children
+      for (let i = 0; i < meshArr.length; i++) {
+        meshArr[i].material.metalness = 0
+      }
+scene.add(model);
+  }, undefined, function(error) {
+      console.error(error);
+  });
+}
+
+else if(listofSavedModels[i].name === "Market_SecondAge_Level3") {
+  assetLoader.load(models[21].href, function(gltf) {
+      const model = gltf.scene;
+      model.scale.set(0.5, 0.5, 0.5);
+      model.position.copy(listofSavedModels[i].position);
+      let meshArr = model.children[0].children
+      for (let i = 0; i < meshArr.length; i++) {
+        meshArr[i].material.metalness = 0
+      }
+scene.add(model);
+  }, undefined, function(error) {
+      console.error(error);
+  });
+}
+
+else if(listofSavedModels[i].name === "Mine") {
+  assetLoader.load(models[22].href, function(gltf) {
+      const model = gltf.scene;
+      model.scale.set(0.5, 0.5, 0.5);
+      model.position.copy(listofSavedModels[i].position);
+      let meshArr = model.children[0].children
+      for (let i = 0; i < meshArr.length; i++) {
+        meshArr[i].material.metalness = 0
+      }
+scene.add(model);
+  }, undefined, function(error) {
+      console.error(error);
+  });
+}
+
+else if(listofSavedModels[i].name === "Port_FirstAge_Level2") {
+  assetLoader.load(models[23].href, function(gltf) {
+      const model = gltf.scene;
+      model.scale.set(0.5, 0.5, 0.5);
+      model.position.copy(listofSavedModels[i].position);
+      let meshArr = model.children[0].children
+      for (let i = 0; i < meshArr.length; i++) {
+        meshArr[i].material.metalness = 0
+      }
+scene.add(model);
+  }, undefined, function(error) {
+      console.error(error);
+  });
+}
+
+else if(listofSavedModels[i].name === "Port_FirstAge_Level3") {
+  assetLoader.load(models[24].href, function(gltf) {
+      const model = gltf.scene;
+      model.scale.set(0.5, 0.5, 0.5);
+      model.position.copy(listofSavedModels[i].position);
+      let meshArr = model.children[0].children
+      for (let i = 0; i < meshArr.length; i++) {
+        meshArr[i].material.metalness = 0
+      }
+scene.add(model);
+  }, undefined, function(error) {
+      console.error(error);
+  });
+}
+
+else if(listofSavedModels[i].name === "Port_SecondAge_Level3") {
+  assetLoader.load(models[24].href, function(gltf) {
+      const model = gltf.scene;
+      model.scale.set(0.5, 0.5, 0.5);
+      model.position.copy(listofSavedModels[i].position);
+      let meshArr = model.children[0].children
+      for (let i = 0; i < meshArr.length; i++) {
+        meshArr[i].material.metalness = 0
+      }
+scene.add(model);
+  }, undefined, function(error) {
+      console.error(error);
+  });
+}
+
+
+
             }
       
 }
