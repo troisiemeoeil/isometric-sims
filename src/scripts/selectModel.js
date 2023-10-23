@@ -545,6 +545,8 @@ export function addPort_FirstAge_Level2(selectedModel, stag, models) {
         model.traverse( function(child) {
             if (child instanceof THREE.Mesh) {
               child.material.metalness = 0
+              child.position.y = 0.40
+
               }
               });
         stag.push(model);
@@ -569,6 +571,8 @@ export function addPort_FirstAge_Level3(selectedModel, stag, models) {
         model.traverse( function(child) {
             if (child instanceof THREE.Mesh) {
               child.material.metalness = 0
+              child.position.y = 0.40
+
               }
               });
         stag.push(model);
@@ -589,12 +593,13 @@ export function addPort_SecondAge_Level3(selectedModel, stag, models) {
     assetLoader.load(selectedModel[0].href, function(gltf) {
         const model = gltf.scene;
     model.scale.set(0.5,0.5,0.5);
-        model.position.set(0,2,0)
 
 
         model.traverse( function(child) {
             if (child instanceof THREE.Mesh) {
               child.material.metalness = 0
+              child.position.y = 0.40
+
               }
               });
         stag.push(model);

@@ -337,6 +337,8 @@ else if(listofSavedModels[i].name === "Port_FirstAge_Level2") {
       let meshArr = model.children[0].children
       for (let i = 0; i < meshArr.length; i++) {
         meshArr[i].material.metalness = 0
+        meshArr[i].position.y = 0.40
+
       }
 scene.add(model);
   }, undefined, function(error) {
@@ -352,6 +354,8 @@ else if(listofSavedModels[i].name === "Port_FirstAge_Level3") {
       let meshArr = model.children[0].children
       for (let i = 0; i < meshArr.length; i++) {
         meshArr[i].material.metalness = 0
+        meshArr[i].position.y = 0.40
+
       }
 scene.add(model);
   }, undefined, function(error) {
@@ -367,6 +371,8 @@ else if(listofSavedModels[i].name === "Port_SecondAge_Level3") {
       let meshArr = model.children[0].children
       for (let i = 0; i < meshArr.length; i++) {
         meshArr[i].material.metalness = 0
+        meshArr[i].position.y = 0.40
+
       }
 scene.add(model);
   }, undefined, function(error) {
