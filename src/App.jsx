@@ -93,10 +93,10 @@ function App() {
     const orbit = new OrbitControls(camera, renderer.domElement);
     orbit.enabled = true
     orbit.enableDamping = true;
-    orbit.zoomSpeed = 0.5;
-    orbit.maxDistance = 30
-    orbit.maxPolarAngle = Math.PI / 2.5
-    orbit.enablePan = false
+    // orbit.zoomSpeed = 0.5;
+    // orbit.maxDistance = 30
+    // orbit.maxPolarAngle = Math.PI / 2.5
+    // orbit.enablePan = false
     orbit.saveState()
 
     const ambLight = new THREE.AmbientLight(0xffffff, 2)
@@ -122,6 +122,38 @@ function App() {
     audio.loop()
   })
 
+
+    assetLoader.load(
+    // resource URL
+    '/models/planeGround9.glb',
+    // called when the resource is loaded
+    function ( gltf ) {
+      scene.add( gltf.scene );
+      let model = gltf.scene
+      model.position.set(0 ,-0.35, 0)
+      model.scale.set(0.5,0.5, 0.5)
+
+      
+
+      // model.scale.setScalar(w)
+     
+      model.traverse( function(child) {
+        if (child instanceof THREE.Mesh) {
+          child.material.metalness = 0
+          
+            }
+          });
+     
+  
+    },
+    // called while loading is progressing
+    function ( xhr ) {
+  
+      console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+  
+    },
+    // called when loading has errors
+  );
 
 
 // const treeData = [
@@ -275,13 +307,13 @@ let getactiveStorage = localStorage.getItem('active')
 
    
 const planeMesh = new THREE.Mesh(
-  new THREE.PlaneGeometry(10, 10, 10,10),
+  new THREE.PlaneGeometry(10, 10, 10, 10),
   new THREE.MeshStandardMaterial({
     
     color: 0xf5ebe0,
-    visible: true,
+    visible: false,
     side: THREE.FrontSide,
-    // transparent:false, 
+    transparent:true, 
     depthWrite: false
 })
 );
@@ -300,6 +332,8 @@ const planeMesh2 = new THREE.Mesh(
 })
 );
 planeMesh2.rotation.x = Math.PI * - 0.5;
+planeMesh2.position.y = 1 ;
+
 planeMesh2.receiveShadow = true
 
 scene.add(planeMesh2);

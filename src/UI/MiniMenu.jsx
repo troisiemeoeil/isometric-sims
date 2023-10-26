@@ -85,7 +85,7 @@ useEffect(()=> {
   return (
  <div className="menu">
     <div className="menu__tabs__container">
-    <div className="btn menu__tab menu__tab--active disabled">
+    {/* <div className="btn menu__tab menu__tab--active disabled">
       <img src="https://assets.codepen.io/7237686/backpack.svg?format=auto" className="menu__img" alt="inventory_tab_image" />
       <span className="tooltip" id="tp1">Inventory</span>
     </div>
@@ -108,11 +108,11 @@ useEffect(()=> {
     <div className="btn menu__tab disabled">
       <img src="https://assets.codepen.io/7237686/bag.svg?format=auto" className="menu__img" alt="inventory_tab_image" />
       <span className="tooltip" id="tp6" >Collection</span>
-    </div>
+    </div>*/}
     <div className="btn menu__tab disabled">
       <img src="https://assets.codepen.io/7237686/console.svg?format=auto" className="menu__img" alt="inventory_tab_image" />
       <span className="tooltip" id="tp7" >Options</span>
-    </div>
+    </div> 
     <div className="btn menu__tab disabled">
       <img src="https://assets.codepen.io/7237686/close.svg?format=auto" className="menu__img" alt="inventory_tab_image" />
       <span className="tooltip" id="tp8" >Exit Game</span>
@@ -485,8 +485,7 @@ useEffect(()=> {
              
 
 
-
-
+{/* 
         <div className="items__container">
           <div className="item__container" draggable="true">
             <img className="item__img" src="https://assets.codepen.io/7237686/coffee.svg?format=auto" alt="coffee" draggable="false" />
@@ -841,8 +840,9 @@ useEffect(()=> {
         </div>
         <div className="items__container">
           <div className="item__container"></div>
-        </div>
+        </div> */}
       </div>
+
   
   </div>
   </div>
