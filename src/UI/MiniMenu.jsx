@@ -109,13 +109,13 @@ useEffect(()=> {
       <img src="https://assets.codepen.io/7237686/bag.svg?format=auto" className="menu__img" alt="inventory_tab_image" />
       <span className="tooltip" id="tp6" >Collection</span>
     </div>*/}
-    <div className="btn menu__tab disabled">
+    <div className="btn menu__tab disabled"  id="saveBtn">
       <img src="https://assets.codepen.io/7237686/console.svg?format=auto" className="menu__img" alt="inventory_tab_image" />
-      <span className="tooltip" id="tp7" >Options</span>
+      <span className="tooltip" id="tp7" >Save Progress</span>
     </div> 
-    <div className="btn menu__tab disabled">
+    <div className="btn menu__tab disabled" onClick={reset}>
       <img src="https://assets.codepen.io/7237686/close.svg?format=auto" className="menu__img" alt="inventory_tab_image" />
-      <span className="tooltip" id="tp8" >Exit Game</span>
+      <span className="tooltip" id="tp8" >Reset Scene</span>
     </div>
   </div>
       <div id="inventory"  className="menu__content__inventory" >
@@ -251,38 +251,9 @@ useEffect(()=> {
           <div className="item__container"></div>
         </div>
         
-         
-      <div className="items__container" >
-        <span className="items__number">-</span>
-        <div className="item__container" draggable="true"  id="saveBtn">
-          <img className="item__img" src="https://assets.codepen.io/7237686/console.svg?format=auto" alt="copper_pan" draggable="false" />
-          <div className="item__tooltip" draggable="false">
-            <div className="item__tooltip__title">
-              <h2>Save Button</h2>
-             
-            </div>
-            <div className="item__tooltip__info">
-              Saves your progress in the game.
-            </div>
-          </div>
-        </div>
-      </div>
+      
      
-      <div className="items__container" onClick={reset}>
-        <span className="items__number">=</span>
-        <div className="item__container" draggable="true">
-          <img className="item__img" src="https://assets.codepen.io/7237686/close.svg?format=auto" alt="menu__img" draggable="false" />
-          <div className="item__tooltip" draggable="false">
-            <div className="item__tooltip__title">
-              <h2>Reset</h2>
-             
-            </div>
-            <div className="item__tooltip__info">
-              This action will delete your scene!
-            </div>
-          </div>
-        </div>
-      </div>
+   
     </div>
 
 
