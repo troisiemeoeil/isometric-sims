@@ -241,6 +241,15 @@ useEffect(()=> {
           title="Farm Level 13"
           description=" Use to gather ore from streams."
         />
+
+<div className="items__container">
+          <span className="items__number"></span>
+          <div className="item__container"></div>
+        </div>
+        <div className="items__container">
+          <span className="items__number"></span>
+          <div className="item__container"></div>
+        </div>
         
          
       <div className="items__container" >
@@ -483,7 +492,38 @@ useEffect(()=> {
           description=" Use to gather ore from streams."
         />
              
-
+             <div className="items__container">
+          <span className="items__number"></span>
+          <div className="item__container"></div>
+        </div>
+        <div className="items__container">
+          <span className="items__number"></span>
+          <div className="item__container"></div>
+        </div>
+        <div className="items__container">
+          <span className="items__number"></span>
+          <div className="item__container"></div>
+        </div>
+        <div className="items__container">
+          <span className="items__number"></span>
+          <div className="item__container"></div>
+        </div>
+        <div className="items__container">
+          <span className="items__number"></span>
+          <div className="item__container"></div>
+        </div>
+        <div className="items__container">
+          <span className="items__number"></span>
+          <div className="item__container"></div>
+        </div>
+        <div className="items__container">
+          <span className="items__number"></span>
+          <div className="item__container"></div>
+        </div>
+        <div className="items__container">
+          <span className="items__number"></span>
+          <div className="item__container"></div>
+        </div>
 
 {/* 
         <div className="items__container">
