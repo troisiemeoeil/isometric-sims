@@ -3,7 +3,7 @@ import * as THREE from 'three'
 
 export  function detectObject(scene,  raycasterObj, mousePosition, camera) {
           raycasterObj.setFromCamera(mousePosition, camera)
-          let intersect = raycasterObj.intersectObjects(scene.children, true)
+          let intersect = raycasterObj.intersectObjects(scene.children)
         
           // TO GET THE FIRST INTERSECTION POINT AKA THE MODEL YOU'RE LOOKING FOR, YOU NEED
           // TO LOOK OUT FOR THE FURTHEST DISTANCE FROM CAMERA

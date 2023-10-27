@@ -62,7 +62,7 @@ function App() {
     scene.fog = true
 		const color = 0xe0d6ff;
     const near = 40;
-		const far = 50;
+		const far = 80;
     // const density = 0.03;
 		scene.fog = new THREE.Fog( color, near, far );
     // scene.fog = new THREE.FogExp2(color, density);
@@ -77,14 +77,14 @@ function App() {
        * Camera
        */
       const resolution = new THREE.Vector2(20, 20)
-      const fov = 20
+      const fov = 45
       const camera = new THREE.PerspectiveCamera(fov, sizes.width / sizes.height, 0.5, 1000)
       // camera.zoom.toFixed(5)
  
       const initialPosition = new THREE.Vector3(
-        resolution.x - 50,
+        resolution.x +1,
         6,
-        resolution.y / 2 + 4
+        resolution.y / 1
       )
       camera.position.copy(initialPosition)
     camera.updateProjectionMatrix()
@@ -93,10 +93,10 @@ function App() {
     const orbit = new OrbitControls(camera, renderer.domElement);
     orbit.enabled = true
     orbit.enableDamping = true;
-    // orbit.zoomSpeed = 0.5;
-    // orbit.maxDistance = 30
-    // orbit.maxPolarAngle = Math.PI / 2.5
-    // orbit.enablePan = false
+    orbit.zoomSpeed = 0.5;
+    orbit.maxDistance = 30
+    orbit.maxPolarAngle = Math.PI / 2.5
+    orbit.enablePan = true
     orbit.saveState()
 
     const ambLight = new THREE.AmbientLight(0xffffff, 2)
@@ -125,13 +125,13 @@ function App() {
 
     assetLoader.load(
     // resource URL
-    '/models/planeGround9.glb',
+    '/models/planeGround24.glb',
     // called when the resource is loaded
     function ( gltf ) {
       scene.add( gltf.scene );
       let model = gltf.scene
       model.position.set(0 ,-0.35, 0)
-      model.scale.set(0.5,0.5, 0.5)
+      model.scale.set(0.5 ,0.5, 0.5)
 
       
 
@@ -140,7 +140,8 @@ function App() {
       model.traverse( function(child) {
         if (child instanceof THREE.Mesh) {
           child.material.metalness = 0
-          
+            child.castShadow = true
+            child.receiveShadow = true
             }
           });
      
@@ -307,14 +308,13 @@ let getactiveStorage = localStorage.getItem('active')
 
    
 const planeMesh = new THREE.Mesh(
-  new THREE.PlaneGeometry(10, 10, 10, 10),
+  new THREE.PlaneGeometry(20, 20, 10,10),
   new THREE.MeshStandardMaterial({
     
-    color: 0xf5ebe0,
     visible: false,
-    side: THREE.FrontSide,
+    // side: THREE.FrontSide,
     transparent:true, 
-    depthWrite: false
+    depthWrite: true
 })
 );
 planeMesh.renderOrder = 1
@@ -332,8 +332,6 @@ const planeMesh2 = new THREE.Mesh(
 })
 );
 planeMesh2.rotation.x = Math.PI * - 0.5;
-planeMesh2.position.y = 1 ;
-
 planeMesh2.receiveShadow = true
 
 scene.add(planeMesh2);
