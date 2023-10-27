@@ -978,6 +978,26 @@ useEffect(()=> {
    
   return (
     <>
+    {/* <div className="marquee">
+  <div className="clouds"  style={{width:"1000px", height:"100px"}}>
+    <img src="https://assets.codepen.io/7237686/clouds.png?format=auto"  alt="clouds" />
+  </div>
+  <div className="clouds" style={{width:"1000px", height:"100px"}}>
+    <img src="https://assets.codepen.io/7237686/clouds.png?format=auto"  alt="clouds" />
+  </div>
+  <div className="clouds" style={{width:"1000px", height:"100px"}}>
+    <img src="https://assets.codepen.io/7237686/clouds.png?format=auto"  alt="clouds" />
+  </div>
+  <div className="clouds" style={{width:"1000px", height:"100px"}}>
+    <img src="https://assets.codepen.io/7237686/clouds.png?format=auto"  alt="clouds" />
+  </div>
+  <div className="clouds" style={{width:"1000px", height:"100px"}}>
+    <img src="https://assets.codepen.io/7237686/clouds.png?format=auto"  alt="clouds" />
+  </div>
+  <div className="clouds" style={{width:"1000px", height:"100px"}}>
+    <img src="https://assets.codepen.io/7237686/clouds.png?format=auto"  alt="clouds" />
+  </div>
+</div> */}
 <div id='canvas' ref={canvas}></div>
 
     
