@@ -125,7 +125,7 @@ function App() {
 
     assetLoader.load(
     // resource URL
-    '/models/planeGround24.glb',
+    '/models/planeGround26.glb',
     // called when the resource is loaded
     function ( gltf ) {
       scene.add( gltf.scene );
