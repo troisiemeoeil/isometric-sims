@@ -61,7 +61,7 @@ function App() {
     const scene = new THREE.Scene();
     scene.fog = true
 		const color = 0xe0d6ff;
-    const near = 40;
+    const near = 50;
 		const far = 80;
     // const density = 0.03;
 		scene.fog = new THREE.Fog( color, near, far );
@@ -77,7 +77,7 @@ function App() {
        * Camera
        */
       const resolution = new THREE.Vector2(20, 20)
-      const fov = 45
+      const fov = 50
       const camera = new THREE.PerspectiveCamera(fov, sizes.width / sizes.height, 0.5, 1000)
       // camera.zoom.toFixed(5)
  
@@ -123,9 +123,59 @@ function App() {
   })
 
 
+  const planeMesh = new THREE.Mesh(
+    new THREE.PlaneGeometry(20, 20, 10,10),
+    new THREE.MeshStandardMaterial({
+      color: 0xdee3db,
+      visible: true,
+      // side: THREE.FrontSide,
+      transparent:false, 
+      depthWrite: false
+  })
+  );
+  planeMesh.renderOrder = 1
+  planeMesh.rotation.x = Math.PI * - 0.5;
+  planeMesh.receiveShadow = true
+  
+  scene.add(planeMesh);
+  
+  const planeMesh2 = new THREE.Mesh(
+    new THREE.PlaneGeometry(100, 100),
+    new THREE.MeshStandardMaterial({
+      color: 0xdbe7ab,
+      side: THREE.FrontSide,
+      depthWrite: false
+  })
+  );
+  planeMesh2.rotation.x = Math.PI * - 0.5;
+  planeMesh2.receiveShadow = true
+  
+  scene.add(planeMesh2);
+  
+  
+  
+  // const grid = new THREE.GridHelper(10, 10, 0xFFFFFF, 0xFFFFFF);
+  // scene.add(grid);
+  
+  
+  let map = new THREE.TextureLoader().load("./platformPack_tile009.png")
+  const highlightMesh = new THREE.Mesh(
+    new THREE.PlaneGeometry(1.1,1.1),
+    new THREE.MeshBasicMaterial({
+      map: map,
+      transparent: true,
+      depthWrite: true
+  
+    })
+  );
+  
+  highlightMesh.rotation.x = Math.PI * - 0.5;
+  highlightMesh.position.set(0.9, 0, 0.9);
+  scene.add(highlightMesh);
+
     assetLoader.load(
     // resource URL
-    '/models/planeGround26.glb',
+    '/models/planeGround27.glb',
     // called when the resource is loaded
     function ( gltf ) {
       scene.add( gltf.scene );
@@ -157,205 +207,156 @@ function App() {
   );
 
 
-// const treeData = [
-// 	new THREE.Vector4(-5, 0, 10, 1),
-// 	new THREE.Vector4(-6, 0, 15, 1.2),
-// 	new THREE.Vector4(-5, 0, 16, 0.8),
-// 	new THREE.Vector4(-10, 0, 4, 1.3),
-// 	// new THREE.Vector4(-5, 0, -3, 2),
-// 	// new THREE.Vector4(-4, 0, -1, 1.5),
-// 	new THREE.Vector4(-2, 0, -15, 1),
-// 	new THREE.Vector4(5, 0, -20, 1.2),
-// 	new THREE.Vector4(24, 0, -12, 1.2),
-// 	// new THREE.Vector4(2, 0, -6, 1.2),
-// 	new THREE.Vector4(3, 0, -7, 1.8),
-// 	new THREE.Vector4(1, 0, -9, 1.0),
-// 	new THREE.Vector4(15, 0, -8, 1.8),
-// 	new THREE.Vector4(7, 0, -9, 1.1),
-// 	// new THREE.Vector4(8, 0, -2, 1.3),
-// 	new THREE.Vector4(12, 0, -1, 1.3),
-// 	new THREE.Vector4(13, 0, 0, 1.8),
-// 	new THREE.Vector4(15, 0, 0, 1),
-// 	new THREE.Vector4(12, 0, 6, 1.7),
-// 	new THREE.Vector4(19, 0, 15, 1.1),
-// 	new THREE.Vector4(8, 0, 23, 1.1),
-// 	new THREE.Vector4(4, 0, 24, 0.9),
-// 	new THREE.Vector4(-3, 0, -13, 0.7),
-// 	new THREE.Vector4(5, 0, 10, 0.7),
-// ]
+const treeData = [
+	new THREE.Vector4( 55, 0, 7, 1),
+	new THREE.Vector4( 65, 0, 10, 0.8),
+	new THREE.Vector4( -60, 0, 15, 1.3),
+	// new THREE.Vector4(-5, 0, -3, 2),
+	// new THREE.Vector4(-4, 0, -1, 1.5),
+	new THREE.Vector4( 52, 10, 15, 1),
+	new THREE.Vector4( -75, 10, 20, 1.2),
+	new THREE.Vector4( 64, 0, 12, 1.2),
+	// new THREE.Vector4(2, 0, -6, 1.2),
+	new THREE.Vector4( -103 / 2, 10, 7, 1.8),
+	new THREE.Vector4( 101 / 2, 10, 9, 1.0),
+	new THREE.Vector4( -105 / 2, 0, 8, 1.8),
+	new THREE.Vector4(107 / 2, 10, 9, 1.1),
+	// new THREE.Vector4(8, 0, -2, 1.3),
+	new THREE.Vector4( -102 / 2, 0, 1, 1.3),
+	new THREE.Vector4( 103 / 2, 0, 0, 1.8),
+	new THREE.Vector4(-105 / 2, 0, 0, 1),
+	new THREE.Vector4(212 / 4, 0, 6, 1.7),
+	new THREE.Vector4(219 / 4, 0, 15, 1.1),
+	new THREE.Vector4(-108 / 2, 10, 23, 1.1),
+	new THREE.Vector4(104 / 2, 10, 24, 0.9),
+	new THREE.Vector4(-103 / 2, 10, 13, 0.7),
+	new THREE.Vector4(525, 10, 10, 0.7),
+]
 
 
-// treeData.forEach(({ x, y, z }) => {
-//   assetLoader.load(
-//     // resource URL
-//     '/models/tree_plateau_fall.glb',
-//     // called when the resource is loaded
-//     function ( gltf ) {
-//       scene.add( gltf.scene );
-//       let model = gltf.scene
-//       model.position.set(x ,y, z)
-//       model.rotation.set(0 ,Math.random() * 10, 0)
+treeData.forEach(({ x, y, z }) => {
+  assetLoader.load(
+    // resource URL
+    '/models/clouds.glb',
+    // called when the resource is loaded
+    function ( gltf ) {
+      scene.add( gltf.scene );
+      let model = gltf.scene
+      model.position.set(x ,y, z)
+      model.rotation.set(0 ,Math.random() * 10, 0)
 
-//       // model.scale.setScalar(w)
+      // model.scale.setScalar(w)
      
-//       model.traverse( function(child) {
-//         if (child instanceof THREE.Mesh) {
-//           child.material.metalness = 0
-//             child.castShadow = true
-//             child.receiveShadow = true
-//             }
-//           });
+      model.traverse( function(child) {
+        if (child instanceof THREE.Mesh) {
+          child.material.metalness = 0
+            child.castShadow = true
+            child.receiveShadow = true
+            }
+          });
      
   
-//     },
-//     // called while loading is progressing
-//     function ( xhr ) {
+    },
+    // called while loading is progressing
+    function ( xhr ) {
   
-//       console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+      console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
   
-//     },
-//     // called when loading has errors
-//   );
+    },
+    // called when loading has errors
+  );
 	
-//   assetLoader.load(
-//     // resource URL
-//     '/models/tree_oak_fall.glb',
-//     // called when the resource is loaded
-//     function ( gltf ) {
-//       scene.add( gltf.scene );
-//       let model = gltf.scene
-//       model.position.set(x - 3,y  , z - 3)
-//       // model.scale.setScalar(w)
+  // assetLoader.load(
+  //   // resource URL
+  //   '/models/tree_oak_fall.glb',
+  //   // called when the resource is loaded
+  //   function ( gltf ) {
+  //     scene.add( gltf.scene );
+  //     let model = gltf.scene
+  //     model.position.set(x - 3,y  , z - 3)
+  //     // model.scale.setScalar(w)
      
-//       model.traverse( function(child) {
-//         if (child instanceof THREE.Mesh) {
-//           child.material.metalness = 0
-//             child.castShadow = true
-//             }
-//           });
+  //     model.traverse( function(child) {
+  //       if (child instanceof THREE.Mesh) {
+  //         child.material.metalness = 0
+  //           child.castShadow = true
+  //           }
+  //         });
     
   
-//     },
-//     // called while loading is progressing
-//     function ( xhr ) {
+  //   },
+  //   // called while loading is progressing
+  //   function ( xhr ) {
   
-//       console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+  //     console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
   
-//     },
-//     // called when loading has errors
-//   );
-//   assetLoader.load(
-//     // resource URL
-//     '/models/tree_palmTall.glb',
-//     // called when the resource is loaded
-//     function ( gltf ) {
-//       scene.add( gltf.scene );
-//       let model = gltf.scene
-//       model.position.set(x * 2,y  , z - 5)
-//       // model.scale.setScalar(w)
+  //   },
+  //   // called when loading has errors
+  // );
+  // assetLoader.load(
+  //   // resource URL
+  //   '/models/tree_palmTall.glb',
+  //   // called when the resource is loaded
+  //   function ( gltf ) {
+  //     scene.add( gltf.scene );
+  //     let model = gltf.scene
+  //     model.position.set(x * 2,y  , z - 5)
+  //     // model.scale.setScalar(w)
      
-//       model.traverse( function(child) {
-//         if (child instanceof THREE.Mesh) {
-//           child.material.metalness = 0
-//             child.castShadow = true
-//             }
-//           });
+  //     model.traverse( function(child) {
+  //       if (child instanceof THREE.Mesh) {
+  //         child.material.metalness = 0
+  //           child.castShadow = true
+  //           }
+  //         });
   
   
-//     },
-//     // called while loading is progressing
-//     function ( xhr ) {
+  //   },
+  //   // called while loading is progressing
+  //   function ( xhr ) {
   
-//       console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+  //     console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
   
-//     },
-//     // called when loading has errors
-//   );
+  //   },
+  //   // called when loading has errors
+  // );
 
-//   assetLoader.load( 
-//     // resource URL
-//     '/models/tree_pineDefaultA.glb',
-//     // called when the resource is loaded
-//     function ( gltf ) {
-//       scene.add( gltf.scene );
-//       let model = gltf.scene
-//       model.position.set(x + 4,y  , z * 2)
-//       // model.scale.setScalar(w)
+  // assetLoader.load( 
+  //   // resource URL
+  //   '/models/tree_pineDefaultA.glb',
+  //   // called when the resource is loaded
+  //   function ( gltf ) {
+  //     scene.add( gltf.scene );
+  //     let model = gltf.scene
+  //     model.position.set(x + 4,y  , z * 2)
+  //     // model.scale.setScalar(w)
      
-//       model.traverse( function(child) {
-//         if (child instanceof THREE.Mesh) {
-//           child.material.metalness = 0
-//             child.castShadow = true
-//             }
-//           });
+  //     model.traverse( function(child) {
+  //       if (child instanceof THREE.Mesh) {
+  //         child.material.metalness = 0
+  //           child.castShadow = true
+  //           }
+  //         });
   
   
-//     },
-//     // called while loading is progressing
-//     function ( xhr ) {
+  //   },
+  //   // called while loading is progressing
+  //   function ( xhr ) {
   
-//       console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+  //     console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
   
-//     },
-//     // called when loading has errors
-//   );
+  //   },
+  //   // called when loading has errors
+  // );
 	
-// })
+})
  
 
 let getStorageItems = localStorage.getItem('listofobjects')
 let getactiveStorage = localStorage.getItem('active')
 
    
-const planeMesh = new THREE.Mesh(
-  new THREE.PlaneGeometry(20, 20, 10,10),
-  new THREE.MeshStandardMaterial({
-    
-    visible: false,
-    // side: THREE.FrontSide,
-    transparent:true, 
-    depthWrite: true
-})
-);
-planeMesh.renderOrder = 1
-planeMesh.rotation.x = Math.PI * - 0.5;
-planeMesh.receiveShadow = true
 
-scene.add(planeMesh);
-
-const planeMesh2 = new THREE.Mesh(
-  new THREE.PlaneGeometry(100, 100),
-  new THREE.MeshStandardMaterial({
-    color: 0xdbe7ab,
-    side: THREE.FrontSide,
-    depthWrite: false
-})
-);
-planeMesh2.rotation.x = Math.PI * - 0.5;
-planeMesh2.receiveShadow = true
-
-scene.add(planeMesh2);
-
-
-
-// const grid = new THREE.GridHelper(10, 10, 0xFFFFFF, 0xFFFFFF);
-// scene.add(grid);
-
-
-let map = new THREE.TextureLoader().load("./platformPack_tile009.png")
-const highlightMesh = new THREE.Mesh(
-  new THREE.PlaneGeometry(1.1,1.1),
-  new THREE.MeshBasicMaterial({
-    map: map,
-    transparent: true,
-    depthWrite: true
-
-  })
-);
-
-highlightMesh.rotation.x = Math.PI * - 0.5;
-highlightMesh.position.set(0.9, 0, 0.9);
-scene.add(highlightMesh);
 
 const mousePosition = new THREE.Vector2();
 const raycaster = new THREE.Raycaster();
