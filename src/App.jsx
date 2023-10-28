@@ -211,26 +211,10 @@ const treeData = [
 	new THREE.Vector4( 55, 0, 7, 1),
 	new THREE.Vector4( 65, 0, 10, 0.8),
 	new THREE.Vector4( -60, 0, 15, 1.3),
-	// new THREE.Vector4(-5, 0, -3, 2),
-	// new THREE.Vector4(-4, 0, -1, 1.5),
 	new THREE.Vector4( 52, 10, 15, 1),
 	new THREE.Vector4( -75, 10, 20, 1.2),
 	new THREE.Vector4( 64, 0, 12, 1.2),
-	// new THREE.Vector4(2, 0, -6, 1.2),
-	new THREE.Vector4( -103 / 2, 10, 7, 1.8),
-	new THREE.Vector4( 101 / 2, 10, 9, 1.0),
-	new THREE.Vector4( -105 / 2, 0, 8, 1.8),
-	new THREE.Vector4(107 / 2, 10, 9, 1.1),
-	// new THREE.Vector4(8, 0, -2, 1.3),
-	new THREE.Vector4( -102 / 2, 0, 1, 1.3),
-	new THREE.Vector4( 103 / 2, 0, 0, 1.8),
-	new THREE.Vector4(-105 / 2, 0, 0, 1),
-	new THREE.Vector4(212 / 4, 0, 6, 1.7),
-	new THREE.Vector4(219 / 4, 0, 15, 1.1),
-	new THREE.Vector4(-108 / 2, 10, 23, 1.1),
-	new THREE.Vector4(104 / 2, 10, 24, 0.9),
-	new THREE.Vector4(-103 / 2, 10, 13, 0.7),
-	new THREE.Vector4(525, 10, 10, 0.7),
+
 ]
 
 
