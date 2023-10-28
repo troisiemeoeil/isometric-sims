@@ -86,7 +86,9 @@ function App() {
         6,
         resolution.y / 1
       )
+      // camera.position.set(0,100,0)
       camera.position.copy(initialPosition)
+
     camera.updateProjectionMatrix()
     scene.add(camera)
 
@@ -96,6 +98,7 @@ function App() {
     orbit.zoomSpeed = 0.5;
     orbit.maxDistance = 30
     orbit.maxPolarAngle = Math.PI / 2.5
+ 
     orbit.enablePan = true
     orbit.saveState()
 
@@ -136,6 +139,7 @@ function App() {
   planeMesh.renderOrder = 1
   planeMesh.rotation.x = Math.PI * - 0.5;
   planeMesh.receiveShadow = true
+  planeMesh.name = "model_terrain"
   
   scene.add(planeMesh);
   
@@ -149,6 +153,7 @@ function App() {
   );
   planeMesh2.rotation.x = Math.PI * - 0.5;
   planeMesh2.receiveShadow = true
+  planeMesh2.name = "world_terrain"
   
   scene.add(planeMesh2);
   
@@ -157,21 +162,27 @@ function App() {
   // const grid = new THREE.GridHelper(10, 10, 0xFFFFFF, 0xFFFFFF);
   // scene.add(grid);
   
-  
+  let highlightMeshScaleX = 0.5
+  let highlightMeshScaleY = 0.5
   let map = new THREE.TextureLoader().load("./platformPack_tile009.png")
   const highlightMesh = new THREE.Mesh(
-    new THREE.PlaneGeometry(1.1,1.1),
+    new THREE.PlaneGeometry(highlightMeshScaleX,highlightMeshScaleY),
     new THREE.MeshBasicMaterial({
       map: map,
       transparent: true,
-      depthWrite: true
+      depthWrite: false
   
     })
-  );
+
+    );
+    
   
   highlightMesh.rotation.x = Math.PI * - 0.5;
   highlightMesh.position.set(0.9, 0, 0.9);
+  highlightMesh.name = "highlightmesh"
   scene.add(highlightMesh);
+
+
 
     assetLoader.load(
     // resource URL
@@ -434,10 +445,7 @@ window.addEventListener('load', function loadScene2() {
 
 }
 else if (getactiveStorage === "active" && getStorageItems.length > 0) {
-
   loadSavedScene(scene, assetLoader, models )
-  console.log('scene children at load time',scene.children);
-
 }
 const canvas = useRef()
 
@@ -458,22 +466,27 @@ const canvas = useRef()
 // })
 
  window.addEventListener("load", function loadAddedModels() {
+
+  
   const largeBuildingBtn = document.getElementById('largeBuildingBtn')
   largeBuildingBtn.addEventListener('click', function loadLargeBuilding() {
+  
     addBuilding(selectedModel, stag, models)
     loadScene( selectedModel, stag)
-    return () => {
-      largeBuildingBtn.removeEventListener("click", loadLargeBuilding);
-    }
+    let model_Scale = localStorage.getItem("model_Scale")
+    console.log(JSON.parse(model_Scale));
+  
 })
  
 const skyScraperBtn = document.getElementById('skyScraperBtn')
 skyScraperBtn.addEventListener('click', function loadSkyScraper() {
 addskyScraperBtn(selectedModel, stag, models)
+
 loadScene( selectedModel, stag)
-return () => {
-  skyScraperBtn.removeEventListener("click", loadSkyScraper);
-}
+let model_Scale = localStorage.getItem("model_Scale")
+console.log(JSON.parse(model_Scale));
+
+
 })
 
  
@@ -792,12 +805,21 @@ return () => {
   });
 
 
-  window.addEventListener('auxclick', function detectObj() {
-    detectObject(scene,  raycasterObj, mousePosition, camera)  
-    return () => {
-      window.removeEventListener("click", detectObj);
-    }
-  });
+  // window.addEventListener('auxclick', function detectObj() {
+  //   detectObject(scene,  raycasterObj, mousePosition, camera)  
+  //   return () => {
+  //     window.removeEventListener("click", detectObj);
+  //   }
+  // });
+
+  window.addEventListener('keydown', function detectObj(event) {
+
+    if ( event.code === 'KeyU') {
+detectObject(scene,  raycasterObj, mousePosition, camera, renderer, orbit)  
+  }
+});
+
+
 
 
   

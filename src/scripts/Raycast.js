@@ -8,7 +8,7 @@ export function Raycast(e,mousePosition, raycaster, intersects, camera, planeMes
     intersects = raycaster.intersectObject(planeMesh);
     if(intersects.length > 0) {
         const intersect = intersects[0];
-        const highlightPos = new THREE.Vector3().copy(intersect.point).floor().addScalar(0.5);
+        const highlightPos = new THREE.Vector3().copy(intersect.point);
         highlightMesh.position.set(highlightPos.x, 0, highlightPos.z);
      
 

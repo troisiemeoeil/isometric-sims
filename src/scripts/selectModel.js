@@ -19,6 +19,7 @@ export function addBuilding(selectedModel, stag, models) {
         const model = gltf.scene;
             console.log("this is true");
         model.scale.set(0.5,0.5,0.5);
+        localStorage.setItem("model_Scale", JSON.stringify(model.scale))
         model.isDraggable = true;
 
         model.traverse( function(child) {
@@ -27,8 +28,10 @@ export function addBuilding(selectedModel, stag, models) {
               child.castShadow = true
               }
               });
+
+            
         stag.push(model);
-        console.log(stag);
+
     }, undefined, function(error) {
         console.error(error);
     });
@@ -47,7 +50,8 @@ export function addskyScraperBtn(selectedModel, stag, models) {
 assetLoader.load(selectedModel[0].href, function(gltf) {
     const model = gltf.scene;
         console.log("this is true");
-    model.scale.set(0.5,0.5,0.5);
+    model.scale.set(1.5,1.5,1.5);
+    localStorage.setItem("model_Scale", JSON.stringify(model.scale))
     model.isDraggable = true;
 
     model.traverse( function(child) {
@@ -56,7 +60,7 @@ assetLoader.load(selectedModel[0].href, function(gltf) {
           }
           });
     stag.push(model);
-    console.log(stag);
+
 }, undefined, function(error) {
     console.error(error);
 });
