@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { DragControls } from 'three/addons/controls/DragControls.js';
 import { gsap } from "gsap";
 
-export  function detectObject(scene,  raycasterObj, mousePosition, camera, renderer, orbit) {
+export  function dragObject(scene,  raycasterObj, mousePosition, camera, renderer, orbit) {
   let controls
   let intersection = []
           raycasterObj.setFromCamera(mousePosition, camera)
@@ -14,26 +14,8 @@ export  function detectObject(scene,  raycasterObj, mousePosition, camera, rende
           // TO LOOK OUT FOR THE FURTHEST DISTANCE FROM CAMERA
 
 
-  function parseObjects(i) {
-    console.log(intersect[i].object);
-    if (intersect[i].object.type === "Mesh" 
-    && intersect[i].object.name !== "world_terrain"
-    && intersect[i].object.name !== "model_terrain") {
-      let selectedModelObj = intersect[i].object;
-      console.log(selectedModelObj);
-      
-    
-      // DELETE MODEL 
-      let deletedModel = selectedModelObj.parent;
-console.log(deletedModel);
-console.log(scene);
 
-      // scene.remove(box)
-      deletedModel.parent.remove(deletedModel);
-    }
-  }
 
-  function dragObject() {
     console.log(intersection[0]);
     if (intersection[0].object.type === "Mesh" 
     && intersection[0].object.name !== "world_terrain"
@@ -54,7 +36,7 @@ console.log(scene);
           gsap.timeline()
           .to(camera.position, {
             x: 0, 
-            y: 30, 
+            y: 45, 
             z: 0.0877576279430568,
             duration: 2,
           }, 0);
@@ -95,27 +77,10 @@ console.log(scene);
       
 
       // scene.remove(box)
-    }
+    
   }
 
-  function rotateObject() {
-    console.log(intersection[0]);
-    if (intersection[0].object.type === "Mesh" 
-    && intersection[0].object.name !== "world_terrain"
-    && intersection[0].object.name !== "model_terrain"
-    && intersection[0].object.name !== "highlightmesh"
-    && intersection[0].isPerspectiveCamera !== true
-    ) {
-      let selectedModelObj = intersection[0].object;
-      console.log(selectedModelObj);
-
-      // DELETE MODEL 
-        let deletedModel = selectedModelObj.parent;
-        console.log(deletedModel);
-      deletedModel.rotation.y += 0.5
-
-    }
-  }
+ 
 
 
   function render() {
@@ -123,23 +88,6 @@ console.log(scene);
     renderer.render( scene, camera );
 
   }
-  dragObject()
-
-  window.addEventListener('keydown', function performActions(event) {
-    event.preventDefault()
-    event.stopPropagation()
-    switch (event.code) {
-        case 'KeyX':
-          parseObjects(0)
-            break
-    }
-    switch (event.code) {
-      case 'KeyW':
-        rotateObject()
-          break
-  }
-   
-    })
   }
 
           

@@ -46,7 +46,13 @@ import {addModel} from './scripts/addModel';
 import { loadSavedScene } from './scripts/loadSavedScene';
 import { loadScene } from './scripts/loadScene';
 import addModelSound from './scripts/audio/addModelSound';
-import { detectObject } from './scripts/detectObject';
+// import { detectObject } from './scripts/detectObject';
+import { deleteObject } from './scripts/deleteObject';
+import { scaleObject } from './scripts/scaleObject';
+
+import { dragObject } from './scripts/dragObject';
+import { rotateObject } from './scripts/rotateObject';
+
 
 
 function App() {
@@ -89,14 +95,14 @@ function App() {
       // camera.position.set(0,100,0)
       camera.position.copy(initialPosition)
 
-    camera.updateProjectionMatrix()
+    // camera.updateProjectionMatrix()
     scene.add(camera)
 
     const orbit = new OrbitControls(camera, renderer.domElement);
     orbit.enabled = true
     orbit.enableDamping = true;
     orbit.zoomSpeed = 0.5;
-    orbit.maxDistance = 30
+    // orbit.maxDistance = 30
     orbit.maxPolarAngle = Math.PI / 2.5
  
     orbit.enablePan = true
@@ -812,15 +818,54 @@ return () => {
   //   }
   // });
 
-  window.addEventListener('keydown', function detectObj(event) {
+  window.addEventListener('auxclick', function dragObj() {
 
-    if ( event.code === 'KeyU') {
-detectObject(scene,  raycasterObj, mousePosition, camera, renderer, orbit)  
-  }
+dragObject(scene,  raycasterObj, mousePosition, camera, renderer, orbit)  
+  
 });
 
+window.addEventListener('keypress', function deleteObj(event) {
+
+  switch (event.code) {
+    case 'KeyX':
+      deleteObject(scene,  raycasterObj, mousePosition, camera)  
+        break
+}});
 
 
+window.addEventListener('wheel', function dragObj(event) {
+ 
+  let targetModel = scaleObject(scene,  raycasterObj, mousePosition, camera, orbit)
+
+    
+
+const delta = event.deltaY;
+// Check the value of delta
+if (delta > 0) {
+  targetModel.scale.x -= 0.1;
+  targetModel.scale.y -= 0.1;
+  targetModel.scale.z -= 0.1;
+
+// The wheel was rotated upwards or away from the user
+} else if (delta < 0) {
+  targetModel.scale.x += 0.1;
+  targetModel.scale.y += 0.1;
+  targetModel.scale.z += 0.1;
+
+// The wheel was rotated downwards or towards the user
+}
+  });
+
+  window.addEventListener('keypress', function rotateObj(event) {
+    let targetModel = rotateObject(scene,  raycasterObj, mousePosition, camera)  
+    switch (event.code) {
+      case 'KeyD':
+        targetModel.rotation.y += 0.1;
+          break
+          case 'KeyF':
+            targetModel.rotation.y -= 0.1;
+          break
+  }});
 
   
 
