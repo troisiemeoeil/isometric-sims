@@ -52,6 +52,7 @@ import { scaleObject } from './scripts/scaleObject';
 
 import { dragObject } from './scripts/dragObject';
 import { rotateObject } from './scripts/rotateObject';
+import gsap from 'gsap';
 
 
 
@@ -93,7 +94,34 @@ function App() {
         resolution.y / 1
       )
       // camera.position.set(0,100,0)
-      camera.position.copy(initialPosition)
+      // camera.position.copy(initialPosition)
+      
+      gsap.timeline(
+        {
+        onComplete: load_assets,
+
+        }
+      )
+      .to(camera.position, {
+      
+        y: 45, 
+        duration: 2,
+        ease: "power1.out",
+      }, 0)
+      .to(camera.position, {
+        // eslint-disable-next-line no-loss-of-precision
+        z: 40.877576279430568,
+        duration: 2,
+        delay: 1,
+        ease: "power1.out",
+      }, 0)
+      .to(camera.position, {
+        x: 10, 
+        duration: 2,
+        delay: 2,
+        ease: "power1.out",
+      }, 0)
+  
 
     // camera.updateProjectionMatrix()
     scene.add(camera)
@@ -104,7 +132,6 @@ function App() {
     orbit.zoomSpeed = 0.5;
     // orbit.maxDistance = 30
     orbit.maxPolarAngle = Math.PI / 2.5
- 
     orbit.enablePan = true
     orbit.saveState()
 
@@ -133,7 +160,7 @@ function App() {
 
 
   const planeMesh = new THREE.Mesh(
-    new THREE.PlaneGeometry(20, 20, 10,10),
+    new THREE.PlaneGeometry(25, 25, 10,10),
     new THREE.MeshStandardMaterial({
       color: 0xdee3db,
       visible: true,
@@ -150,7 +177,7 @@ function App() {
   scene.add(planeMesh);
   
   const planeMesh2 = new THREE.Mesh(
-    new THREE.PlaneGeometry(100, 100),
+    new THREE.PlaneGeometry(150, 150),
     new THREE.MeshStandardMaterial({
       color: 0xdbe7ab,
       side: THREE.FrontSide,
@@ -168,6 +195,7 @@ function App() {
   // const grid = new THREE.GridHelper(10, 10, 0xFFFFFF, 0xFFFFFF);
   // scene.add(grid);
   
+
   let highlightMeshScaleX = 0.5
   let highlightMeshScaleY = 0.5
   let map = new THREE.TextureLoader().load("./platformPack_tile009.png")
@@ -186,11 +214,13 @@ function App() {
   highlightMesh.rotation.x = Math.PI * - 0.5;
   highlightMesh.position.set(0.9, 0, 0.9);
   highlightMesh.name = "highlightmesh"
+setTimeout(()=> {
   scene.add(highlightMesh);
+},5000)
 
+function load_assets() {
 
-
-    assetLoader.load(
+  assetLoader.load(
     // resource URL
     '/models/planeGround27.glb',
     // called when the resource is loaded
@@ -198,7 +228,7 @@ function App() {
       scene.add( gltf.scene );
       let model = gltf.scene
       model.position.set(0 ,-0.35, 0)
-      model.scale.set(0.5 ,0.5, 0.5)
+      model.scale.set(0.75 ,0.75, 0.75)
 
       
 
@@ -351,6 +381,7 @@ treeData.forEach(({ x, y, z }) => {
   // );
 	
 })
+}
  
 
 let getStorageItems = localStorage.getItem('listofobjects')
@@ -836,7 +867,7 @@ window.addEventListener('keypress', function deleteObj(event) {
 window.addEventListener('wheel', function dragObj(event) {
  
   let targetModel = scaleObject(scene,  raycasterObj, mousePosition, camera, orbit)
-
+  console.log(targetModel)
     
 
 const delta = event.deltaY;

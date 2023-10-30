@@ -1,7 +1,7 @@
 
 
 export  function scaleObject(scene,  raycasterObj, mousePosition, camera, orbit) {
-    orbit.enableZoom = false;
+
     let intersection = []
             raycasterObj.setFromCamera(mousePosition, camera)
           let   intersect = raycasterObj.intersectObjects(scene.children,  true)
@@ -16,6 +16,8 @@ export  function scaleObject(scene,  raycasterObj, mousePosition, camera, orbit)
       if (intersect[0].object.type === "Mesh" 
       && intersect[0].object.name !== "world_terrain"
       && intersect[0].object.name !== "model_terrain") {
+    orbit.enableZoom = false;
+
         let selectedModelObj = intersect[0].object;
         console.log(selectedModelObj);
         
