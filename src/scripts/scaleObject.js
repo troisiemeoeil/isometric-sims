@@ -15,27 +15,24 @@ export  function scaleObject(scene,  raycasterObj, mousePosition, camera, orbit)
       console.log(intersect[0].object);
       if (intersect[0].object.type === "Mesh" 
       && intersect[0].object.name !== "world_terrain"
-      && intersect[0].object.name !== "model_terrain") {
+      && intersect[0].object.name !== "model_terrain"
+    && intersection[0].object.name !== "highlightmesh"
+    && intersection[0].object.name !== "decoration"
+      ) 
+      {
     orbit.enableZoom = false;
 
         let selectedModelObj = intersect[0].object;
-        console.log(selectedModelObj);
-        
       
         // DELETE MODEL 
         let deletedModel = selectedModelObj.parent;
-
-
-
-
-
-
-
   
         // scene.remove(box)
         // deletedModel.parent.remove(deletedModel);
         return deletedModel
       }
+
+      else orbit.enableZoom = true;
 
     }
   

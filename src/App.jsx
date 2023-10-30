@@ -88,20 +88,10 @@ function App() {
       const camera = new THREE.PerspectiveCamera(fov, sizes.width / sizes.height, 0.5, 1000)
       // camera.zoom.toFixed(5)
  
-      const initialPosition = new THREE.Vector3(
-        resolution.x +1,
-        6,
-        resolution.y / 1
-      )
       // camera.position.set(0,100,0)
       // camera.position.copy(initialPosition)
       
-      gsap.timeline(
-        {
-        onComplete: load_assets,
-
-        }
-      )
+      gsap.timeline({onComplete: load_assets})
       .to(camera.position, {
       
         y: 45, 
@@ -116,11 +106,12 @@ function App() {
         ease: "power1.out",
       }, 0)
       .to(camera.position, {
-        x: 10, 
-        duration: 2,
+        x: 20, 
+        duration: 4,
         delay: 2,
         ease: "power1.out",
       }, 0)
+    
   
 
     // camera.updateProjectionMatrix()
@@ -222,16 +213,15 @@ function load_assets() {
 
   assetLoader.load(
     // resource URL
-    '/models/planeGround27.glb',
+    '/models/planeGround28.glb',
     // called when the resource is loaded
     function ( gltf ) {
       scene.add( gltf.scene );
       let model = gltf.scene
-      model.position.set(0 ,-0.35, 0)
-      model.scale.set(0.75 ,0.75, 0.75)
-
-      
-
+        model.name = "decoration"
+      console.log("scene name get it",model );
+      model.position.set(0 ,-3, 0)
+      model.scale.set( 4, 4, 4)
       // model.scale.setScalar(w)
      
       model.traverse( function(child) {
@@ -239,8 +229,25 @@ function load_assets() {
           child.material.metalness = 0
             child.castShadow = true
             child.receiveShadow = true
+          
             }
           });
+
+          gsap.timeline()
+          .to(model.position, {
+          
+            y: -1.5, 
+            duration: 2,
+            ease: "power1.out",
+          }, 0)
+          .to(camera.position, {
+            x: 10,
+            y: 20,
+             
+            delay: 2,
+            duration: 2,
+            ease: "power1.out",
+          }, 0)
      
   
     },
@@ -254,133 +261,133 @@ function load_assets() {
   );
 
 
-const treeData = [
-	new THREE.Vector4( 55, 0, 7, 1),
-	new THREE.Vector4( 65, 0, 10, 0.8),
-	new THREE.Vector4( -60, 0, 15, 1.3),
-	new THREE.Vector4( 52, 10, 15, 1),
-	new THREE.Vector4( -75, 10, 20, 1.2),
-	new THREE.Vector4( 64, 0, 12, 1.2),
+// const treeData = [
+// 	new THREE.Vector4( 55, 0, 7, 1),
+// 	new THREE.Vector4( 65, 0, 10, 0.8),
+// 	new THREE.Vector4( -60, 0, 15, 1.3),
+// 	new THREE.Vector4( 52, 10, 15, 1),
+// 	new THREE.Vector4( -75, 10, 20, 1.2),
+// 	new THREE.Vector4( 64, 0, 12, 1.2),
 
-]
+// ]
 
 
-treeData.forEach(({ x, y, z }) => {
-  assetLoader.load(
-    // resource URL
-    '/models/clouds.glb',
-    // called when the resource is loaded
-    function ( gltf ) {
-      scene.add( gltf.scene );
-      let model = gltf.scene
-      model.position.set(x ,y, z)
-      model.rotation.set(0 ,Math.random() * 10, 0)
+// treeData.forEach(({ x, y, z }) => {
+//   assetLoader.load(
+//     // resource URL
+//     '/models/clouds.glb',
+//     // called when the resource is loaded
+//     function ( gltf ) {
+//       scene.add( gltf.scene );
+//       let model = gltf.scene
+//       model.position.set(x ,y, z)
+//       model.rotation.set(0 ,Math.random() * 10, 0)
 
-      // model.scale.setScalar(w)
+//       // model.scale.setScalar(w)
      
-      model.traverse( function(child) {
-        if (child instanceof THREE.Mesh) {
-          child.material.metalness = 0
-            child.castShadow = true
-            child.receiveShadow = true
-            }
-          });
+//       model.traverse( function(child) {
+//         if (child instanceof THREE.Mesh) {
+//           child.material.metalness = 0
+//             child.castShadow = true
+//             child.receiveShadow = true
+//             }
+//           });
      
   
-    },
-    // called while loading is progressing
-    function ( xhr ) {
+//     },
+//     // called while loading is progressing
+//     function ( xhr ) {
   
-      console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+//       console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
   
-    },
-    // called when loading has errors
-  );
+//     },
+//     // called when loading has errors
+//   );
 	
-  // assetLoader.load(
-  //   // resource URL
-  //   '/models/tree_oak_fall.glb',
-  //   // called when the resource is loaded
-  //   function ( gltf ) {
-  //     scene.add( gltf.scene );
-  //     let model = gltf.scene
-  //     model.position.set(x - 3,y  , z - 3)
-  //     // model.scale.setScalar(w)
+//   // assetLoader.load(
+//   //   // resource URL
+//   //   '/models/tree_oak_fall.glb',
+//   //   // called when the resource is loaded
+//   //   function ( gltf ) {
+//   //     scene.add( gltf.scene );
+//   //     let model = gltf.scene
+//   //     model.position.set(x - 3,y  , z - 3)
+//   //     // model.scale.setScalar(w)
      
-  //     model.traverse( function(child) {
-  //       if (child instanceof THREE.Mesh) {
-  //         child.material.metalness = 0
-  //           child.castShadow = true
-  //           }
-  //         });
+//   //     model.traverse( function(child) {
+//   //       if (child instanceof THREE.Mesh) {
+//   //         child.material.metalness = 0
+//   //           child.castShadow = true
+//   //           }
+//   //         });
     
   
-  //   },
-  //   // called while loading is progressing
-  //   function ( xhr ) {
+//   //   },
+//   //   // called while loading is progressing
+//   //   function ( xhr ) {
   
-  //     console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+//   //     console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
   
-  //   },
-  //   // called when loading has errors
-  // );
-  // assetLoader.load(
-  //   // resource URL
-  //   '/models/tree_palmTall.glb',
-  //   // called when the resource is loaded
-  //   function ( gltf ) {
-  //     scene.add( gltf.scene );
-  //     let model = gltf.scene
-  //     model.position.set(x * 2,y  , z - 5)
-  //     // model.scale.setScalar(w)
+//   //   },
+//   //   // called when loading has errors
+//   // );
+//   // assetLoader.load(
+//   //   // resource URL
+//   //   '/models/tree_palmTall.glb',
+//   //   // called when the resource is loaded
+//   //   function ( gltf ) {
+//   //     scene.add( gltf.scene );
+//   //     let model = gltf.scene
+//   //     model.position.set(x * 2,y  , z - 5)
+//   //     // model.scale.setScalar(w)
      
-  //     model.traverse( function(child) {
-  //       if (child instanceof THREE.Mesh) {
-  //         child.material.metalness = 0
-  //           child.castShadow = true
-  //           }
-  //         });
+//   //     model.traverse( function(child) {
+//   //       if (child instanceof THREE.Mesh) {
+//   //         child.material.metalness = 0
+//   //           child.castShadow = true
+//   //           }
+//   //         });
   
   
-  //   },
-  //   // called while loading is progressing
-  //   function ( xhr ) {
+//   //   },
+//   //   // called while loading is progressing
+//   //   function ( xhr ) {
   
-  //     console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+//   //     console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
   
-  //   },
-  //   // called when loading has errors
-  // );
+//   //   },
+//   //   // called when loading has errors
+//   // );
 
-  // assetLoader.load( 
-  //   // resource URL
-  //   '/models/tree_pineDefaultA.glb',
-  //   // called when the resource is loaded
-  //   function ( gltf ) {
-  //     scene.add( gltf.scene );
-  //     let model = gltf.scene
-  //     model.position.set(x + 4,y  , z * 2)
-  //     // model.scale.setScalar(w)
+//   // assetLoader.load( 
+//   //   // resource URL
+//   //   '/models/tree_pineDefaultA.glb',
+//   //   // called when the resource is loaded
+//   //   function ( gltf ) {
+//   //     scene.add( gltf.scene );
+//   //     let model = gltf.scene
+//   //     model.position.set(x + 4,y  , z * 2)
+//   //     // model.scale.setScalar(w)
      
-  //     model.traverse( function(child) {
-  //       if (child instanceof THREE.Mesh) {
-  //         child.material.metalness = 0
-  //           child.castShadow = true
-  //           }
-  //         });
+//   //     model.traverse( function(child) {
+//   //       if (child instanceof THREE.Mesh) {
+//   //         child.material.metalness = 0
+//   //           child.castShadow = true
+//   //           }
+//   //         });
   
   
-  //   },
-  //   // called while loading is progressing
-  //   function ( xhr ) {
+//   //   },
+//   //   // called while loading is progressing
+//   //   function ( xhr ) {
   
-  //     console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+//   //     console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
   
-  //   },
-  //   // called when loading has errors
-  // );
+//   //   },
+//   //   // called when loading has errors
+//   // );
 	
-})
+// })
 }
  
 
