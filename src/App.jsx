@@ -57,10 +57,58 @@ import gsap from 'gsap';
 
 
 function App() {
+
+
   const loadingManager = new THREE.LoadingManager()
 
   
   const assetLoader = new GLTFLoader(loadingManager)
+
+
+  
+  //   const progressBar = useRef()
+  //   const progressBarContainer = useRef()
+  
+  // loadingManager.onProgress = function(url, loaded, total) {
+  //   console.log(url);
+  //   console.log(progressBar);
+  // progressBar.current.value = (loaded / total) * 100;
+  
+  
+  
+   
+  // loadingManager.onLoad = function() {
+  // progressBarContainer.current.style.display = 'none';
+  // }
+  // }
+  
+  var percent = useRef()
+  var progress = useRef();
+  var text = useRef()
+  const container = useRef()
+  function progressing(){
+   
+    var count = 4;
+    var per = 16;
+    var loading = setInterval(animate, 50);
+    function animate(){
+      if(count == 100 && per == 400){
+        percent.current.classList.add("text-blink");
+        text.current.style.display = "block";
+        clearInterval(loading);
+        container.current.remove();
+      }else{
+        per = per + 4;
+        count = count + 1;
+        progress.current.style.width = per + 'px';
+        percent.current.textContent = count + '%';
+      }
+    }
+  }
+  
+
+  
+
   let stag = []
 
     const renderer = new THREE.WebGLRenderer({
@@ -89,32 +137,7 @@ function App() {
       const resolution = new THREE.Vector2(20, 20)
       const fov = 50
       const camera = new THREE.PerspectiveCamera(fov, sizes.width / sizes.height, 0.5, 1000)
-      // camera.zoom.toFixed(5)
- 
-      // camera.position.set(0,100,0)
-      // camera.position.copy(initialPosition)
-      
-      // gsap.timeline({onComplete: load_assets})
-      // .to(camera.position, {
-      
-      //   y: 45, 
-      //   duration: 2,
-      //   ease: "power1.out",
-      // }, 0)
-      // .to(camera.position, {
-      //   // eslint-disable-next-line no-loss-of-precision
-      //   z: 40.877576279430568,
-      //   duration: 2,
-      //   delay: 1,
-      //   ease: "power1.out",
-      // }, 0)
-      // .to(camera.position, {
-      //   x: 20, 
-      //   duration: 4,
-      //   delay: 2,
-      //   ease: "power1.out",
-      // }, 0)
-    
+        camera.position.set(0,3,0)
   
 
     // camera.updateProjectionMatrix()
@@ -209,27 +232,10 @@ setTimeout(()=> {
   scene.add(highlightMesh);
 },5000)
 
-useEffect(()=> {
-  
-  const progressBar = document.getElementById('progress-bar');
 
-loadingManager.onProgress = function(url, loaded, total) {
-  console.log(url);
-  console.log(progressBar);
-progressBar.value = (loaded / total) * 100;
-
-
-
-const progressBarContainer = document.querySelector('.progress-bar-container');
-
-loadingManager.onLoad = function() {
-progressBarContainer.style.display = 'none';
-}
-}
-})
 
 function load_assets() {
-
+  progressing();
   assetLoader.load(
     // resource URL
     '/models/planeGround28.glb',
@@ -237,17 +243,18 @@ function load_assets() {
     function ( gltf ) {
       
 
+    setTimeout(()=> {
       gsap.timeline()
       .to(camera.position, {
         y: 35, 
-        duration: 2,
+        duration: 4,
         ease: "power1.out",
       }, 0)
       .to(camera.position, {
         // eslint-disable-next-line no-loss-of-precision
         z: 40.877576279430568,
-        duration: 2,
-        delay: 1,
+        duration: 3,
+        delay: 4,
         ease: "power1.out",
       }, 0)
       .to(camera.position, {
@@ -256,9 +263,10 @@ function load_assets() {
         delay: 2,
         ease: "power1.out",
       }, 0)
-      .add( function()
+      .add( 
       //LOAD MODEL TO THE SCENE
-      { scene.add( gltf.scene );
+      function(){
+        scene.add( gltf.scene );
         let model = gltf.scene
           model.name = "decoration"
         model.position.set(0 ,-3, 0)
@@ -279,6 +287,7 @@ function load_assets() {
               ease: "power1.out",
             }, 0)
       })
+    }, 5000)
     
          
     orbit.enabled = true
@@ -1102,9 +1111,17 @@ useEffect(()=> {
    
   return (
     <>
-    <div className="progress-bar-container">
-        <label htmlFor="progress-bar">Loading...</label>
-        <progress id="progress-bar" value="0" max="100"></progress>
+    {/* <div className="progress-bar-container" ref={progressBarContainer}>
+   
+        <progress id="progress-bar" ref={progressBar} value="0" max="100"></progress>
+    </div> */}
+  
+     <div className="loading" ref={container} >
+      <div className="percent" ref={percent}>100%</div>
+       <label className="text" ref={text}>Completed!</label>
+      <div className="progress-bar">
+        <div className="progress" ref={progress}></div>
+      </div>
     </div>
     {/* <div className="marquee">
   <div className="clouds"  style={{width:"1000px", height:"100px"}}>
