@@ -1,3 +1,4 @@
+import * as THREE from "three"
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 export  function loadScene( selectedModel, stag) {
@@ -9,11 +10,15 @@ export  function loadScene( selectedModel, stag) {
             console.log(model.children[0].name) 
                 model.scale.set(0.5,0.5,0.5);
                 model.isDraggable = true;
-                let meshArr = model.children[0].children
-                for (let i = 0; i < meshArr.length; i++) {
-                  meshArr[i].material.metalness = 0
-                  meshArr[i].receiveShadow = true
-                }
+                let object = model.children[0]
+                object.traverse(function(child) {
+                    if (child instanceof THREE.Mesh) {
+                  child.material.metalness = 0
+
+                        }
+                      }
+                  )
+             
                 stag.push(model);
             
           

@@ -6,8 +6,6 @@ export  function scaleObject(scene,  raycasterObj, mousePosition, camera, orbit)
             raycasterObj.setFromCamera(mousePosition, camera)
           let   intersect = raycasterObj.intersectObjects(scene.children,  true)
           intersection.push(intersect[0])
-          console.log(intersection);
-        //  console.log(intersect);
             // TO GET THE FIRST INTERSECTION POINT AKA THE MODEL YOU'RE LOOKING FOR, YOU NEED
             // TO LOOK OUT FOR THE FURTHEST DISTANCE FROM CAMERA
   
@@ -23,12 +21,8 @@ export  function scaleObject(scene,  raycasterObj, mousePosition, camera, orbit)
     orbit.enableZoom = false;
 
         let selectedModelObj = intersect[0].object;
-      
         // DELETE MODEL 
         let deletedModel = selectedModelObj.parent;
-  
-        // scene.remove(box)
-        // deletedModel.parent.remove(deletedModel);
         return deletedModel
       }
 

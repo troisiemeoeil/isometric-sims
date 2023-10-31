@@ -198,19 +198,35 @@ function App() {
     new THREE.MeshBasicMaterial({
       map: map,
       transparent: true,
-      depthWrite: false
-  
-    })
+      depthWrite:false
+    }));
 
-    );
-    
-  
+
   highlightMesh.rotation.x = Math.PI * - 0.5;
   highlightMesh.position.set(0.9, 0, 0.9);
   highlightMesh.name = "highlightmesh"
 setTimeout(()=> {
   scene.add(highlightMesh);
 },5000)
+
+useEffect(()=> {
+  
+  const progressBar = document.getElementById('progress-bar');
+
+loadingManager.onProgress = function(url, loaded, total) {
+  console.log(url);
+  console.log(progressBar);
+progressBar.value = (loaded / total) * 100;
+
+
+
+const progressBarContainer = document.querySelector('.progress-bar-container');
+
+loadingManager.onLoad = function() {
+progressBarContainer.style.display = 'none';
+}
+}
+})
 
 function load_assets() {
 
@@ -221,9 +237,8 @@ function load_assets() {
     function ( gltf ) {
       
 
-          gsap.timeline()
-            .to(camera.position, {
-      
+      gsap.timeline()
+      .to(camera.position, {
         y: 35, 
         duration: 2,
         ease: "power1.out",
@@ -241,20 +256,15 @@ function load_assets() {
         delay: 2,
         ease: "power1.out",
       }, 0)
-      .add( function(){ scene.add( gltf.scene );
+      .add( function()
+      //LOAD MODEL TO THE SCENE
+      { scene.add( gltf.scene );
         let model = gltf.scene
           model.name = "decoration"
         model.position.set(0 ,-3, 0)
         model.scale.set( 4, 4, 4)
        
-        model.traverse(function(child) {
-          if (child instanceof THREE.Mesh) {
-            child.material.metalness = 0
-              child.castShadow = true
-              child.receiveShadow = true
-              }
-            }
-        )
+       
           gsap.timeline()
             .to(model.position, {
               y: -1.5, 
@@ -262,14 +272,13 @@ function load_assets() {
               ease: "power1.out",
             }, 0)
             .to(camera.position, {
-              x: 10,
-              y: 20,
+              x: 5,
+              y: 15,
               delay: 2.5,
-              duration: 2,
+              duration: 4,
               ease: "power1.out",
             }, 0)
       })
-      console.log(scene)
     
          
     orbit.enabled = true
@@ -277,22 +286,11 @@ function load_assets() {
   
     },
     // called while loading is progressing
-    function () {
-      const progressBar = document.getElementById('progress-bar');
-
-loadingManager.onProgress = function(url, loaded, total) {
-    progressBar.value = (loaded / total) * 100;
-}
-
-const progressBarContainer = document.querySelector('.progress-bar-container');
-
-loadingManager.onLoad = function() {
-    progressBarContainer.style.display = 'none';
-}
-    },
+ 
     // called when loading has errors
   );
 
+  
 
 // const treeData = [
 // 	new THREE.Vector4( 55, 0, 7, 1),
@@ -913,6 +911,7 @@ window.addEventListener('wheel', function dragObj(event) {
     
 
 const delta = event.deltaY;
+
 // Check the value of delta
 if (delta > 0) {
   targetModel.scale.x -= 0.1;
