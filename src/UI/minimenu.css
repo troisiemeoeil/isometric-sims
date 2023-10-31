@@ -35,11 +35,6 @@
     src: url(https://assets.codepen.io/7237686//pixelFont.woff) format("woff");
   }
 
-  @media (max-width: 46.875rem) {
-    body {
-      padding: 1rem;
-    }
-  }
   
   .btn {
     display: inline-block;

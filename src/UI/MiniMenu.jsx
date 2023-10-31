@@ -37,9 +37,14 @@ useEffect(()=> {
   const menu = document.querySelector('.menu')
   const menu__tabs__container = document.querySelector('.menu__tabs__container')
 
+  menu.style.opacity = '0'
 
+setTimeout(()=> {
+  menu.style.opacity = '1'
+      },5000)
   // const marquee = document.querySelector('.marquee')
   const canvas = document.querySelector('#canvas')
+  
 
   if (isOn === false) {
     inventory.style.bottom = '20%'

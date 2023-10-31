@@ -228,9 +228,10 @@ function App() {
   highlightMesh.rotation.x = Math.PI * - 0.5;
   highlightMesh.position.set(0.9, 0, 0.9);
   highlightMesh.name = "highlightmesh"
+
 setTimeout(()=> {
   scene.add(highlightMesh);
-},5000)
+},20000)
 
 
 
@@ -247,20 +248,20 @@ function load_assets() {
       gsap.timeline()
       .to(camera.position, {
         y: 35, 
-        duration: 4,
+        duration: 6,
         ease: "power1.out",
       }, 0)
       .to(camera.position, {
         // eslint-disable-next-line no-loss-of-precision
-        z: 40.877576279430568,
-        duration: 3,
-        delay: 4,
+        z: 20.877576279430568,
+        duration: 4,
+        delay: 1,
         ease: "power1.out",
       }, 0)
       .to(camera.position, {
-        x: 30, 
-        duration: 4,
-        delay: 2,
+        x: 20, 
+        duration: 8,
+        delay: 1.5,
         ease: "power1.out",
       }, 0)
       .add( 
@@ -1116,13 +1117,6 @@ useEffect(()=> {
         <progress id="progress-bar" ref={progressBar} value="0" max="100"></progress>
     </div> */}
   
-     <div className="loading" ref={container} >
-      <div className="percent" ref={percent}>100%</div>
-       <label className="text" ref={text}>Completed!</label>
-      <div className="progress-bar">
-        <div className="progress" ref={progress}></div>
-      </div>
-    </div>
     {/* <div className="marquee">
   <div className="clouds"  style={{width:"1000px", height:"100px"}}>
     <img src="https://assets.codepen.io/7237686/clouds.png?format=auto"  alt="clouds" />
@@ -1145,6 +1139,13 @@ useEffect(()=> {
 </div> */}
 <div id='canvas' ref={canvas}></div>
 
+<div className="loading" ref={container} >
+      <div className="percent" ref={percent}>100%</div>
+       <label className="text" ref={text}>Completed!</label>
+      <div className="progress-bar">
+        <div className="progress" ref={progress}></div>
+      </div>
+    </div>
     
 <MiniMenu />
     </>
