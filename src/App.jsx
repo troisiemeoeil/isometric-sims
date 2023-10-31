@@ -57,7 +57,10 @@ import gsap from 'gsap';
 
 
 function App() {
-  const assetLoader = new GLTFLoader()
+  const loadingManager = new THREE.LoadingManager()
+
+  
+  const assetLoader = new GLTFLoader(loadingManager)
   let stag = []
 
     const renderer = new THREE.WebGLRenderer({
@@ -118,7 +121,7 @@ function App() {
     scene.add(camera)
 
     const orbit = new OrbitControls(camera, renderer.domElement);
-    orbit.enabled = true
+    orbit.enabled = false
     orbit.enableDamping = true;
     orbit.zoomSpeed = 0.5;
     // orbit.maxDistance = 30
@@ -248,13 +251,26 @@ function load_assets() {
             duration: 2,
             ease: "power1.out",
           }, 0)
+    orbit.enabled = true
      
   
     },
     // called while loading is progressing
     function ( xhr ) {
+      const progressBar = document.getElementById('progress-bar');
+
+loadingManager.onProgress = function(url, loaded, total) {
+    progressBar.value = (loaded / total) * 100;
+}
+
+const progressBarContainer = document.querySelector('.progress-bar-container');
+
+loadingManager.onLoad = function() {
+    progressBarContainer.style.display = 'none';
+}
+
   
-      console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+      // console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
   
     },
     // called when loading has errors
@@ -1068,6 +1084,10 @@ useEffect(()=> {
    
   return (
     <>
+    <div className="progress-bar-container">
+        <label htmlFor="progress-bar">Loading...</label>
+        <progress id="progress-bar" value="0" max="100"></progress>
+    </div>
     {/* <div className="marquee">
   <div className="clouds"  style={{width:"1000px", height:"100px"}}>
     <img src="https://assets.codepen.io/7237686/clouds.png?format=auto"  alt="clouds" />
